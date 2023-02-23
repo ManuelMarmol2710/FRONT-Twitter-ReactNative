@@ -22,7 +22,7 @@ function ProfilePage() {
   const lastName = useAuthStore((state) => state.profile.username.last_Name);
   const [tweets, setText] = React.useState("");
   const [task, setTask] = useState([]);
-
+ 
   const tweetsPress = async () => {
     return axios.post(`tweet/${email}`, {
       tweets,
@@ -39,13 +39,16 @@ function ProfilePage() {
   useEffect(() => {
     tweetsRelease();
   }, []);
+  const edit = async() => {
 
+    navigate('/EditProfile');
+  }
   return (
     <SafeAreaView>
-      <View>Perfil</View>
-      <View>Correo: {email}</View>
-      <View>Name: {name}</View>
-      <View>Apellido: {lastName}</View>
+      <Text>Perfil</Text>
+      <Text>Correo: {email}</Text>
+      <Text>Name: {name}</Text>
+      <Text>Apellido: {lastName}</Text>
       
       <View>
         <Tweets task={task} />
@@ -63,6 +66,7 @@ function ProfilePage() {
       />
 
       <Button title="Enviar Tweet" onPress={tweetsPress} />
+      <Button title="EditarPerfil" onPress={edit} />
       <Button
         title="Logout"
         onPress={() => {

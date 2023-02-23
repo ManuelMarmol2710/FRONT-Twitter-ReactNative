@@ -28,6 +28,10 @@ function LoginPage() {
 
     navigation('/home');
   };
+  const register = async() => {
+
+    navigation('/register');
+  }
 
   return (
     <SafeAreaView>
@@ -46,6 +50,7 @@ function LoginPage() {
         style={styles.input}
       />
       <Button title="Login" onPress={loginPress} />
+      <Button title="Registrarse" onPress={register} />
     </SafeAreaView>
   );
 }

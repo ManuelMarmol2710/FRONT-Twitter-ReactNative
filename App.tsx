@@ -1,11 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { useAuthStore } from "./src/store/auth.store";
-import Navigation from "./src/components/Navigation";
+
 import LoginPage from "./src/pages/LoginPage";
 import RegisterPage from "./src/pages/RegisterPage";
 import HomePage from "./src/pages/HomePage";
 import ProfilePage from "./src/pages/ProfilePage";
+import EditProfilePage from "./src/pages/EditProfile";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ProtectedRoute } from "./src/components/ProtectedRoute";
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
         <Route element={<ProtectedRoute isALlowed={isAuth} />}>
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/EditProfile" element={<EditProfilePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
