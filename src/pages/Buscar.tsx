@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import {useNavigate} from 'react-router-dom'
 
-function HomePage() {
+function buscarPage() {
   const navigate = useNavigate()  
   
   return (
@@ -20,4 +20,4 @@ function HomePage() {
         </SafeAreaView>
       );
 }
-export default HomePage;
+export default buscarPage;

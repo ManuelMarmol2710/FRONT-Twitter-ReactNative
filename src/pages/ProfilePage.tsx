@@ -35,7 +35,7 @@ function ProfilePage() {
       console.log(response.data);
     });
   };
-
+// <Tweets task={task} />
   useEffect(() => {
     tweetsRelease();
   }, []);
@@ -51,7 +51,7 @@ function ProfilePage() {
       <Text>Apellido: {lastName}</Text>
       
       <View>
-        <Tweets task={task} />
+       
       </View>
       
       <TextInput

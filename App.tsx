@@ -7,6 +7,7 @@ import RegisterPage from "./src/pages/RegisterPage";
 import HomePage from "./src/pages/HomePage";
 import ProfilePage from "./src/pages/ProfilePage";
 import EditProfilePage from "./src/pages/EditProfile";
+import SendEmailPage from "./src/pages/SendEmail";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ProtectedRoute } from "./src/components/ProtectedRoute";
 export default function App() {
@@ -15,9 +16,11 @@ export default function App() {
   return (
     <BrowserRouter>
       
+
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/recoverpassword" element={<SendEmailPage/>} />
         <Route element={<ProtectedRoute isALlowed={isAuth} />}>
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/home" element={<HomePage />} />

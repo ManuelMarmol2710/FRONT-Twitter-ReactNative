@@ -32,7 +32,10 @@ function LoginPage() {
 
     navigation('/register');
   }
+  const recoverEmail = async() => {
 
+    navigation('/recoverpassword');
+  }
   return (
     <SafeAreaView>
       <Text>Email </Text>
@@ -51,6 +54,7 @@ function LoginPage() {
       />
       <Button title="Login" onPress={loginPress} />
       <Button title="Registrarse" onPress={register} />
+      <Button title="Olvido de contraseña" onPress={recoverEmail} />
     </SafeAreaView>
   );
 }
