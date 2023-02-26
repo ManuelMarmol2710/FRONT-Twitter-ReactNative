@@ -9,12 +9,12 @@ import {
 } from "react-native";
 import { loginRequest, PerfilRequest } from "../api/auth";
 import { useAuthStore } from "../store/auth.store";
-import { useNavigate } from "react-router-dom";
-function LoginPage() {
+
+function LoginPage({navigation }) {
   const setToken = useAuthStore((state) => state.setToken);
 
   const setProfile = useAuthStore((state) => state.setProfile);
-  const navigation = useNavigate();
+
 
    const [email, setText] = useState("");
   const [password, setText1] = useState("");
@@ -25,16 +25,16 @@ function LoginPage() {
 
     const resProfile = await PerfilRequest();
     setProfile(resProfile.data.profile);
-
-    navigation('/home');
+    navigation.navigate('homepage')
+  
   };
   const register = async() => {
+navigation.navigate('register')
 
-    navigation('/register');
   }
   const recoverEmail = async() => {
+    navigation.navigate('sendEmail')
 
-    navigation('/recoverpassword');
   }
   return (
     <SafeAreaView>

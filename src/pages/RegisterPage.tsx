@@ -13,7 +13,7 @@ import { RegisterRequest, PerfilRequest } from "../api/auth";
 import { useAuthStore } from "../store/auth.store";
 import { useNavigate } from "react-router-dom";
 
-function RegisterPage() {
+function RegisterPage({navigation}) {
   const [email, setText] = useState("");
   const [password, setText1] = useState("");
   const [name, setText2] = useState("");
@@ -24,21 +24,15 @@ function RegisterPage() {
   const setToken = useAuthStore((state) => state.setToken);
   const setProfile = useAuthStore((state) => state.setProfile);
 
-  const navigate = useNavigate();
+
 
   const SignupPress = async () => {
     const respuesta = await RegisterRequest(email, password, name, last_Name);
     setToken(respuesta.data.token);
 
-    const resProfile = await PerfilRequest();
-
-    setProfile(resProfile.data.profile);
-
-    navigate("/login");
+    navigation.navigate("login ");
   };
-  const volver = async () => {
-    navigate("/login");
-  };
+ 
 
   const checkPasswordValidity = (value: any) => {
  
@@ -124,7 +118,6 @@ if(!checkpassword) {
         onPress={SignupPress}
       />
 
-      <Button title="Volver" onPress={volver} />
     </SafeAreaView>
   );
 }

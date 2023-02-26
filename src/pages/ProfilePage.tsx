@@ -14,15 +14,13 @@ import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
 import Tweets from "../components/Tweets";
 
-function ProfilePage() {
-  const Bye = useAuthStore((state) => state.logout);
-  const navigate = useNavigate();
+function ProfilePage({ navigation }) {
   const email = useAuthStore((state) => state.profile.username.email);
   const name = useAuthStore((state) => state.profile.username.name);
   const lastName = useAuthStore((state) => state.profile.username.last_Name);
   const [tweets, setText] = React.useState("");
   const [task, setTask] = useState([]);
- 
+
   const tweetsPress = async () => {
     return axios.post(`tweet/${email}`, {
       tweets,
@@ -35,25 +33,17 @@ function ProfilePage() {
       console.log(response.data);
     });
   };
-// <Tweets task={task} />
+
   useEffect(() => {
     tweetsRelease();
   }, []);
-  const edit = async() => {
 
-    navigate('/EditProfile');
-  }
   return (
     <SafeAreaView>
       <Text>Perfil</Text>
       <Text>Correo: {email}</Text>
       <Text>Name: {name}</Text>
       <Text>Apellido: {lastName}</Text>
-      
-      <View>
-       
-      </View>
-      
       <TextInput
         placeholder="Dile al mundo lo que piensas"
         onChangeText={(text) => setText(text)}
@@ -66,12 +56,14 @@ function ProfilePage() {
       />
 
       <Button title="Enviar Tweet" onPress={tweetsPress} />
-      <Button title="EditarPerfil" onPress={edit} />
+      <View>
+        <Tweets task={task} />
+      </View>
+
+
       <Button
-        title="Logout"
-        onPress={() => {
-          Bye(), navigate("/login");
-        }}
+        title="EditarPerfil"
+        onPress={() => navigation.navigate("EditProfile")}
       />
     </SafeAreaView>
   );

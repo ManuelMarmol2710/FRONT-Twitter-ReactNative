@@ -6,18 +6,30 @@ import {
   TextInput,
   Button,
   Alert,
-  View
+  View,
 } from "react-native";
-import {useNavigate} from 'react-router-dom'
+import { useAuthStore } from "../store/auth.store";
+function HomePage({navigation}) {
+  const Bye = useAuthStore((state) => state.logout);
+  const buscar = async () => {
+    navigation.navigate('buscar');
+  };
+  const profile = async () => {
+    navigation.navigate('profile');
+  };
 
-function HomePage() {
-  const navigate = useNavigate()  
-  
   return (
-        <SafeAreaView>
-              <Text>HOME</Text>
-          <Button title="Profile" onPress={()=>{ navigate('/profile')}} />
-        </SafeAreaView>
-      );
+    <SafeAreaView>
+      <Text>HOME</Text>
+      <Button title="Buscar" onPress={buscar} />
+      <Button title="Profile" onPress={profile} />
+      <Button
+        title="Logout"
+        onPress={() => {
+          Bye(), navigation.navigate("login");
+        }}
+      />
+    </SafeAreaView>
+  );
 }
 export default HomePage;

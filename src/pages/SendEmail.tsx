@@ -7,12 +7,12 @@ import {
   Button,
  
 } from "react-native";
-import {useNavigate} from 'react-router-dom'
+
 import axios from "../libs/axios";
 
-function SendEmailPage() {
+function SendEmailPage({navigation}) {
     const [email, setText] = useState("");
-  const navigate = useNavigate()  
+
   
   const sendemail = async () => {
     return axios.post(`sendEmail/${email}`, {
@@ -30,7 +30,7 @@ function SendEmailPage() {
         style={styles.input}
       /> 
           <Button title="Enviar contraseña al correo"  onPress={() => {
-          sendemail(), navigate("/login");
+          sendemail(), navigation.navigate("/login");
         }} />
         
         </SafeAreaView>

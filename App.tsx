@@ -1,41 +1,31 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
 import { useAuthStore } from "./src/store/auth.store";
-
 import LoginPage from "./src/pages/LoginPage";
 import RegisterPage from "./src/pages/RegisterPage";
 import HomePage from "./src/pages/HomePage";
 import ProfilePage from "./src/pages/ProfilePage";
 import EditProfilePage from "./src/pages/EditProfile";
 import SendEmailPage from "./src/pages/SendEmail";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ProtectedRoute } from "./src/components/ProtectedRoute";
+import BuscarPage from "./src/pages/BuscarPage";
+import AwayProfile from "./src/pages/AwayProfile";
+
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+const Stack = createStackNavigator();
 export default function App() {
   const isAuth = useAuthStore((state) => state.isAuth);
 
   return (
-    <BrowserRouter>
-      
-
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/recoverpassword" element={<SendEmailPage/>} />
-        <Route element={<ProtectedRoute isALlowed={isAuth} />}>
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/EditProfile" element={<EditProfilePage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="login" component={LoginPage} />
+        <Stack.Screen name="register" component={RegisterPage} />
+        <Stack.Screen name="profile" component={ProfilePage} />
+        <Stack.Screen name="homepage" component={HomePage} />
+        <Stack.Screen name="sendEmail" component={SendEmailPage} />
+        <Stack.Screen name="EditProfile" component={EditProfilePage} />
+        <Stack.Screen name="buscar" component={BuscarPage} />
+        <Stack.Screen name="awayprofile" component={AwayProfile} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#2020",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

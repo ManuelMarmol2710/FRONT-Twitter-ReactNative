@@ -13,14 +13,10 @@ import {
 import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
 
-
-function EditProfilePage() {
-  const Bye = useAuthStore((state) => state.logout);
-  const navigate = useNavigate();
+function EditProfilePage({ navigation }) {
   const emailShow = useAuthStore((state) => state.profile.username.email);
   const nameShow = useAuthStore((state) => state.profile.username.name);
   const lastName = useAuthStore((state) => state.profile.username.last_Name);
-
 
   const [password, setText1] = useState("");
   const [name, setText2] = useState("");
@@ -28,17 +24,14 @@ function EditProfilePage() {
 
   const changePassword = async () => {
     return axios.put(`/updatepassword/${emailShow}`, {
-   
       password: password,
-     
     });
-    
   };
 
   const changeNameandLast = async () => {
     return axios.put(`/update/${emailShow}`, {
-        name: name,
-        last_Name: last_Name,
+      name: name,
+      last_Name: last_Name,
     });
   };
 
@@ -72,16 +65,16 @@ function EditProfilePage() {
         value={password}
         style={styles.input}
       />
-      <Button title="Editar Perfil"   onPress={() => {
-          changeNameandLast(), navigate("/profile");
-        }} />
-      <Button title="Cambiar Contraseña" onPress={() => {
-        changePassword(), navigate("/login");
-        }} />
       <Button
-        title="Logout"
+        title="Cambiar Nombre"
         onPress={() => {
-          Bye(), navigate("/login");
+          changeNameandLast(), navigation.navigate("/profile");
+        }}
+      />
+      <Button
+        title="Cambiar Contraseña"
+        onPress={() => {
+          changePassword(), navigation.navigate("login");
         }}
       />
     </SafeAreaView>
