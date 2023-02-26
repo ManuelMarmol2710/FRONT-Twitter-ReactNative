@@ -13,7 +13,7 @@ import {
 import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
 
-function EditProfilePage({ navigation }) {
+function EditProfilePage({navigation}: {navigation: any}) {
   const emailShow = useAuthStore((state) => state.profile.username.email);
   const nameShow = useAuthStore((state) => state.profile.username.name);
   const lastName = useAuthStore((state) => state.profile.username.last_Name);

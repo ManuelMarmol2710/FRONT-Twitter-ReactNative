@@ -13,21 +13,19 @@ import {
 import axios from "../libs/axios";
 import Tweets from "../components/Tweets";
 import SearchUser from "../components/SearchUser";
-function BuscarPage({ navigation }) {
+function BuscarPage({ navigation }: { navigation: any }) {
   const [search, setText] = React.useState("");
   const [task, setTask] = useState([]);
   const [taskUser, setTaskUser] = useState([]);
   const tweetsFind = async () => {
     await axios.get(`/tweetSearch/${search}`).then((response) => {
       setTask(response.data);
-      console.log(response.data);
     });
   };
 
   const userFind = async () => {
     await axios.get(`/userSearch/${search}`).then((response) => {
       setTaskUser(response.data);
-      console.log(response.data);
     });
   };
   useEffect(() => {
@@ -49,7 +47,31 @@ function BuscarPage({ navigation }) {
       />
 
       <Tweets task={task} />
-      <SearchUser taskUser={taskUser} />
+      <View>
+        <FlatList
+          data={taskUser}
+          renderItem={({ item }) => {
+            return (
+              <Text
+                onPress={() =>
+                  navigation.navigate("awayprofile", {
+                    email: item.email,
+                    name: item.name,
+                    last_Name: item.last_Name,
+                  })
+                }
+              >
+                {item.email}
+              </Text>
+            );
+          }}
+        />
+
+<Button
+        title="Atras"
+        onPress={() => navigation.navigate("homepage")}
+      />
+      </View>
     </SafeAreaView>
   );
 }
