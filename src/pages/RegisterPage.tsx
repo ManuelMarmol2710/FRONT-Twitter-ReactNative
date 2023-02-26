@@ -3,15 +3,16 @@ import {
   SafeAreaView,
   Text,
   StyleSheet,
-  TextInput,
   Button,
-Image,
+  View,
+  Image,
   TouchableOpacity,
   Alert,
 } from "react-native";
 import { RegisterRequest, PerfilRequest } from "../api/auth";
 import { useAuthStore } from "../store/auth.store";
 import { useNavigate } from "react-router-dom";
+import { TextInput, IconButton} from "@react-native-material/core";
 
 function RegisterPage({navigation}: {navigation: any}) {
   const [email, setText] = useState("");
@@ -23,14 +24,11 @@ function RegisterPage({navigation}: {navigation: any}) {
 
   const setToken = useAuthStore((state) => state.setToken);
   const setProfile = useAuthStore((state) => state.setProfile);
-
-
-
   const SignupPress = async () => {
     const respuesta = await RegisterRequest(email, password, name, last_Name);
     setToken(respuesta.data.token);
 
-    navigation.navigate('login');
+    navigation.navigate("login");
   };
  
 
@@ -38,7 +36,7 @@ function RegisterPage({navigation}: {navigation: any}) {
  
     const isValidLength = /^.{8,16}$/;
     if (!isValidLength.test(value)) {
-      return 'Password must be 8-16 Characters Long.';
+      return 'La contraseña debe tener entre 8 y 16 caracteres.';
     }
   }
 
@@ -54,12 +52,12 @@ if (re.test(text) || reg.test(text)) {
     }
   };
 
-  const handleLogin = () => {
+const handleLogin = () => {
 const checkpassword = checkPasswordValidity(password)
 
 if(!checkpassword) {
  
-  alert("sucess")
+  alert("success")
 
   } else {
 
@@ -68,75 +66,76 @@ if(!checkpassword) {
   }
   return (
     <SafeAreaView>
-      <Text>Nombre </Text>
+      <View style={{paddingHorizontal:25, paddingTop:150}}>
+      <Text style={{
+            textAlign:'center',
+            fontSize: 30,
+            fontWeight: '500',
+            color: '#333',
+            paddingBottom: 25
+          }}>
+        Registro de usuario
+      </Text>
+
       <TextInput
+        color='#066cb4'
+        label="Nombre"
         placeholder="Nombre"
         onChangeText={setText2}
         value={name}
-        style={styles.input}
       />
-      <Text>Apellido </Text>
+  
       <TextInput
+        color='#066cb4'
+        label="Apellido"
         placeholder="Apellido"
         onChangeText={setText3}
         value={last_Name}
-        style={styles.input}
+        
       />
-      <Text>Email </Text>
       <TextInput
-        placeholder="ejemplo@gmail.com"
+        color='#066cb4'
+        label="Email"
+        placeholder="ejemplo@test.com"
         onChangeText={(text) => handleCheckEmail(text)}
         value={email}
-        style={styles.input}
+        
       />
-      <Text>password </Text>
       <TextInput
-        placeholder="********"
+        color='#066cb4'
+        label="Contraseña"
+        placeholder="Contraseña"
         onChangeText={(text) => setText1(text)}
         value={password}
-        style={styles.input}
-        secureTextEntry={seePassword}
       />
-      <TouchableOpacity
-        style={styles.wrapperIcon}
-        onPress={() => setseePassword(!seePassword)}
-      >
-        <Image
-          source={
-            seePassword
-              ? require("../images/Eye.png")
-              : require("../images/EyeActive.png")
-          }
-          style={styles.icon}
-        />
-      </TouchableOpacity>
+      </View>
 
-      <Button
-        disabled={checkValidEmail}
-   
-        title="Register"
-        onPress={SignupPress}
-      />
+      <View style={{paddingHorizontal: 70, paddingVertical: 5, paddingTop:25}}>
+      <TouchableOpacity
+      disabled={checkValidEmail} 
+      onPress={SignupPress}
+      style={{
+        backgroundColor: '#066cb4',
+        padding: 20,
+        borderRadius: 10,
+        marginBottom: 30,
+      }}>
+        <Text
+        style={{
+          textAlign:'center',
+          fontWeight: '700',
+          fontSize: 16,
+          color: '#fff'
+        }}>
+          Login
+        </Text>
+      </TouchableOpacity>
+      </View>
 
     </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-  wrapperIcon: {
-    position: "absolute",
-    right: -260,
-    padding: 287,
-  },
-  icon: {
-    width: 30,
-    height: 24,
-  },
 });
 
 export default RegisterPage;
