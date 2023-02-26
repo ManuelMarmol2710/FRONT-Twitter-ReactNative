@@ -14,7 +14,7 @@ import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
 import Tweets from "../components/Tweets";
 
-function ProfilePage({ navigation }) {
+function ProfilePage({navigation}: {navigation: any}) {
   const email = useAuthStore((state) => state.profile.username.email);
   const name = useAuthStore((state) => state.profile.username.name);
   const lastName = useAuthStore((state) => state.profile.username.last_Name);
@@ -42,8 +42,7 @@ function ProfilePage({ navigation }) {
     <SafeAreaView>
       <Text>Perfil</Text>
       <Text>Correo: {email}</Text>
-      <Text>Name: {name}</Text>
-      <Text>Apellido: {lastName}</Text>
+      <Text>Nombre: {name} {lastName}</Text>
       <TextInput
         placeholder="Dile al mundo lo que piensas"
         onChangeText={(text) => setText(text)}

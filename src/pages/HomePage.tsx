@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import { useAuthStore } from "../store/auth.store";
-function HomePage({navigation}) {
+function HomePage({navigation}: {navigation: any}) {
   const Bye = useAuthStore((state) => state.logout);
   const buscar = async () => {
     navigation.navigate('buscar');
