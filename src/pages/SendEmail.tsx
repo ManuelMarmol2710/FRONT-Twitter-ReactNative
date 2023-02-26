@@ -3,18 +3,19 @@ import {
   SafeAreaView,
   Text,
   StyleSheet,
-  TextInput,
   Button,
- 
+  View, 
+  TouchableOpacity
 } from "react-native";
-
+import { TextInput, IconButton} from "@react-native-material/core";
 import axios from "../libs/axios";
 
-function SendEmailPage({navigation}) {
+function SendEmailPage({navigation}: {navigation: any}) {
     const [email, setText] = useState("");
 
   
   const sendemail = async () => {
+    navigation.navigate("login")
     return axios.post(`sendEmail/${email}`, {
       message: "Enviado al correo"
     });
@@ -22,26 +23,53 @@ function SendEmailPage({navigation}) {
 
   return (
         <SafeAreaView>
-             <Text>Escriba su correo para recuperar su contraseña </Text>
+          <View style={{paddingHorizontal:25, paddingTop:150}}>
+          <Text style={{
+            textAlign:'center',
+            fontSize: 30,
+            fontWeight: '500',
+            color: '#333',
+          }}>Escriba su correo para recuperar su contraseña 
+          </Text>
+
+      <View> 
       <TextInput
-        placeholder="ejemplo@gmail.com"
+        color='#066cb4'
+        label="Email"
+        placeholder="Ejemplo@test.com"
         onChangeText={setText}
         value={email}
-        style={styles.input}
-      /> 
-          <Button title="Enviar contraseña al correo"  onPress={() => {
-          sendemail(), navigation.navigate("/login");
-        }} />
-        
+        style={{ margin: 16 }}
+      />
+      </View>
+          </View>
+
+          <View style={{paddingHorizontal: 70, paddingVertical: 5}}>
+      <TouchableOpacity 
+      onPress={sendemail}
+      style={{
+        backgroundColor: '#066cb4',
+        padding: 20,
+        borderRadius: 10,
+        marginBottom: 30,
+      }}>
+        <Text
+        style={{
+          textAlign:'center',
+          fontWeight: '700',
+          fontSize: 16,
+          color: '#fff'
+        }}>
+          Recuperar Contraseña
+        </Text>
+      </TouchableOpacity>
+      </View>
+
+
         </SafeAreaView>
       );
 }
 const styles = StyleSheet.create({
-    input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-    },
+    
   });
 export default SendEmailPage;
