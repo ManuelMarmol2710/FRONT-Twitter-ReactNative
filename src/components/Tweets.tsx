@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { useNavigate } from "react-router-dom";
 
-function Tweets({ task }) {
+function Tweets({ task }: {task:any}) {
   return (
     <View>
       <FlatList
@@ -21,6 +21,7 @@ function Tweets({ task }) {
             <Text>
               {item.owner}
               {item.tweets}
+              {item.time}
             </Text>
           );
         }}
