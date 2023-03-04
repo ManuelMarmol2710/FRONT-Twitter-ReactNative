@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import {
   SafeAreaView,
   Text,
-  StyleSheet,
-  Button,
   View, 
   TouchableOpacity
 } from "react-native";
-import { TextInput, IconButton} from "@react-native-material/core";
+import { TextInput} from "@react-native-material/core";
 import axios from "../libs/axios";
 
 function SendEmailPage({navigation}: {navigation: any}) {
@@ -15,10 +13,10 @@ function SendEmailPage({navigation}: {navigation: any}) {
 
   
   const sendemail = async () => {
-    navigation.navigate("login")
     return axios.post(`sendEmail/${email}`, {
       message: "Enviado al correo"
-    });
+    }),
+    navigation.navigate("login")
   };
 
   return (
@@ -46,8 +44,8 @@ function SendEmailPage({navigation}: {navigation: any}) {
 
           <View style={{paddingHorizontal: 70, paddingVertical: 5}}>
       <TouchableOpacity 
-      onPress={sendemail}
-      style={{
+        onPress={sendemail}
+        style={{
         backgroundColor: '#066cb4',
         padding: 20,
         borderRadius: 10,
@@ -69,7 +67,4 @@ function SendEmailPage({navigation}: {navigation: any}) {
         </SafeAreaView>
       );
 }
-const styles = StyleSheet.create({
-    
-  });
 export default SendEmailPage;

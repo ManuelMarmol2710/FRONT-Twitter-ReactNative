@@ -91,16 +91,16 @@ if(!checkpassword) {
         placeholder="Apellido"
         onChangeText={setText3}
         value={last_Name}
-        
       />
+
       <TextInput
         color='#066cb4'
         label="Email"
         placeholder="ejemplo@test.com"
         onChangeText={(text) => handleCheckEmail(text)}
         value={email}
-        
       />
+
       <TextInput
         color='#066cb4'
         label="Contraseña"
@@ -108,6 +108,7 @@ if(!checkpassword) {
         onChangeText={(text) => setText1(text)}
         value={password}
       />
+      
       </View>
 
       <View style={{paddingHorizontal: 70, paddingVertical: 5, paddingTop:25}}>
