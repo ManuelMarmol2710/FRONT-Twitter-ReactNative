@@ -13,8 +13,7 @@ import {
 } from "react-native";
 import Tweets from "../components/Tweets";
 function AwayProfile(
-  { route }: { route: any },
-  { navigation }: { navigation: any }
+  { route, navigation }: { route: any, navigation: any }
 ) {
   const { username, name, last_Name, biography } = route.params;
   return (
@@ -47,14 +46,6 @@ function AwayProfile(
       </View>
       <View style={{ paddingHorizontal: 25, paddingTop: 30 }}></View>
 
-      <View>
-        <Tweets  />
-      </View>
-
-      <Button
-        title="Atras"
-        onPress={() => navigation.navigate("homepage")}
-      />
     </SafeAreaView>
   );
 

@@ -66,7 +66,7 @@ if(!checkpassword) {
   }
   return (
     <SafeAreaView>
-      <View style={{paddingHorizontal:25, paddingTop:150}}>
+      <View style={{paddingHorizontal:25, paddingTop:100}}>
       <Text style={{
             textAlign:'center',
             fontSize: 30,
@@ -143,7 +143,7 @@ if(!checkpassword) {
           fontSize: 16,
           color: '#fff'
         }}>
-          Login
+          Registrar
         </Text>
       </TouchableOpacity>
       </View>

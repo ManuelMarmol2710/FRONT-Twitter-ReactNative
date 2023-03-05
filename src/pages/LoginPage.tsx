@@ -91,7 +91,7 @@ function LoginPage({navigation}: {navigation: any}) {
       <TextInput
         color='#066cb4'
         label="Usuario"
-        placeholder="Ejemplo@test.com"
+        placeholder="user1"
         onChangeText={setText}
         value={username}
         style={{ margin: 16 }}
