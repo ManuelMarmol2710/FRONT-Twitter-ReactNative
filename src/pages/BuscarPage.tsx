@@ -3,7 +3,6 @@ import {
   SafeAreaView,
   Text,
   StyleSheet,
-  TextInput,
   Button,
   Alert,
   View,
@@ -12,6 +11,8 @@ import {
 
 import axios from "../libs/axios";
 import Tweets from "../components/Tweets";
+import { TextInput, IconButton} from "@react-native-material/core";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 function BuscarPage({ navigation }: { navigation: any }) {
   const [search, setSearch] = React.useState("");
@@ -38,17 +39,19 @@ function BuscarPage({ navigation }: { navigation: any }) {
   return (
     <SafeAreaView>
       <TextInput
-        placeholder="Buscador"
+        color='#066cb4'
+        trailing={props => (
+          <IconButton icon={props => <Icon name="magnify" {...props} />} {...props} />
+        )}
         onChangeText={(text) => setSearch(text)}
         value={search}
-        style={styles.input}
-        numberOfLines={4}
+        style={{ margin: 10 }}
+        numberOfLines={1}
         maxLength={40}
         editable
         multiline
       />
 
-      <Tweets />
       <View>
         <FlatList
           data={taskUser}
@@ -71,10 +74,6 @@ function BuscarPage({ navigation }: { navigation: any }) {
           }}
         />
 
-<Button
-        title="Atras"
-        onPress={() => navigation.navigate("homepage")}
-      />
       </View>
     </SafeAreaView>
   );

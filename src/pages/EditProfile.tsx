@@ -17,10 +17,12 @@ function EditProfilePage({navigation}: {navigation: any}) {
   const emailShow = useAuthStore((state) => state.profile.username.email);
   const nameShow = useAuthStore((state) => state.profile.username.name);
   const lastName = useAuthStore((state) => state.profile.username.last_Name);
+  const bioShow = useAuthStore((state) => state.profile.username.biography);
 
   const [password, setText1] = useState("");
   const [name, setText2] = useState("");
   const [last_Name, setText3] = useState("");
+  const [biography, setText4] = useState("");
 
   const changePassword = async () => {
     return axios.put(`/updatepassword/${emailShow}`, {
@@ -32,12 +34,13 @@ function EditProfilePage({navigation}: {navigation: any}) {
     return axios.put(`/update/${emailShow}`, {
       name: name,
       last_Name: last_Name,
+      biography: biography,
     });
   };
 
   return (
     <SafeAreaView>
-      <View style={{paddingHorizontal:25, paddingTop:150}}>
+      <View style={{paddingHorizontal:25, paddingTop:100}}>
       <Text style={{
             textAlign:'center',
             fontSize: 30,
@@ -74,6 +77,16 @@ function EditProfilePage({navigation}: {navigation: any}) {
 
       <TextInput
         color='#066cb4'
+        label="Bio"
+        placeholder={bioShow}
+        onChangeText={setText4}
+        value={biography}
+        disableFullscreenUI
+
+      />
+
+      <TextInput
+        color='#066cb4'
         label="Contraseña"
         placeholder="******"
         value={password}
@@ -84,7 +97,7 @@ function EditProfilePage({navigation}: {navigation: any}) {
       <Button
         title="Cambiar Nombre"
         onPress={() => {
-          changeNameandLast(), navigation.navigate("/profile");
+          changeNameandLast(), navigation.navigate("profile");
         }}
       />
       <Button
@@ -92,11 +105,6 @@ function EditProfilePage({navigation}: {navigation: any}) {
         onPress={() => {
           changePassword(), navigation.navigate("login");
         }}
-      />
-
-        <Button
-        title="Atras"
-        onPress={() => navigation.navigate("profile")}
       />
 
       </View>
