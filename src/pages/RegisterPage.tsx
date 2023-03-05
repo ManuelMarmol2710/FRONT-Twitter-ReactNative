@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { RegisterRequest, PerfilRequest } from "../api/auth";
 import { useAuthStore } from "../store/auth.store";
-import { useNavigate } from "react-router-dom";
 import { TextInput, IconButton} from "@react-native-material/core";
 
 function RegisterPage({navigation}: {navigation: any}) {
@@ -19,15 +18,16 @@ function RegisterPage({navigation}: {navigation: any}) {
   const [password, setText1] = useState("");
   const [name, setText2] = useState("");
   const [last_Name, setText3] = useState("");
+  const [biography, setText4] = useState("");
+  const [username, setText5] = useState("");
   const [seePassword, setseePassword] = useState(true);
   const [checkValidEmail, setcheckValidEmail] = useState(true);
 
   const setToken = useAuthStore((state) => state.setToken);
   const setProfile = useAuthStore((state) => state.setProfile);
   const SignupPress = async () => {
-    const respuesta = await RegisterRequest(email, password, name, last_Name);
+    const respuesta = await RegisterRequest(email, password, name, last_Name,username,biography);
     setToken(respuesta.data.token);
-
     navigation.navigate("login");
   };
  
@@ -92,6 +92,14 @@ if(!checkpassword) {
         onChangeText={setText3}
         value={last_Name}
       />
+       
+       <TextInput
+        color='#066cb4'
+        label="Biografia"
+        placeholder="Hola mi usuario es..."
+        onChangeText={(text) => setText4(text)}
+        value={biography}
+      />
 
       <TextInput
         color='#066cb4'
@@ -99,6 +107,13 @@ if(!checkpassword) {
         placeholder="ejemplo@test.com"
         onChangeText={(text) => handleCheckEmail(text)}
         value={email}
+      />
+  <TextInput
+        color='#066cb4'
+        label="Usuario"
+        placeholder="Nombre de Usuario"
+        onChangeText={setText5}
+        value={username}
       />
 
       <TextInput

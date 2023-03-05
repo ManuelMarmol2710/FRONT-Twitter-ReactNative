@@ -20,14 +20,14 @@ function LoginPage({navigation}: {navigation: any}) {
   const setToken = useAuthStore((state) => state.setToken);
   const [seePassword, setseePassword] = useState(true);
   const setProfile = useAuthStore((state) => state.setProfile);
-  const [email, setText] = useState("");
+  const [username, setText] = useState("");
   const [password, setText1] = useState("");
   
   const loginPress = async () => {
 
     try {
 
-      const respuesta = await loginRequest(email, password);
+      const respuesta = await loginRequest(username, password);
       setToken(respuesta.data.token);
       const resProfile = await PerfilRequest();
       setProfile(resProfile.data.profile);
@@ -90,10 +90,10 @@ function LoginPage({navigation}: {navigation: any}) {
       <View> 
       <TextInput
         color='#066cb4'
-        label="Email"
+        label="Usuario"
         placeholder="Ejemplo@test.com"
         onChangeText={setText}
-        value={email}
+        value={username}
         style={{ margin: 16 }}
       />
       </View>

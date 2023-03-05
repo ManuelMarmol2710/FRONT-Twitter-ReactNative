@@ -17,16 +17,17 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{
-      headerShown: false,
+
       cardStyle: { backgroundColor: '#afc7d8' }
   }}>
+        <Stack.Screen name="buscar" component={BuscarPage}  />
         <Stack.Screen name="login" component={LoginPage} />
         <Stack.Screen name="register" component={RegisterPage} />
         <Stack.Screen name="profile" component={ProfilePage} />
         <Stack.Screen name="sendEmail" component={SendEmailPage} />
         <Stack.Screen name="EditProfile" component={EditProfilePage} />
         <Stack.Screen name="awayprofile" component={AwayProfile} />
-        <Stack.Screen name="buscar" component={BuscarPage}  />
+       
         <Stack.Screen name="follow" component={SiguiendoPage}  />
         <Stack.Screen name="homepage" component={HomePage} />
       </Stack.Navigator>

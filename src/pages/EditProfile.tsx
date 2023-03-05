@@ -69,6 +69,7 @@ function EditProfilePage({navigation}: {navigation: any}) {
         label="Email"
         placeholder={emailShow}
         disableFullscreenUI
+
       />
 
       <TextInput

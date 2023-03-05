@@ -12,9 +12,9 @@ import {
 
 import axios from "../libs/axios";
 import Tweets from "../components/Tweets";
-import SearchUser from "../components/SearchUser";
+
 function BuscarPage({ navigation }: { navigation: any }) {
-  const [search, setText] = React.useState("");
+  const [search, setSearch] = React.useState("");
   const [task, setTask] = useState([]);
   const [taskUser, setTaskUser] = useState([]);
   const tweetsFind = async () => {
@@ -28,6 +28,8 @@ function BuscarPage({ navigation }: { navigation: any }) {
       setTaskUser(response.data);
     });
   };
+ 
+  
   useEffect(() => {
     userFind();
     tweetsFind();
@@ -37,7 +39,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
     <SafeAreaView>
       <TextInput
         placeholder="Buscador"
-        onChangeText={(text) => setText(text)}
+        onChangeText={(text) => setSearch(text)}
         value={search}
         style={styles.input}
         numberOfLines={4}
@@ -46,7 +48,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
         multiline
       />
 
-      <Tweets task={task} />
+      <Tweets />
       <View>
         <FlatList
           data={taskUser}
@@ -55,13 +57,15 @@ function BuscarPage({ navigation }: { navigation: any }) {
               <Text
                 onPress={() =>
                   navigation.navigate("awayprofile", {
-                    email: item.email,
+                    username: item.username,
                     name: item.name,
                     last_Name: item.last_Name,
+                    biography: item.biography
                   })
                 }
               >
-                {item.email}
+                {item.username}
+                
               </Text>
             );
           }}
@@ -74,6 +78,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
       </View>
     </SafeAreaView>
   );
+  
 }
 const styles = StyleSheet.create({
   input: {

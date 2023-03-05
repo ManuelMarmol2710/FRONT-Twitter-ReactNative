@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback} from "react";
 import {
   SafeAreaView,
   Text,
@@ -8,10 +8,34 @@ import {
   Alert,
   View,
   FlatList,
+  RefreshControl
 } from "react-native";
-import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/auth.store";
 
-function Tweets({ task }: {task:any}) {
+import axios from "../libs/axios";
+
+
+function Tweets() {
+  const username = useAuthStore((state) => state.profile.username.username)
+  const [task, setTask] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const tweetsRelease = async () => {
+    await axios.get(`tweet/${username}`).then((response) => {
+      setTask(response.data);
+      console.log(response.data);
+    });
+  };
+
+  useEffect(() => {
+    tweetsRelease();
+  }, []);
+
+  const OnRefresh = useCallback(async ()=> {
+setRefreshing(true);
+    await tweetsRelease(),
+   setRefreshing(false); 
+  },[]);
+ 
   return (
     <View>
       <FlatList
@@ -24,8 +48,16 @@ function Tweets({ task }: {task:any}) {
               {item.time}
             </Text>
           );
+          
         }}
+        refreshControl ={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={OnRefresh}
+          />
+        }
       />
+    
     </View>
   );
 }
