@@ -20,7 +20,6 @@ export default function App() {
       headerShown: false,
       cardStyle: { backgroundColor: '#afc7d8' }
   }}>
-   
         <Stack.Screen name="login" component={LoginPage} />
         <Stack.Screen name="register" component={RegisterPage} />
         <Stack.Screen name="profile" component={ProfilePage} />

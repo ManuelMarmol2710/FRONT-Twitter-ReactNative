@@ -8,6 +8,7 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
+
 import { TextInput, IconButton} from "@react-native-material/core";
 import { loginRequest, PerfilRequest } from "../api/auth";
 import { useAuthStore } from "../store/auth.store";
@@ -21,17 +22,54 @@ function LoginPage({navigation}: {navigation: any}) {
   const setProfile = useAuthStore((state) => state.setProfile);
   const [email, setText] = useState("");
   const [password, setText1] = useState("");
+  
   const loginPress = async () => {
-  const respuesta = await loginRequest(email, password);
-  setToken(respuesta.data.token);
-  const resProfile = await PerfilRequest();
-  setProfile(resProfile.data.profile);
-  navigation.navigate('homepage')
-  };
-  const register = async() => {
-navigation.navigate('register')
 
+    try {
+
+      const respuesta = await loginRequest(email, password);
+      setToken(respuesta.data.token);
+      const resProfile = await PerfilRequest();
+      setProfile(resProfile.data.profile);
+      navigation.navigate('homepage')
+
+    } catch (error) {
+
+      Alert.alert('Login Invalido', 'Usuario o contraseña', [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ])
+
+      console.log(error);
+
+    }
+
+  };
+
+    const createTwoButtonAlert1 = async() => {
+      Alert.alert('Alert Title', 'My Alert Msg', [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ])
+
+      console.log(createTwoButtonAlert1);
+
+      }
+
+
+
+  const register = async() => {
+  navigation.navigate('register')
   }
+
   const recoverEmail = async() => {
     navigation.navigate('sendEmail')
 
@@ -65,7 +103,7 @@ navigation.navigate('register')
         label="Password"
         secureTextEntry={seePassword}
         trailing={props => (
-          <IconButton icon={props => <Icon name="eye" {...props} />} {...props} />
+          <IconButton onPress={() => setseePassword(!seePassword)} icon={props => <Icon name="eye" {...props} />} {...props} />
         )}
         placeholder="Password"
         onChangeText={setText1}

@@ -4,7 +4,6 @@ import {
   SafeAreaView,
   Text,
   StyleSheet,
-  TextInput,
   Button,
   Alert,
   View,
@@ -12,6 +11,7 @@ import {
 } from "react-native";
 import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
+import { TextInput, IconButton} from "@react-native-material/core";
 
 function EditProfilePage({navigation}: {navigation: any}) {
   const emailShow = useAuthStore((state) => state.profile.username.email);
@@ -37,34 +37,49 @@ function EditProfilePage({navigation}: {navigation: any}) {
 
   return (
     <SafeAreaView>
-      <Text>Perfil</Text>
-      <Text>Nombre </Text>
+      <View style={{paddingHorizontal:25, paddingTop:150}}>
+      <Text style={{
+            textAlign:'center',
+            fontSize: 30,
+            fontWeight: '500',
+            color: '#333',
+            paddingBottom: 25
+          }}>
+        Editar perfil
+      </Text>
+
       <TextInput
+        color='#066cb4'
+        label="Nombre"
         placeholder={nameShow}
         onChangeText={setText2}
         value={name}
-        style={styles.input}
       />
-      <Text>Apellido </Text>
+
       <TextInput
+        color='#066cb4'
+        label="Apellido"
         placeholder={lastName}
         onChangeText={setText3}
         value={last_Name}
-        style={styles.input}
       />
-      <Text>Email </Text>
+  
       <TextInput
+        color='#066cb4'
+        label="Email"
         placeholder={emailShow}
-        style={styles.input}
         disableFullscreenUI
       />
-      <Text>password </Text>
+
       <TextInput
-        placeholder="********"
-        onChangeText={setText1}
+        color='#066cb4'
+        label="Contraseña"
+        placeholder="******"
         value={password}
-        style={styles.input}
       />
+      </View>
+
+<View style={{paddingHorizontal:25, paddingTop:50}}>
       <Button
         title="Cambiar Nombre"
         onPress={() => {
@@ -77,18 +92,14 @@ function EditProfilePage({navigation}: {navigation: any}) {
           changePassword(), navigation.navigate("login");
         }}
       />
+
+        <Button
+        title="Atras"
+        onPress={() => navigation.navigate("profile")}
+      />
+
+      </View>
     </SafeAreaView>
   );
 }
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-
-    borderBottomColor: "#000000",
-    borderBottomWidth: 1,
-  },
-});
 export default EditProfilePage;
