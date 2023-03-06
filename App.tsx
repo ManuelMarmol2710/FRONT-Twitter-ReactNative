@@ -9,30 +9,36 @@ import BuscarPage from "./src/pages/BuscarPage";
 import AwayProfile from "./src/pages/AwayProfile";
 import SiguiendoPage from "./src/pages/Siguiendo";
 import SettingsPage from "./src/pages/SettingsPage";
+import NewTweetPage from "./src/pages/NewTweet";
 import { BottomTab } from "./src/navigation/BottomTab";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function Home() {
   return (
+    <SafeAreaProvider>
     <Tab.Navigator 
     screenOptions={{
       headerShown: false,
       tabBarStyle: {
-        height: 60,
+        height: 90,
         paddingHorizontal: 5,
         paddingTop: 0,
         backgroundColor: '#FFFFFF',
         position: 'absolute',
         borderTopWidth: 0,
-        paddingBottom: 5
+        paddingBottom: 35
     },
-      tabBarActiveTintColor: '#58ceb2',
+      tabBarActiveTintColor: '#0e00ff',
       tabBarInactiveTintColor: 'gray',
   }} sceneContainerStyle={{backgroundColor: '#afc7d8'}}
   
@@ -45,6 +51,10 @@ function Home() {
           tabBarIcon: ({ color, size }) => (
             <Icon name="magnify" color={color} size={size} />
           ),}}/>
+          <Tab.Screen name="Nuevo" component={NewTweetPage} options={{tabBarLabel: 'Tweetear',
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="plus-box" color={color} size={size} />
+          ),}}/>
       <Tab.Screen name="Profile" component={ProfilePage} options={{tabBarLabel: 'Perfil',
           tabBarIcon: ({ color, size }) => (
             <Icon name="account-box" color={color} size={size} />
@@ -55,6 +65,7 @@ function Home() {
           ),}}/>
       
     </Tab.Navigator>
+    </SafeAreaProvider>
   );
 }
 
@@ -64,6 +75,7 @@ export default function App() {
   const isAuth = useAuthStore((state) => state.isAuth);
 
   return (
+    <SafeAreaProvider>
     <NavigationContainer>
       <Stack.Navigator screenOptions={{
 
@@ -105,5 +117,6 @@ export default function App() {
         <Stack.Screen name="homepage" component={Home} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
