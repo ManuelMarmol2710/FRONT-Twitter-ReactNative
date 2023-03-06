@@ -16,7 +16,7 @@ import {
 
 import axios from "../libs/axios";
 function AwayProfile(
-  { route}: { route: any } ,{navigation}:{navigation:any}
+ { route,navigation}: { route: any, navigation:any } 
 ) {
   const { username, name, last_Name, biography } = route.params;
   const [task, setTask] = useState([]);
