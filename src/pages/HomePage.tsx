@@ -8,6 +8,7 @@ import {
   Alert,
   View,
   ScrollView,
+  BackHandler,
 } from "react-native";
 import { useAuthStore } from "../store/auth.store";
 import Tweets from "../components/Tweets";

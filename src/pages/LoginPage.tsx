@@ -31,6 +31,9 @@ function LoginPage({navigation}: {navigation: any}) {
       setToken(respuesta.data.token);
       const resProfile = await PerfilRequest();
       setProfile(resProfile.data.profile);
+      setText("");
+      setText1("");
+
       navigation.navigate('homepage')
 
     } catch (error) {

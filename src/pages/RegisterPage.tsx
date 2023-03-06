@@ -15,22 +15,75 @@ import { TextInput, IconButton} from "@react-native-material/core";
 
 function RegisterPage({navigation}: {navigation: any}) {
   const [email, setText] = useState("");
-  const [password, setText1] = useState("");
+  const [password, setText1] = useState('');
   const [name, setText2] = useState("");
   const [last_Name, setText3] = useState("");
   const [biography, setText4] = useState("");
   const [username, setText5] = useState("");
   const [seePassword, setseePassword] = useState(true);
   const [checkValidEmail, setcheckValidEmail] = useState(true);
-
   const setToken = useAuthStore((state) => state.setToken);
   const setProfile = useAuthStore((state) => state.setProfile);
+  
   const SignupPress = async () => {
-    const respuesta = await RegisterRequest(email, password, name, last_Name,username,biography);
+  const respuesta = await RegisterRequest(email, password, name, last_Name,username,biography);
     setToken(respuesta.data.token);
+
+    if (password.length < 8) {
+      Alert.alert('Registro Invalido', 'Contraseña invalida', [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ])
+  } else if (email == null){
+    Alert.alert('Registro Invalido', 'Campo vacio', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ])
+
+  } else if (name == null){
+    Alert.alert('Registro Invalido', 'Campo vacio', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ])
+
+  } else if (last_Name == null){
+    Alert.alert('Registro Invalido', 'Campo vacio', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ])
+
+  } else if (username == null){
+    Alert.alert('Registro Invalido', 'Campo vacio', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ])
+
+  } else {
     navigation.navigate("login");
+  }
+    
   };
- 
+
 
   const checkPasswordValidity = (value: any) => {
  
@@ -66,7 +119,7 @@ if(!checkpassword) {
   }
   return (
     <SafeAreaView>
-      <View style={{paddingHorizontal:25, paddingTop:100}}>
+      <View style={{paddingHorizontal:25, paddingTop:150}}>
       <Text style={{
             textAlign:'center',
             fontSize: 30,
@@ -143,7 +196,7 @@ if(!checkpassword) {
           fontSize: 16,
           color: '#fff'
         }}>
-          Registrar
+          Registrarse
         </Text>
       </TouchableOpacity>
       </View>

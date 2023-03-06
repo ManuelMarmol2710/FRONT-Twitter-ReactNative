@@ -45,7 +45,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
         )}
         onChangeText={(text) => setSearch(text)}
         value={search}
-        style={{ margin: 10 }}
+        style={{ margin: 10, paddingTop:35 }}
         numberOfLines={1}
         maxLength={40}
         editable
