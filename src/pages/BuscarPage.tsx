@@ -7,17 +7,22 @@ import {
   Alert,
   View,
   FlatList,
+  NativeEventEmitter
 } from "react-native";
 
 import axios from "../libs/axios";
 import Tweets from "../components/Tweets";
-import { TextInput, IconButton} from "@react-native-material/core";
+import { TextInput, IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 function BuscarPage({ navigation }: { navigation: any }) {
   const [search, setSearch] = React.useState("");
+  console.log(search)
+  const [data, setData] = useState([]);
+  const [filtredData, setFiltredData] = useState([])
   const [task, setTask] = useState([]);
   const [taskUser, setTaskUser] = useState([]);
+
   const tweetsFind = async () => {
     await axios.get(`/tweetSearch/${search}`).then((response) => {
       setTask(response.data);
@@ -29,13 +34,12 @@ function BuscarPage({ navigation }: { navigation: any }) {
       setTaskUser(response.data);
     });
   };
- 
-  
-  useEffect(() => {
-    userFind();
-    tweetsFind();
-  }, [search]);
 
+  useEffect(() => {
+    userFind()
+    tweetsFind();
+
+  }, [search]);
   return (
     <SafeAreaView>
       <TextInput
@@ -44,6 +48,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
           <IconButton icon={props => <Icon name="magnify" {...props} />} {...props} />
         )}
         onChangeText={(text) => setSearch(text)}
+
         value={search}
         style={{ margin: 10 }}
         numberOfLines={1}
@@ -53,22 +58,41 @@ function BuscarPage({ navigation }: { navigation: any }) {
       />
 
       <View>
+        <FlatList data={taskUser} renderItem={({ item }) => {
+          return (
+            <Text
+              onPress={() =>
+                navigation.navigate("awayprofile", {
+                  username: item.username,
+                  name: item.name,
+                  last_Name: item.last_Name,
+                  biography: item.biography
+                })}>
+             @{item.username}</Text>
+          )
+
+        }} />
+      </View>
+
+      <View>
         <FlatList
-          data={taskUser}
+          data={task}
           renderItem={({ item }) => {
             return (
               <Text
                 onPress={() =>
-                  navigation.navigate("awayprofile", {
-                    username: item.username,
-                    name: item.name,
-                    last_Name: item.last_Name,
-                    biography: item.biography
+                  navigation.navigate("showTweets", {
+                    owner: item.owner,
+                    tweets: item.tweets,
+                    time: item.time
+
                   })
                 }
               >
-                {item.username}
-                
+                {item.owner}
+                {item.tweets}
+                {item.time}
+
               </Text>
             );
           }}
@@ -77,7 +101,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
       </View>
     </SafeAreaView>
   );
-  
+
 }
 const styles = StyleSheet.create({
   input: {

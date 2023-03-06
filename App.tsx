@@ -9,6 +9,8 @@ import BuscarPage from "./src/pages/BuscarPage";
 import AwayProfile from "./src/pages/AwayProfile";
 import SiguiendoPage from "./src/pages/Siguiendo";
 import SettingsPage from "./src/pages/SettingsPage";
+import TweetsPage from "./src/pages/TweetsPage";
+import OwnTweetsPage from "./src/pages/OwnTweetsPage";
 import { BottomTab } from "./src/navigation/BottomTab";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -95,6 +97,14 @@ export default function App() {
             backgroundColor: '#afc7d8',
           }}}/>
         <Stack.Screen name="follow" component={SiguiendoPage}  options={{ title: '' ,
+          headerStyle: {
+            backgroundColor: '#afc7d8',
+          }}}/>
+          <Stack.Screen name="showTweets" component={TweetsPage}  options={{ title: '' ,
+          headerStyle: {
+            backgroundColor: '#afc7d8',
+          }}}/>
+           <Stack.Screen name="OwnTweets" component={OwnTweetsPage}  options={{ title: '' ,
           headerStyle: {
             backgroundColor: '#afc7d8',
           }}}/>
