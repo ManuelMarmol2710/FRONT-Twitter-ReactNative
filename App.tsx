@@ -11,11 +11,16 @@ import SiguiendoPage from "./src/pages/Siguiendo";
 import SettingsPage from "./src/pages/SettingsPage";
 import TweetsPage from "./src/pages/TweetsPage";
 import OwnTweetsPage from "./src/pages/OwnTweetsPage";
+import NewTweetPage from "./src/pages/NewTweet";
 import { BottomTab } from "./src/navigation/BottomTab";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -26,15 +31,15 @@ function Home() {
     screenOptions={{
       headerShown: false,
       tabBarStyle: {
-        height: 60,
+        height: 90,
         paddingHorizontal: 5,
         paddingTop: 0,
         backgroundColor: '#FFFFFF',
         position: 'absolute',
         borderTopWidth: 0,
-        paddingBottom: 5
+        paddingBottom: 35
     },
-      tabBarActiveTintColor: '#58ceb2',
+      tabBarActiveTintColor: '#0e00ff',
       tabBarInactiveTintColor: 'gray',
   }} sceneContainerStyle={{backgroundColor: '#afc7d8'}}
   
@@ -46,6 +51,10 @@ function Home() {
       <Tab.Screen name="Buscar" component={BuscarPage} options={{tabBarLabel: 'Buscar',
           tabBarIcon: ({ color, size }) => (
             <Icon name="magnify" color={color} size={size} />
+          ),}}/>
+          <Tab.Screen name="Nuevo" component={NewTweetPage} options={{tabBarLabel: 'Tweetear',
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="plus-box" color={color} size={size} />
           ),}}/>
       <Tab.Screen name="Profile" component={ProfilePage} options={{tabBarLabel: 'Perfil',
           tabBarIcon: ({ color, size }) => (
@@ -61,11 +70,11 @@ function Home() {
 }
 
 
-
 export default function App() {
   const isAuth = useAuthStore((state) => state.isAuth);
 
   return (
+    <SafeAreaProvider>
     <NavigationContainer>
       <Stack.Navigator screenOptions={{
 
@@ -108,12 +117,17 @@ export default function App() {
           headerStyle: {
             backgroundColor: '#afc7d8',
           }}}/>
+          <Stack.Screen name="newTweet" component={NewTweetPage}  options={{ title: '' ,
+          headerStyle: {
+            backgroundColor: '#afc7d8',
+          }}}/>
           <Stack.Screen name="settings" component={SettingsPage}  options={{ title: '' ,
           headerStyle: {
             backgroundColor: '#afc7d8',
           }}}/>
-        <Stack.Screen name="homepage" component={Home} options={{headerShown:false}}/>
+        <Stack.Screen name="homepage" component={Home} options={{gestureEnabled: false, headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
+    </SafeAreaProvider>
   );
 }

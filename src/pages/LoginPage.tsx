@@ -32,6 +32,8 @@ function LoginPage({navigation}: {navigation: any}) {
       const resProfile = await PerfilRequest();
       setProfile(resProfile.data.profile);
       navigation.navigate('homepage')
+      setText("");
+      setText1("");
 
     } catch (error) {
 

@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import {
   SafeAreaView,
   View,
-Text,
+  Text,
   FlatList,
   RefreshControl,
   ScrollView,
@@ -10,6 +10,7 @@ Text,
 } from "react-native";
 import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
+
 function HomePage({ navigation }: { navigation: any }) {
   const username = useAuthStore((state) => state.profile.username.username)
   const [task, setTask] = useState([]);
@@ -49,11 +50,11 @@ function HomePage({ navigation }: { navigation: any }) {
                   fontSize: 16,
                   fontWeight: '500',
                   color: '#333',
-                  paddingTop: 45,
+                  paddingTop: 25,
                   paddingBottom: 5,
                   paddingHorizontal: 15,
                   borderColor: 'black',
-                  borderWidth: 0.05,
+                  borderWidth: 1,
                 }}
                   onPress={() =>
                     navigation.navigate("OwnTweets", {
