@@ -11,7 +11,7 @@ import {
     Image,
     RefreshControl
   } from "react-native";
-  
+  import Likes from "../components/likes";
   import axios from "../libs/axios";
   function TweetsPage(
     { route, navigation }: { route: any, navigation: any }
@@ -22,6 +22,7 @@ import {
 <Text >{owner}</Text>
 <Text>{tweets}</Text>
 <Text>{time}</Text>
+<Likes/>
 </SafeAreaView>
 
     )

@@ -7,7 +7,7 @@ import {
   Alert,
   View,
   FlatList,
-  NativeEventEmitter
+  ScrollView
 } from "react-native";
 
 import axios from "../libs/axios";
@@ -52,6 +52,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
   }, [search]);
   return (
     <SafeAreaView>
+      <ScrollView>
       <TextInput
         color='#066cb4'
         trailing={props => (
@@ -118,6 +119,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
         />
 
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 
