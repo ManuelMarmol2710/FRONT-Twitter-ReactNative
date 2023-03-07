@@ -33,13 +33,14 @@ function HomePage({ navigation }: { navigation: any }) {
   }, []);
 
   return (
+    <ScrollView   refreshControl={
+      <RefreshControl
+        refreshing={refreshing}
+        onRefresh={OnRefresh}
+      />
+    }>
     <SafeAreaView >
-      <ScrollView   refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={OnRefresh}
-              />
-            }>
+      
         <View>
           <FlatList
             data={task}
@@ -68,16 +69,15 @@ function HomePage({ navigation }: { navigation: any }) {
                   {item.owner}  {item.tweets}
                   {item.time}
                 </Text>
-
               );
-
             }}
-          
           />
 
+
         </View>
-      </ScrollView>
+      
     </SafeAreaView>
+    </ScrollView>
   );
 }
 export default HomePage;
