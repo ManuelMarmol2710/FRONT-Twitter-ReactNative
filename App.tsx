@@ -33,7 +33,7 @@ function Home() {
       tabBarStyle: {
         height: 90,
         paddingHorizontal: 5,
-        paddingTop: 0,
+        paddingTop: 10,
         backgroundColor: '#FFFFFF',
         position: 'absolute',
         borderTopWidth: 0,

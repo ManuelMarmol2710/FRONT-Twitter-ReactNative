@@ -7,17 +7,18 @@ import {
   Alert,
   View,
   FlatList,
+  NativeEventEmitter,
   ScrollView
 } from "react-native";
 
+import { SelectList } from 'react-native-dropdown-select-list'
 import axios from "../libs/axios";
 import { TextInput, IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 function BuscarPage({ navigation }: { navigation: any }) {
   const [search, setSearch] = React.useState("");
-
-
+  const [selected, setSelected] = React.useState("");
   const [task, setTask] = useState([]);
   const [taskUser, setTaskUser] = useState([]);
 
@@ -45,14 +46,31 @@ function BuscarPage({ navigation }: { navigation: any }) {
     });
   }
 
+  const data = [
+    {key:'1', value:'Fecha descendente', filtrartweetsNew},
+    {key:'2', value:'Fecha ascendente', filtrartweetsOld}
+]
+
   useEffect(() => {
     userFind()
     tweetsFind();
 
   }, [search]);
+  
   return (
     <SafeAreaView>
-      <ScrollView>
+    <ScrollView>
+    <View style={{ margin: 10, paddingTop:25 }}>
+    <SelectList 
+                setSelected={(selected: React.SetStateAction<string>) => setSelected(selected)} 
+                data={data} 
+                save="value"
+                onSelect={filtrartweetsOld}
+                searchPlaceholder = "Filtrar por"
+            />
+    </View>
+        
+
       <TextInput
         color='#066cb4'
         trailing={props => (
@@ -61,23 +79,22 @@ function BuscarPage({ navigation }: { navigation: any }) {
         onChangeText={(text) => setSearch(text)}
 
         value={search}
-        style={{ margin: 10 }}
-        numberOfLines={1}
+        style={{ margin: 10, paddingTop:15 }}
+        numberOfLines={2}
         maxLength={40}
         editable
-        multiline
       />
-      <Button
-            title= {'Nuevo'}
-            onPress={filtrartweetsNew }
-          />
 
-       <Button
-            title= {'Viejo'}
-            onPress={ filtrartweetsOld }
-          />
-
-      <View>
+      <View style={{ margin: 20, paddingTop:5 }}>
+      <Text style={{
+            textAlign:'left',
+            fontSize: 24,
+            fontWeight: '500',
+            color: '#333',
+            paddingBottom:25
+          }}>
+              Usuarios encontrados:
+      </Text>
         <FlatList data={taskUser} renderItem={({ item }) => {
           return (
             <Text
@@ -94,7 +111,15 @@ function BuscarPage({ navigation }: { navigation: any }) {
         }} />
       </View>
 
-      <View>
+      
+      <View style={{ margin: 20, paddingTop:0 }}>
+        <Text style={{
+            textAlign:'left',
+            fontSize: 24,
+            fontWeight: '500',
+            color: '#333',
+            paddingBottom:15
+          }}> Tweets: </Text>
         <FlatList
           data={task}
           renderItem={({ item }) => {
@@ -109,9 +134,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
                   })
                 }
               >
-                {item.owner}
-                {item.tweets}
-                {item.time}
+                {item.owner}: {item.tweets} || {item.time}
 
               </Text>
             );
@@ -130,7 +153,6 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
-
     borderBottomColor: "#000000",
     borderBottomWidth: 1,
   },

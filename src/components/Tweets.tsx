@@ -62,7 +62,7 @@ setRefreshing(true);
                 paddingBottom:5,
                 paddingHorizontal: 15,
                 borderColor: 'black',
-                borderWidth: 0.05,
+                borderWidth: 1,
               }}
               onPress={() =>
                 navigation.navigate("OwnTweets", {
