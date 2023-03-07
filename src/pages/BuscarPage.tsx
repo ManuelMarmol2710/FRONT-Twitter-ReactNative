@@ -11,17 +11,21 @@ import {
 } from "react-native";
 
 import axios from "../libs/axios";
-import Tweets from "../components/Tweets";
 import { TextInput, IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 function BuscarPage({ navigation }: { navigation: any }) {
   const [search, setSearch] = React.useState("");
-  console.log(search)
-  const [data, setData] = useState([]);
-  const [filtredData, setFiltredData] = useState([])
+
+
   const [task, setTask] = useState([]);
   const [taskUser, setTaskUser] = useState([]);
+
+   const userFind = async () => {
+    await axios.get(`/userSearch/${search}`).then((response) => {
+      setTaskUser(response.data);
+    });
+  };
 
   const tweetsFind = async () => {
     await axios.get(`/tweetSearch/${search}`).then((response) => {
@@ -29,11 +33,17 @@ function BuscarPage({ navigation }: { navigation: any }) {
     });
   };
 
-  const userFind = async () => {
-    await axios.get(`/userSearch/${search}`).then((response) => {
-      setTaskUser(response.data);
+
+  const filtrartweetsOld = async () => {
+    await axios.get(`/tweetsFilterForOld/${search}`).then((response) => {
+      setTask(response.data);
     });
-  };
+  }
+  const filtrartweetsNew = async () => {
+    await axios.get(`/tweetsFilterForNew/${search}`).then((response) => {
+      setTask(response.data);
+    });
+  }
 
   useEffect(() => {
     userFind()
@@ -48,12 +58,23 @@ function BuscarPage({ navigation }: { navigation: any }) {
           <IconButton icon={props => <Icon name="magnify" {...props} />} {...props} />
         )}
         onChangeText={(text) => setSearch(text)}
+
         value={search}
-        style={{ margin: 10, paddingTop:35}}
-        numberOfLines={2}
+        style={{ margin: 10 }}
+        numberOfLines={1}
         maxLength={40}
         editable
+        multiline
       />
+      <Button
+            title= {'Nuevo'}
+            onPress={filtrartweetsNew }
+          />
+
+       <Button
+            title= {'Viejo'}
+            onPress={ filtrartweetsOld }
+          />
 
       <View>
         <FlatList data={taskUser} renderItem={({ item }) => {
@@ -66,7 +87,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
                   last_Name: item.last_Name,
                   biography: item.biography
                 })}>
-             {item.username}</Text>
+              @{item.username}</Text>
           )
 
         }} />
