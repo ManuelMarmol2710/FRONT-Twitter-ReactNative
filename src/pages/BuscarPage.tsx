@@ -48,13 +48,11 @@ function BuscarPage({ navigation }: { navigation: any }) {
           <IconButton icon={props => <Icon name="magnify" {...props} />} {...props} />
         )}
         onChangeText={(text) => setSearch(text)}
-
         value={search}
-        style={{ margin: 10 }}
-        numberOfLines={1}
+        style={{ margin: 10, paddingTop:35}}
+        numberOfLines={2}
         maxLength={40}
         editable
-        multiline
       />
 
       <View>
@@ -68,7 +66,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
                   last_Name: item.last_Name,
                   biography: item.biography
                 })}>
-             @{item.username}</Text>
+             {item.username}</Text>
           )
 
         }} />

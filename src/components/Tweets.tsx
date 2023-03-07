@@ -13,7 +13,10 @@ import {
   Image,
 } from "react-native";
 import { useAuthStore } from "../store/auth.store";
-
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import axios from "../libs/axios";
 
 
@@ -27,6 +30,8 @@ function Tweets({ navigation }: { navigation: any }) {
       console.log(response.data);
     });
   };
+
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     tweetsRelease();
@@ -43,6 +48,7 @@ setRefreshing(true);
     <ScrollView>
     <View>
       <FlatList
+        scrollEnabled={true}
         data={task}
         renderItem={({ item }) => {
           return (

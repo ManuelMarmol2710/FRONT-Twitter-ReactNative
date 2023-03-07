@@ -8,6 +8,7 @@ import {
   Alert,
   View,
   FlatList,
+  TouchableOpacity
 } from "react-native";
 import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
@@ -93,20 +94,58 @@ function EditProfilePage({navigation}: {navigation: any}) {
       />
       </View>
 
-<View style={{paddingHorizontal:25, paddingTop:50}}>
-      <Button
-        title="Cambiar Nombre"
-        onPress={() => {
-          changeNameandLast(), navigation.navigate("profile");
-        }}
-      />
-      <Button
-        title="Cambiar Contraseña"
-        onPress={() => {
-          changePassword(), navigation.navigate("login");
-        }}
-      />
+      <View
+        style={{ paddingHorizontal: 70, paddingVertical: 5, paddingTop: 25 }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            changeNameandLast(), navigation.navigate("Profile");
+          }}
+          style={{
+            backgroundColor: "#066cb4",
+            padding: 20,
+            borderRadius: 10,
+            marginBottom: 30,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              fontWeight: "700",
+              fontSize: 16,
+              color: "#fff",
+            }}
+          >
+            Editar datos
+          </Text>
+        </TouchableOpacity>
+      </View>
 
+      <View
+        style={{ paddingHorizontal: 70, paddingVertical: 5, paddingTop: 5 }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            changePassword(), navigation.navigate("Profile");
+          }}
+          style={{
+            backgroundColor: "#066cb4",
+            padding: 20,
+            borderRadius: 10,
+            marginBottom: 30,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              fontWeight: "700",
+              fontSize: 16,
+              color: "#fff",
+            }}
+          >
+            Editar contraseña
+          </Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

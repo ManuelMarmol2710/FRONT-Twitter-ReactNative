@@ -28,7 +28,29 @@ function RegisterPage({navigation}: {navigation: any}) {
   const SignupPress = async () => {
     const respuesta = await RegisterRequest(email, password, name, last_Name,username,biography);
     setToken(respuesta.data.token);
+
+    if (password.length < 7) {
+      Alert.alert('Registro Invalido', 'Contraseña invalida', [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ])
+  } else if (email == null || username == null || name == null || last_Name == null){
+    Alert.alert('Registro Invalido', 'Campo vacio', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ])
+
+  } else {
     navigation.navigate("login");
+  }
   };
  
 
