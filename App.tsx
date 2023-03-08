@@ -34,13 +34,14 @@ function Home() {
         height: 90,
         paddingHorizontal: 5,
         paddingTop: 10,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#afc7d8',
         position: 'absolute',
-        borderTopWidth: 0,
+        borderTopWidth: 2,
+        borderTopColor: '#000000',
         paddingBottom: 35
     },
-      tabBarActiveTintColor: '#0e00ff',
-      tabBarInactiveTintColor: 'gray',
+      tabBarActiveTintColor: '#000000',
+      tabBarInactiveTintColor: '#fff',
   }} sceneContainerStyle={{backgroundColor: '#afc7d8'}}
   
   >
