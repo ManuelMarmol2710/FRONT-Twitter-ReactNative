@@ -36,11 +36,11 @@ function NewTweetPage({ navigation }: { navigation: any }) {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View style={{ paddingHorizontal: 25, paddingTop: 30 }}></View>
+        <View style={{ paddingHorizontal: 25, paddingTop: 250 }}></View>
 
         <TextInput
           color="#066cb4"
-          placeholder="Dile al mundo lo que piensas"
+          placeholder="Dile al mundo lo que piensas..."
           onChangeText={(text) => setText(text)}
           style={{ paddingHorizontal: 30, paddingVertical: 20 }}
           value={tweets}

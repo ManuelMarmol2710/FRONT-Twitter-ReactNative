@@ -24,62 +24,93 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
 
   return (
     <SafeAreaView>
-      <View style={{backgroundColor: "#fff",
-    paddingTop: 10,}}>
-      <Text
-        style={{
-          paddingTop: 20,
-          paddingLeft: 30,
-          textAlign: "left",
-          fontWeight: "700",
-          fontSize: 16,
-          color: "#000000",
-        }}
-      >
-        @{owner}
-      </Text>
-      <Text
-        style={{
-          paddingTop: 20,
-          paddingLeft: 60,
-          paddingRight: 60,
-          textAlign: "left",
-          fontSize: 14,
-        }}
-      >
-        {tweets}
-      </Text>
-      <Text>{time}</Text>
-      <View style={{ paddingHorizontal: 50, paddingTop: 45 }}>
-        <Likes />
-      </View>
-
       <View
-        style={{ paddingHorizontal: 210, paddingVertical: 1, paddingTop: 15 }}
+        style={{
+          backgroundColor: "#afc7d8",
+          paddingTop: 10,
+          paddingLeft: 10,
+          paddingRight: 10,
+        }}
       >
-        <TouchableOpacity
-          onPress={deleteTweets}
+        <Text
           style={{
-            backgroundColor: "#d30000",
-            padding: 10,
-            borderRadius: 10,
-            marginBottom: 30,
-            marginLeft: -80,
-            marginRight: -60,
+            textAlign: "left",
+            fontSize: 16,
+            fontWeight: "500",
+            color: "#333",
+            paddingTop: 25,
+            paddingLeft: 10,
+            paddingRight: 10,
+            paddingBottom: 5,
+            paddingHorizontal: 10,
+            borderColor: "black",
+            borderWidth: 3,
+            borderRadius: 15,
+            backgroundColor: "#fff",
+            overflow: "hidden",
           }}
         >
           <Text
             style={{
-              textAlign: "center",
+              paddingTop: 20,
+              paddingLeft: 30,
+              textAlign: "left",
               fontWeight: "700",
               fontSize: 16,
-              color: "#fff",
+              color: "#000000",
             }}
           >
-            Eliminar Tweet
+            @{owner}: {"\n"}
+            {"\n"}
           </Text>
-        </TouchableOpacity>
-      </View>
+
+          <Text
+            style={{
+              paddingTop: 20,
+              paddingLeft: 80,
+              paddingRight: 60,
+              textAlign: "left",
+              fontSize: 14,
+            }}
+          >
+            {" "}
+            {tweets} {"\n"}
+            {"\n"}
+            {"\n"}
+          </Text>
+          
+        </Text>
+
+        <View
+          style={{
+            paddingHorizontal: 210,
+            paddingVertical: 1,
+            paddingTop: 15,
+          }}
+        >
+          <TouchableOpacity
+            onPress={deleteTweets}
+            style={{
+              backgroundColor: "#d30000",
+              padding: 10,
+              borderRadius: 10,
+              marginBottom: 15,
+              marginLeft: -80,
+              marginRight: -60,
+            }}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+                fontWeight: "700",
+                fontSize: 16,
+                color: "#fff",
+              }}
+            >
+              Eliminar Tweet
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
