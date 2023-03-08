@@ -21,9 +21,11 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import {LogBox} from "react-native"
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+LogBox.ignoreAllLogs();
 
 function Home() {
   return (

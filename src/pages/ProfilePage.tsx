@@ -29,7 +29,6 @@ function ProfilePage({ navigation }: { navigation: any }) {
   const [task, setTask] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
-
   const tweetsRelease = async () => {
     await axios.get(`tweet/${username}`).then((response) => {
       setTask(response.data);
@@ -53,9 +52,27 @@ function ProfilePage({ navigation }: { navigation: any }) {
           <RefreshControl refreshing={refreshing} onRefresh={OnRefresh} />
         }
       >
-        <View style={{paddingLeft: 5, paddingRight: 5}}>
-          <View style={styles.container}>
-            <View style={styles.header}>
+        <View style={{ paddingLeft: 5, paddingRight: 5 }}>
+          <View
+            style={{
+              backgroundColor: "#FFFFFF",
+              paddingTop: 10,
+              borderColor: "#00000",
+              borderBottomWidth: 4,
+              borderTopWidth: 4,
+              borderLeftWidth: 4,
+              borderRightWidth: 4,
+              borderRadius: 20,
+            }}
+          >
+            <View
+              style={{
+                marginTop: 20,
+                flexDirection: "row",
+                alignItems: "center",
+                padding: 20,
+              }}
+            >
               <Image
                 style={styles.avatar}
                 source={{
@@ -63,7 +80,9 @@ function ProfilePage({ navigation }: { navigation: any }) {
                 }}
               />
               <View style={styles.info}>
-                <Text style={styles.name}>{username}</Text>
+                <Text style={{ fontSize: 22, fontWeight: "bold" }}>
+                  {username}
+                </Text>
                 <Text style={styles.username}>{email}</Text>
                 <Text style={styles.username}>
                   {name} {lastName}
@@ -95,16 +114,22 @@ function ProfilePage({ navigation }: { navigation: any }) {
                 </TouchableOpacity>
               </View>
             </View>
-            <View style={styles.stats}>
-              <View style={styles.stat}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                padding: 20,
+              }}
+            >
+              <View style={{ flex: 1, alignItems: "center" }}>
                 <Text style={styles.statLabel}>Tweets</Text>
                 <Text style={styles.statValue}>1,234</Text>
               </View>
-              <View style={styles.stat}>
+              <View style={{ flex: 1, alignItems: "center" }}>
                 <Text style={styles.statLabel}>Following</Text>
                 <Text style={styles.statValue}>123</Text>
               </View>
-              <View style={styles.stat}>
+              <View style={{ flex: 1, alignItems: "center" }}>
                 <Text style={styles.statLabel}>Followers</Text>
                 <Text style={styles.statValue}>456</Text>
               </View>
@@ -144,10 +169,10 @@ function ProfilePage({ navigation }: { navigation: any }) {
                       }}
                       onPress={() =>
                         navigation.navigate("OwnTweets", {
-                          owner: item.owner,
-                          tweets: item.tweets,
-                          time: item.time,
-                          _id: item._id
+                          owner: item["owner"],
+                          tweets: item["tweets"],
+                          time: item["time"],
+                          _id: item["_id"],
                         })
                       }
                     >
@@ -161,7 +186,7 @@ function ProfilePage({ navigation }: { navigation: any }) {
                           color: "#000000",
                         }}
                       >
-                        @{item.owner}: {"\n"}
+                        @{item["owner"]}: {"\n"}
                         {"\n"}
                       </Text>
 
@@ -175,7 +200,7 @@ function ProfilePage({ navigation }: { navigation: any }) {
                         }}
                       >
                         {" "}
-                        {item.tweets} {"\n"}
+                        {item["tweets"]} {"\n"}
                         {"\n"}
                         {"\n"}
                       </Text>
@@ -190,7 +215,7 @@ function ProfilePage({ navigation }: { navigation: any }) {
                         }}
                       >
                         {" "}
-                        || Subido el: {item.time}
+                        || Subido el: {item["time"]}
                       </Text>
                     </Text>
                   </View>
