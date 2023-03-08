@@ -66,10 +66,10 @@ function HomePage({ navigation }: { navigation: any }) {
                 }}
                   onPress={() =>
                     navigation.navigate("OwnTweets", {
-                      owner: item.owner,
-                      tweets: item.tweets,
-                      time: item.time,
-                      _id:item._id
+                      owner: item['owner'],
+                      tweets: item['tweets'],
+                      time: item['time'],
+                      _id:item['_id']
 
                     })
                   }>
@@ -80,7 +80,7 @@ function HomePage({ navigation }: { navigation: any }) {
                       fontWeight: "700",
                       fontSize: 16,
                       color: "#000000",
-                      }}>@{item.owner}: {'\n'}{'\n'}</Text>
+                      }}>@{item['owner']}: {'\n'}{'\n'}</Text>
 
                     <Text style={{
                               paddingTop: 20,
@@ -88,7 +88,7 @@ function HomePage({ navigation }: { navigation: any }) {
                               paddingRight: 60,
                               textAlign: "left",
                               fontSize: 14,
-                            }}> {item.tweets} {'\n'}{'\n'}{'\n'}
+                            }}> {item['tweets']} {'\n'}{'\n'}{'\n'}
                             </Text>                      
                          
                     <Text style={{
@@ -97,7 +97,7 @@ function HomePage({ navigation }: { navigation: any }) {
                               paddingRight: 60,
                               textAlign: "right",
                               fontSize: 14,
-                            }}> || Subido el:  {item.time}</Text>                       
+                            }}> || Subido el:  {item['time']}</Text>                       
                 </Text>
                 </View>
               );

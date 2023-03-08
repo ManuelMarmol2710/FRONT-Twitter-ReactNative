@@ -40,9 +40,16 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
           <RefreshControl refreshing={refreshing} onRefresh={OnRefresh} />
         }
       >
-        <View style={{paddingLeft: 5, paddingRight: 5}}>
+        <View style={{ paddingLeft: 5, paddingRight: 5 }}>
           <View style={styles.container}>
-            <View style={styles.header}>
+            <View
+              style={{
+                marginTop: 50,
+                flexDirection: "row",
+                alignItems: "center",
+                padding: 20,
+              }}
+            >
               <Image
                 style={styles.avatar}
                 source={{
@@ -50,22 +57,30 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
                 }}
               />
               <View style={styles.info}>
-                <Text style={styles.name}>@{username}</Text>
+                <Text style={{ fontSize: 24, fontWeight: "bold" }}>
+                  @{username}
+                </Text>
                 <Text style={styles.username}>
                   {name} {last_Name}
                 </Text>
               </View>
             </View>
-            <View style={styles.stats}>
-              <View style={styles.stat}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                padding: 20,
+              }}
+            >
+              <View style={{ flex: 1, alignItems: "center" }}>
                 <Text style={styles.statLabel}>Tweets</Text>
                 <Text style={styles.statValue}>1,234</Text>
               </View>
-              <View style={styles.stat}>
+              <View style={{ flex: 1, alignItems: "center" }}>
                 <Text style={styles.statLabel}>Following</Text>
                 <Text style={styles.statValue}>123</Text>
               </View>
-              <View style={styles.stat}>
+              <View style={{ flex: 1, alignItems: "center" }}>
                 <Text style={styles.statLabel}>Followers</Text>
                 <Text style={styles.statValue}>456</Text>
               </View>
@@ -106,10 +121,10 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
                       }}
                       onPress={() =>
                         navigation.navigate("showTweets", {
-                          owner: item.owner,
-                          tweets: item.tweets,
-                          time: item.time,
-                          _id: item._id
+                          owner: item["owner"],
+                          tweets: item["tweets"],
+                          time: item["time"],
+                          _id: item["_id"],
                         })
                       }
                     >
@@ -123,7 +138,7 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
                           color: "#000000",
                         }}
                       >
-                        @{item.owner}: {"\n"}
+                        @{item["owner"]}: {"\n"}
                         {"\n"}
                       </Text>
 
@@ -137,7 +152,7 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
                         }}
                       >
                         {" "}
-                        {item.tweets} {"\n"}
+                        {item["tweets"]} {"\n"}
                         {"\n"}
                         {"\n"}
                       </Text>
@@ -152,7 +167,7 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
                         }}
                       >
                         {" "}
-                        || Subido el: {item.time}
+                        || Subido el: {item["time"]}
                       </Text>
                     </Text>
                   </View>

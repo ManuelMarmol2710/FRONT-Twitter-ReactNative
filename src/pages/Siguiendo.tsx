@@ -32,7 +32,7 @@ import axios from "../libs/axios";
             renderItem={({ item }) => {
               return (
                 <Text>
-                  {item.following}
+                  {item['following']}
                 </Text>
               );
             }}

@@ -10,12 +10,17 @@ import {
   NativeEventEmitter,
   ScrollView,
   RefreshControl,
+  LogBox,
+  YellowBox,
 } from "react-native";
 import { useAuthStore } from "../store/auth.store";
 import { SelectList } from "react-native-dropdown-select-list";
 import axios from "../libs/axios";
 import { TextInput, IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+
+LogBox.ignoreAllLogs();
+YellowBox.ignoreWarnings(['VirtualizedLists should never be nested']);
 
 function BuscarPage({ navigation }: { navigation: any }) {
   const [search, setSearch] = React.useState("");
@@ -149,10 +154,10 @@ function BuscarPage({ navigation }: { navigation: any }) {
                       }}
                       onPress={() =>
                         navigation.navigate("awayprofile", {
-                          username: item.username,
-                          name: item.name,
-                          last_Name: item.last_Name,
-                          biography: item.biography,
+                          username: item['username'],
+                          name: item['name'],
+                          last_Name: item['last_Name'],
+                          biography: item['biography'],
                         })
                       }
                     >
@@ -166,7 +171,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
                           color: "#000000",
                         }}
                       >
-                        @{item.username}
+                        @{item['username']}
                       </Text>
                     </Text>
                   </View>
@@ -214,10 +219,10 @@ function BuscarPage({ navigation }: { navigation: any }) {
                 }}
                   onPress={() =>
                     navigation.navigate("showTweets", {
-                      owner: item.owner,
-                      tweets: item.tweets,
-                      time: item.time,
-                      _id: item._id
+                      owner: item['owner'],
+                      tweets: item['tweets'],
+                      time: item['time'],
+                      _id: item['_id']
                     })
                   }
                 >
@@ -228,7 +233,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
                       fontWeight: "700",
                       fontSize: 16,
                       color: "#000000",
-                      }}>@{item.owner}: {'\n'}{'\n'}</Text>
+                      }}>@{item['owner']}: {'\n'}{'\n'}</Text>
                       
                       <Text style={{
                               paddingTop: 20,
@@ -236,7 +241,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
                               paddingRight: 60,
                               textAlign: "left",
                               fontSize: 14,
-                            }}> {item.tweets} {'\n'}{'\n'}{'\n'}
+                            }}> {item['tweets']} {'\n'}{'\n'}{'\n'}
                             </Text>                      
                          
                     <Text style={{
@@ -245,7 +250,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
                               paddingRight: 60,
                               textAlign: "right",
                               fontSize: 14,
-                            }}> || Subido el:  {item.time}</Text> 
+                            }}> || Subido el:  {item['time']}</Text> 
                 </Text>
                 </View>
               );

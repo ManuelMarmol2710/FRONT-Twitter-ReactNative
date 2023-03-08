@@ -300,7 +300,7 @@ getComments();
                           color: "#000000",
                         }}
                       >
-                        @{item.owner}: {"\n"}
+                        @{item['owner']}: {"\n"}
                         {"\n"}
                       </Text>
 
@@ -314,7 +314,7 @@ getComments();
                         }}
                       >
                         {" "}
-                        {item.comment} {"\n"}
+                        {item['comment']} {"\n"}
                         {"\n"}
                         {"\n"}
                       </Text>
@@ -332,7 +332,7 @@ getComments();
 
  
                         {" "}
-                        || Subido el: {item.time}
+                        || Subido el: {item['time']}
                       </Text>
                     </Text>
                   </View>
