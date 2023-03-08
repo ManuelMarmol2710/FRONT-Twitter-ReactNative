@@ -92,11 +92,7 @@ getComments();
   
   },[])
   
-  const deleteTweets = async () => {
-    await axios.delete(`deleteTweets/${tweets}`).then((response) => {
-      navigation.navigate("Profile");
-    });
-  };
+
   const OnRefresh = useCallback(async () => {
     setRefreshing(true);
     await getComments(), setRefreshing(false);
@@ -185,36 +181,7 @@ getComments();
           </Text>
         </Text>
 
-        <View
-          style={{
-            paddingHorizontal: 210,
-            paddingVertical: 1,
-            paddingTop: 15,
-          }}
-        >
-          <TouchableOpacity
-            onPress={deleteTweets}
-            style={{
-              backgroundColor: "#d30000",
-              padding: 10,
-              borderRadius: 10,
-              marginBottom: 15,
-              marginLeft: -80,
-              marginRight: -60,
-            }}
-          >
-            <Text
-              style={{
-                textAlign: "center",
-                fontWeight: "700",
-                fontSize: 16,
-                color: "#fff",
-              }}
-            >
-              Eliminar Tweet
-            </Text>
-          </TouchableOpacity>
-          </View>
+      
         <View style={{ paddingHorizontal: 25, paddingTop:10 }}></View>
 
 <TextInput
