@@ -33,14 +33,15 @@ function Home() {
       tabBarStyle: {
         height: 90,
         paddingHorizontal: 5,
-        paddingTop: 0,
-        backgroundColor: '#FFFFFF',
+        paddingTop: 10,
+        backgroundColor: '#afc7d8',
         position: 'absolute',
-        borderTopWidth: 0,
+        borderTopWidth: 2,
+        borderTopColor: '#000000',
         paddingBottom: 35
     },
-      tabBarActiveTintColor: '#0e00ff',
-      tabBarInactiveTintColor: 'gray',
+      tabBarActiveTintColor: '#000000',
+      tabBarInactiveTintColor: '#fff',
   }} sceneContainerStyle={{backgroundColor: '#afc7d8'}}
   
   >

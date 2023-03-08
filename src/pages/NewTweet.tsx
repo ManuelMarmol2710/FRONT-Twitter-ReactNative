@@ -16,14 +16,11 @@ import {
 import { useAuthStore } from "../store/auth.store";
 import { TextInput, IconButton } from "@react-native-material/core";
 import axios from "../libs/axios";
-import Tweets from "../components/Tweets";
+
 
 function NewTweetPage({ navigation }: { navigation: any }) {
   const username = useAuthStore((state) => state.profile.username.username);
-  const email = useAuthStore((state) => state.profile.username.email);
-  const name = useAuthStore((state) => state.profile.username.name);
-  const lastName = useAuthStore((state) => state.profile.username.last_Name);
-  const biography = useAuthStore((state) => state.profile.username.biography);
+
   const [tweets, setText] = React.useState("");
 
   const tweetsPress = async () => {
@@ -36,11 +33,11 @@ function NewTweetPage({ navigation }: { navigation: any }) {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View style={{ paddingHorizontal: 25, paddingTop: 30 }}></View>
+        <View style={{ paddingHorizontal: 25, paddingTop: 250 }}></View>
 
         <TextInput
           color="#066cb4"
-          placeholder="Dile al mundo lo que piensas"
+          placeholder="Dile al mundo lo que piensas..."
           onChangeText={(text) => setText(text)}
           style={{ paddingHorizontal: 30, paddingVertical: 20 }}
           value={tweets}
