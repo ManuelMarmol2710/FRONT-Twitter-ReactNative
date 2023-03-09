@@ -12,6 +12,8 @@ import SettingsPage from "./src/pages/SettingsPage";
 import TweetsPage from "./src/pages/TweetsPage";
 import OwnTweetsPage from "./src/pages/OwnTweetsPage";
 import NewTweetPage from "./src/pages/NewTweet";
+import OwnComments from "./src/pages/OwnComments";
+import AwayComments from "./src/pages/AwayComments";
 import { BottomTab } from "./src/navigation/BottomTab";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -125,6 +127,15 @@ export default function App() {
             backgroundColor: '#afc7d8',
           }}}/>
           <Stack.Screen name="settings" component={SettingsPage}  options={{ title: '' ,
+          headerStyle: {
+            backgroundColor: '#afc7d8',
+          }}}/>
+          
+      <Stack.Screen name="owncomment" component={OwnComments}  options={{ title: '' ,
+          headerStyle: {
+            backgroundColor: '#afc7d8',
+          }}}/>
+           <Stack.Screen name="awaycomment" component={AwayComments}  options={{ title: '' ,
           headerStyle: {
             backgroundColor: '#afc7d8',
           }}}/>

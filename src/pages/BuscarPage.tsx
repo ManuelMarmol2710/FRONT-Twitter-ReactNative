@@ -126,6 +126,55 @@ function BuscarPage({ navigation }: { navigation: any }) {
             <FlatList
               data={taskUser}
               renderItem={({ item }) => {
+                if(username === item['username']){  
+                return (
+                  <View
+                    style={{
+                      backgroundColor: "#afc7d8",
+                      paddingTop: 10,
+                      paddingLeft: 10,
+                      paddingRight: 160,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        textAlign: "left",
+                        fontSize: 16,
+                        fontWeight: "500",
+                        color: "#333",
+                        paddingTop: 25,
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                        paddingBottom: 5,
+                        paddingHorizontal: 10,
+                        borderColor: "black",
+                        borderWidth: 3,
+                        borderRadius: 15,
+                        backgroundColor: "#fff",
+                        overflow: "hidden",
+                      }}
+                      onPress={() =>
+                        navigation.navigate("Profile", {
+                        
+                        })
+                      }
+                    >
+                      <Text
+                        style={{
+                          paddingTop: 10,
+                          paddingLeft: 30,
+                          textAlign: "left",
+                          fontWeight: "700",
+                          fontSize: 16,
+                          color: "#000000",
+                        }}
+                      >
+                        @{item['username']}
+                      </Text>
+                    </Text>
+                  </View>
+                ); 
+              } else{
                 return (
                   <View
                     style={{
@@ -175,8 +224,8 @@ function BuscarPage({ navigation }: { navigation: any }) {
                       </Text>
                     </Text>
                   </View>
-                );
-              }}
+                ); 
+              }}}
             />
           </View>
         </View>
@@ -197,7 +246,69 @@ function BuscarPage({ navigation }: { navigation: any }) {
           <FlatList
             data={task}
             renderItem={({ item }) => {
+             
+                if(username === item['owner']){
               return (
+                
+                <View style={{backgroundColor: "#afc7d8",
+                paddingTop: 10, paddingLeft: 5, paddingRight: 5}}>
+                <Text
+                style={{
+                  textAlign: "left",
+                  fontSize: 16,
+                  fontWeight: "500",
+                  color: "#333",
+                  paddingTop: 25,
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                  paddingBottom: 5,
+                  paddingHorizontal: 10,
+                  borderColor: "black",
+                  borderWidth: 3,
+                  borderRadius: 15,
+                  backgroundColor: "#fff",
+                  overflow: 'hidden'
+                }}
+                  onPress={() =>
+                    navigation.navigate("OwnTweets", {
+                      owner: item['owner'],
+                      tweets: item['tweets'],
+                      time: item['time'],
+                      _id: item['_id']
+                    })
+                  }
+                >
+                   <Text style={{
+                      paddingTop: 20,
+                      paddingLeft: 30,
+                      textAlign: "left",
+                      fontWeight: "700",
+                      fontSize: 16,
+                      color: "#000000",
+                      }}>@{item['owner']}: {'\n'}{'\n'}</Text>
+                      
+                      <Text style={{
+                              paddingTop: 20,
+                              paddingLeft: 60,
+                              paddingRight: 60,
+                              textAlign: "left",
+                              fontSize: 14,
+                            }}> {item['tweets']} {'\n'}{'\n'}{'\n'}
+                            </Text>                      
+                         
+                    <Text style={{
+                              paddingTop: 50,
+                              paddingLeft: 60,
+                              paddingRight: 60,
+                              textAlign: "right",
+                              fontSize: 14,
+                            }}> || Subido el:  {item['time']}</Text> 
+                </Text>
+                </View>
+              );
+            }else{
+              return (
+                
                 <View style={{backgroundColor: "#afc7d8",
                 paddingTop: 10, paddingLeft: 5, paddingRight: 5}}>
                 <Text
@@ -254,7 +365,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
                 </Text>
                 </View>
               );
-            }}
+            }}}
           />
         </View>
       </ScrollView>

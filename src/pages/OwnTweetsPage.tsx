@@ -37,22 +37,7 @@ await axios.get(`comment/${_id}`).then((response) => {
   
   
   };
-  const onClickComment =  async() => {
-   if((like +(!isLike ? -1: 1))){
-     
-        await axios.get(`comment/${_id}`).then(async (response) => {
-          const idComentario = response.data._id
-          console.log(idComentario)
-          await axios.put(`/likeComment/${idComentario}/${owner}`).then(async (response) => {
-        setLike(like +(isLike ? -1 : 1));
-      });})
-    } else if((like +(isLike ? -1: 1))){
-      await axios.put(`/notlikeComment/${_id}`).then((response) => {
-     
-        setLike(like +(!isLike ? -1 : 1));
-       });
-       
-  }}
+
   const onClick =  async() => {
     if((like +(!isLike ? -1: 1))){
        await axios.put(`/like/${_id}/${owner}`).then((response) => {
@@ -73,17 +58,7 @@ await axios.get(`comment/${_id}`).then((response) => {
   }
     });}
 
-    const obtenerLikeComments = async() => {
-      await axios.get(`/likeComment/${_id}`).then((response) => {
-    if(response.data.like === true){
-      setLike(like +(isLike ? -1 : 1));
-    } if(response.data.like === false){
-      setisLike(!isLike);
-    }
     
-    });
-    
-    }
   
   useEffect(() => {
    obtenerLike();
@@ -101,6 +76,10 @@ getComments();
     setRefreshing(true);
     await getComments(), setRefreshing(false);
   }, []);
+
+
+
+
 
   return (
     <SafeAreaView>
@@ -258,87 +237,195 @@ getComments();
  
   </View>     
  <View>
-   
-            <FlatList
+   <FlatList
               data={task}
               renderItem={({ item }) => {
-                return (
-                  <View
-                    style={{
-                      backgroundColor: "#afc7d8",
-                      paddingTop: 10,
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  >
-                    <Text
+                if(username === item['owner']){  
+                  return (
+                    <View
                       style={{
-                        textAlign: "left",
-                        fontSize: 16,
-                        fontWeight: "500",
-                        color: "#333",
-                        paddingTop: 25,
+                        backgroundColor: "#afc7d8",
+                        paddingTop: 10,
                         paddingLeft: 10,
                         paddingRight: 10,
-                        paddingBottom: 5,
-                        paddingHorizontal: 10,
-                        borderColor: "black",
-                        borderWidth: 3,
-                        borderRadius: 15,
-                        backgroundColor: "#fff",
-                        overflow: "hidden",
                       }}
-                    
                     >
                       <Text
                         style={{
-                          paddingTop: 20,
-                          paddingLeft: 30,
                           textAlign: "left",
-                          fontWeight: "700",
                           fontSize: 16,
-                          color: "#000000",
+                          fontWeight: "500",
+                          color: "#333",
+                          paddingTop: 25,
+                          paddingLeft: 10,
+                          paddingRight: 10,
+                          paddingBottom: 5,
+                          paddingHorizontal: 10,
+                          borderColor: "black",
+                          borderWidth: 3,
+                          borderRadius: 15,
+                          backgroundColor: "#fff",
+                          overflow: "hidden",
                         }}
-                      >
-                        @{item['owner']}: {"\n"}
-                        {"\n"}
+                        onPress={
+                    
+                          () =>
+  
+                          navigation.navigate("owncomment", {
+                            comment: item['comment'],
+                            owner: item['owner'],
+                            time: item['time'],
+                            _id: item['_id']
+                          })
+                        }
+                     >
+                        
+                 <Text 
+                          style={{
+                            paddingTop: 20,
+                            paddingLeft: 30,
+                            textAlign: "left",
+                            fontWeight: "700",
+                            fontSize: 16,
+                            color: "#000000",
+                          }}
+                       
+                        >
+                          
+                          @{item['owner']}: {"\n"}
+                          {"\n"}
+                        </Text>
+  
+                        <Text
+                          style={{
+                            paddingTop: 20,
+                            paddingLeft: 60,
+                            paddingRight: 60,
+                            textAlign: "left",
+                            fontSize: 14,
+                          }}
+                        >
+                          {" "}
+                          {item['comment']} {"\n"}
+                          {"\n"}
+                          {"\n"}
+                        </Text>
+  
+                        <Text
+                          style={{
+                            paddingTop: 50,
+                            paddingLeft: 60,
+                            paddingRight: 60,
+                            textAlign: "right",
+                            fontSize: 14,
+                          }}
+                        >
+         
+  
+   
+                          {" "}
+                          || Subido el: {item['time']}
+                        </Text>
                       </Text>
-
+                    </View>
+                  );
+                } else {
+                  return (
+                    <View
+                      style={{
+                        backgroundColor: "#afc7d8",
+                        paddingTop: 10,
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    >
                       <Text
                         style={{
-                          paddingTop: 20,
-                          paddingLeft: 60,
-                          paddingRight: 60,
                           textAlign: "left",
-                          fontSize: 14,
+                          fontSize: 16,
+                          fontWeight: "500",
+                          color: "#333",
+                          paddingTop: 25,
+                          paddingLeft: 10,
+                          paddingRight: 10,
+                          paddingBottom: 5,
+                          paddingHorizontal: 10,
+                          borderColor: "black",
+                          borderWidth: 3,
+                          borderRadius: 15,
+                          backgroundColor: "#fff",
+                          overflow: "hidden",
                         }}
-                      >
-                        {" "}
-                        {item['comment']} {"\n"}
-                        {"\n"}
-                        {"\n"}
+                        onPress={
+                    
+                          () =>
+  
+                          navigation.navigate("awaycomment", {
+                            comment: item['comment'],
+                            owner: item['owner'],
+                            time: item['time'],
+                            _id: item['_id']
+                          })
+                        }
+                     >
+                        
+                 <Text 
+                          style={{
+                            paddingTop: 20,
+                            paddingLeft: 30,
+                            textAlign: "left",
+                            fontWeight: "700",
+                            fontSize: 16,
+                            color: "#000000",
+                          }}
+                       
+                        >
+                          
+                          @{item['owner']}: {"\n"}
+                          {"\n"}
+                        </Text>
+  
+                        <Text
+                          style={{
+                            paddingTop: 20,
+                            paddingLeft: 60,
+                            paddingRight: 60,
+                            textAlign: "left",
+                            fontSize: 14,
+                          }}
+                        >
+                          {" "}
+                          {item['comment']} {"\n"}
+                          {"\n"}
+                          {"\n"}
+                        </Text>
+  
+                        <Text
+                          style={{
+                            paddingTop: 50,
+                            paddingLeft: 60,
+                            paddingRight: 60,
+                            textAlign: "right",
+                            fontSize: 14,
+                          }}
+                        >
+         
+  
+   
+                          {" "}
+                          || Subido el: {item['time']}
+                        </Text>
                       </Text>
+                    </View>
+                  );
 
-                      <Text
-                        style={{
-                          paddingTop: 50,
-                          paddingLeft: 60,
-                          paddingRight: 60,
-                          textAlign: "right",
-                          fontSize: 14,
-                        }}
-                      >
-       
-
- 
-                        {" "}
-                        || Subido el: {item['time']}
-                      </Text>
-                    </Text>
-                  </View>
-                );
-              }}
-            />
+                }}
+             
+                  
+                } 
+                  
+                
+                />   
          </View>
          </ScrollView>
       
