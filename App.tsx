@@ -23,7 +23,7 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import {LogBox} from "react-native"
+import {LogBox, ImageBackground} from "react-native"
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -74,7 +74,6 @@ function Home() {
   );
 }
 
-
 export default function App() {
   const isAuth = useAuthStore((state) => state.isAuth);
 
@@ -82,8 +81,7 @@ export default function App() {
     <SafeAreaProvider>
     <NavigationContainer>
       <Stack.Navigator screenOptions={{
-
-      cardStyle: { backgroundColor: '#afc7d8' }
+      cardStyle: { backgroundColor: '#afc7d8',  }
   }}>
         <Stack.Screen name="login" component={LoginPage} options={{headerShown:false}}/>
         <Stack.Screen name="buscar" component={BuscarPage}  options={{ title: '' ,

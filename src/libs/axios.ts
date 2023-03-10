@@ -4,7 +4,7 @@ import { useAuthStore } from "../store/auth.store";
 const baseURL =
   process.env.NODE_ENV === "production"
     ? process.env.DOMAIN
-    : "http://192.168.1.100:3000";
+    : "http://192.168.0.150:3000";
 
 const authApi = axios.create({
   baseURL,

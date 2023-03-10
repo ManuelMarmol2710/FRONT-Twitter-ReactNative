@@ -17,14 +17,13 @@ import { useAuthStore } from "../store/auth.store";
 import { TextInput, IconButton } from "@react-native-material/core";
 import axios from "../libs/axios";
 
-
 function NewTweetPage({ navigation }: { navigation: any }) {
   const username = useAuthStore((state) => state.profile.username.username);
 
   const [tweets, setText] = React.useState("");
 
   const tweetsPress = async () => {
-    setText('');
+    setText("");
     return axios.post(`tweet/${username}`, {
       tweets,
     });
@@ -33,43 +32,63 @@ function NewTweetPage({ navigation }: { navigation: any }) {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View style={{ paddingHorizontal: 25, paddingTop: 250 }}></View>
-
-        <TextInput
-          color="#066cb4"
-          placeholder="Dile al mundo lo que piensas..."
-          onChangeText={(text) => setText(text)}
-          style={{ paddingHorizontal: 30, paddingVertical: 20 }}
-          value={tweets}
-          numberOfLines={4}
-          maxLength={120}
-          editable
-          multiline
-        />
-
-        <View style={{ paddingHorizontal: 200, paddingVertical: 1 }}>
-          <TouchableOpacity
-            onPress={tweetsPress}
+        <View
+          style={{
+            paddingHorizontal: 25,
+            paddingTop: 80,
+            backgroundColor: "#fff",
+            borderRadius: 50,
+            borderWidth: 3,
+            margin:10,
+          }}
+        >
+          <Text
             style={{
-              backgroundColor: "#066cb4",
-              padding: 10,
-              borderRadius: 10,
-              marginBottom: 30,
-              marginLeft: -80,
-              marginRight: -60
+              textAlign: "center",
+              fontSize: 30,
+              fontWeight: "500",
+              color: "#333",
+              paddingBottom: 25,
             }}
           >
-            <Text
+            Nuevo tweet
+          </Text>
+
+          <TextInput
+            color="#066cb4"
+            placeholder="Dile al mundo lo que piensas..."
+            onChangeText={(text) => setText(text)}
+            style={{ paddingHorizontal: 10, paddingVertical: 20 }}
+            value={tweets}
+            numberOfLines={4}
+            maxLength={120}
+            editable
+          />
+
+          <View style={{ paddingHorizontal: 200, paddingVertical: 1 }}>
+            <TouchableOpacity
+              onPress={tweetsPress}
               style={{
-                textAlign: "center",
-                fontWeight: "700",
-                fontSize: 16,
-                color: "#fff",
+                backgroundColor: "#000000",
+                padding: 10,
+                borderRadius: 10,
+                marginBottom: 30,
+                marginLeft: -20,
+                marginRight: -100,
               }}
             >
-              Tweetear
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontWeight: "700",
+                  fontSize: 16,
+                  color: "#fff",
+                }}
+              >
+                Tweetear
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
