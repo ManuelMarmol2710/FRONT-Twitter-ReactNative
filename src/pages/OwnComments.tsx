@@ -135,15 +135,7 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
               />
             </Text>
           </TouchableOpacity>
-        </View>
 
-        <View
-          style={{
-            paddingHorizontal: 210,
-            paddingVertical: 1,
-            paddingTop: 15,
-          }}
-        >
           <TouchableOpacity
             onPress={actuComment}
             style={{
@@ -173,6 +165,7 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
           </TouchableOpacity>
         </View>
 
+      
         <View
           style={{
             backgroundColor: "#afc7d8",
@@ -187,7 +180,7 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
               fontSize: 16,
               fontWeight: "500",
               color: "#333",
-              paddingTop: 25,
+              paddingTop: 15,
               paddingLeft: 10,
               paddingRight: 10,
               paddingBottom: 5,
@@ -215,13 +208,14 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
                 color="#000000"
                 size={25}
               />
-                <Icon
+                
+              @{owner}:                                                   <Icon
                 style={{ padding: 12, textAlign: "left" }}
                 name="brush"
                 color="#000000"
                 size={25}
               />
-              @{owner}: {"\n"}
+              {"\n"}
               {"\n"}
             </Text>
 
@@ -250,7 +244,7 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
               {"\n"}
               {"\n"}
               {"\n"}
-              {time} 
+              || Subido el: {time} 
             </Text>
           </Text>
 
@@ -277,6 +271,7 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
               />
               <Text>{"" + (isLike ? like : "")} </Text>
             </Pressable>
+
           </View>
         </View>
       </ScrollView>

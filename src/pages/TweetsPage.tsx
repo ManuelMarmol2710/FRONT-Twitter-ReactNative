@@ -138,8 +138,8 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
               }}
             >
               {" "}
-              {'\n'}
-              {'\n'}
+              {"\n"}
+              {"\n"}
               || Subido el: {time} {"\n"}
             </Text>
           </Text>
@@ -169,46 +169,74 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
             </Pressable>
           </View>
 
-          <View style={{ paddingHorizontal: 25, paddingTop: 10 }}></View>
-
-          <TextInput
-            color="#066cb4"
-            placeholder="Agregar comentario al Tweet"
-            onChangeText={(text) => setText(text)}
-            style={{ paddingHorizontal: 30, paddingVertical: 20 }}
-            value={comment}
-            numberOfLines={4}
-            maxLength={120}
-            editable
-            multiline
-          />
-
-          <View style={{ paddingHorizontal: 200, paddingVertical: 1 }}>
-            <TouchableOpacity
-              onPress={commentsPress}
+          <View style={{ borderRadius: 10, borderWidth: 3, paddingTop: 5 }}>
+            <Text
               style={{
-                backgroundColor: "#066cb4",
-                padding: 10,
-                borderRadius: 10,
-                marginBottom: 30,
-                marginLeft: -80,
-                marginRight: -60,
+                textAlign: "left",
+                fontSize: 30,
+                fontWeight: "500",
+                color: "#333",
+                paddingBottom: 25,
+                paddingLeft: 10,
+                paddingTop: 5,
               }}
             >
-              <Text
-                style={{
-                  textAlign: "center",
-                  fontWeight: "700",
-                  fontSize: 16,
-                  color: "#fff",
-                }}
-              >
-                Comentar
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View>
+              <Icon
+                style={{ padding: 12, textAlign: "left" }}
+                name="reply"
+                color="#000000"
+                size={35}
+              />
+              Comentarios:
+            </Text>
+
+            <View
+              style={{
+                backgroundColor: "#fff",
+                borderRadius: 50,
+                margin: 10,
+                borderWidth: 4,
+              }}
+            >
+              <View style={{ paddingHorizontal: 25, paddingTop: 0 }}>
+                <TextInput
+                  color="#066cb4"
+                  placeholder="Agregar comentario al Tweet"
+                  onChangeText={(text) => setText(text)}
+                  style={{ paddingHorizontal: 30, paddingVertical: 20 }}
+                  value={comment}
+                  numberOfLines={4}
+                  maxLength={120}
+                  editable
+                />
+
+                <View style={{ paddingHorizontal: 200, paddingVertical: 1 }}>
+                  <TouchableOpacity
+                    onPress={commentsPress}
+                    style={{
+                      backgroundColor: "#000000",
+                      padding: 10,
+                      borderRadius: 10,
+                      marginBottom: 30,
+                      marginLeft: -30,
+                      marginRight: -70,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontWeight: "700",
+                        fontSize: 16,
+                        color: "#fff",
+                      }}
+                    >
+                      Comentar
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+
           <FlatList
             data={task}
             renderItem={({ item }) => {
@@ -220,6 +248,7 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
                       paddingTop: 10,
                       paddingLeft: 10,
                       paddingRight: 10,
+                      paddingBottom:10
                     }}
                     onPress={() =>
                       navigation.navigate("owncomment", {
@@ -264,13 +293,14 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
                           color="#000000"
                           size={25}
                         />
-                        <Icon
+                        @{item["owner"]}:                                            <Icon
                           style={{ padding: 10, textAlign: "left" }}
                           name="brush"
                           color="#000000"
                           size={25}
-                        />
-                        @{item["owner"]}: {"\n"}
+                        />{" "}
+                        {" "}
+                        {"\n"}
                         {"\n"}
                       </Text>
 
@@ -312,6 +342,8 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
                       paddingTop: 10,
                       paddingLeft: 10,
                       paddingRight: 10,
+                      paddingBottom:10
+
                     }}
                     onPress={() =>
                       navigation.navigate("awaycomment", {
@@ -393,6 +425,7 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
               }
             }}
           />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

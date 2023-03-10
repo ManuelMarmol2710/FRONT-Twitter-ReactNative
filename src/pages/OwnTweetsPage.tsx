@@ -148,7 +148,7 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
               fontSize: 16,
               fontWeight: "500",
               color: "#333",
-              paddingTop: 25,
+              paddingTop: 15,
               paddingLeft: 10,
               paddingRight: 10,
               paddingBottom: 5,
@@ -170,13 +170,13 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
                 color: "#000000",
               }}
             >
-              <Icon
+             
+              @{owner}:                                                         <Icon
                 style={{ padding: 10, textAlign: "left" }}
                 name="brush"
                 color="#000000"
                 size={25}
-              />
-              @{owner}: {"\n"}
+              />{"\n"}
               {"\n"}
             </Text>
 
@@ -361,8 +361,16 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
                               color="#000000"
                               size={25}
                             />
-                            @{item["owner"]}: {"\n"}
+                          
+                            
+                            @{item["owner"]}:                                             <Icon
+                              style={{ padding: 10, textAlign: "left" }}
+                              name="brush"
+                              color="#000000"
+                              size={25}
+                            />   {"\n"}
                             {"\n"}
+                            
                           </Text>
 
                           <Text
