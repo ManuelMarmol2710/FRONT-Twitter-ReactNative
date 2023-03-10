@@ -13,7 +13,7 @@ import {
   ScrollView,
   RefreshControl,
 } from "react-native";
-
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useAuthStore } from "../store/auth.store";
 import { TextInput, IconButton } from "@react-native-material/core";
 import axios from "../libs/axios";
@@ -88,31 +88,6 @@ function ProfilePage({ navigation }: { navigation: any }) {
                   {name} {lastName}
                 </Text>
               </View>
-              <View style={{ paddingHorizontal: 220, paddingVertical: 20 }}>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("EditProfile")}
-                  style={{
-                    backgroundColor: "#79a1be",
-                    padding: 10,
-                    borderRadius: 10,
-                    marginTop: 15,
-                    marginBottom: 30,
-                    marginLeft: -200,
-                    marginRight: 85,
-                  }}
-                >
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontWeight: "700",
-                      fontSize: 16,
-                      color: "#fff",
-                    }}
-                  >
-                    Editar Perfil
-                  </Text>
-                </TouchableOpacity>
-              </View>
             </View>
             <View
               style={{
@@ -142,7 +117,15 @@ function ProfilePage({ navigation }: { navigation: any }) {
               data={task}
               renderItem={({ item }) => {
                 return (
-                  <View
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("OwnTweets", {
+                        owner: item["owner"],
+                        tweets: item["tweets"],
+                        time: item["time"],
+                        _id: item["_id"],
+                      })
+                    }
                     style={{
                       backgroundColor: "#afc7d8",
                       paddingTop: 10,
@@ -167,14 +150,6 @@ function ProfilePage({ navigation }: { navigation: any }) {
                         backgroundColor: "#fff",
                         overflow: "hidden",
                       }}
-                      onPress={() =>
-                        navigation.navigate("OwnTweets", {
-                          owner: item["owner"],
-                          tweets: item["tweets"],
-                          time: item["time"],
-                          _id: item["_id"],
-                        })
-                      }
                     >
                       <Text
                         style={{
@@ -186,6 +161,12 @@ function ProfilePage({ navigation }: { navigation: any }) {
                           color: "#000000",
                         }}
                       >
+                        <Icon
+                          style={{ padding: 12, textAlign: "left" }}
+                          name="brush"
+                          color="#000000"
+                          size={25}
+                        />
                         @{item["owner"]}: {"\n"}
                         {"\n"}
                       </Text>
@@ -218,7 +199,7 @@ function ProfilePage({ navigation }: { navigation: any }) {
                         || Subido el: {item["time"]}
                       </Text>
                     </Text>
-                  </View>
+                  </TouchableOpacity>
                 );
               }}
             />

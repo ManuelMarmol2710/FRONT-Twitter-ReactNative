@@ -12,6 +12,7 @@ import {
   RefreshControl,
   LogBox,
   YellowBox,
+  TouchableOpacity,
 } from "react-native";
 import { useAuthStore } from "../store/auth.store";
 import { SelectList } from "react-native-dropdown-select-list";
@@ -20,7 +21,7 @@ import { TextInput, IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 LogBox.ignoreAllLogs();
-YellowBox.ignoreWarnings(['VirtualizedLists should never be nested']);
+YellowBox.ignoreWarnings(["VirtualizedLists should never be nested"]);
 
 function BuscarPage({ navigation }: { navigation: any }) {
   const [search, setSearch] = React.useState("");
@@ -70,7 +71,6 @@ function BuscarPage({ navigation }: { navigation: any }) {
     tweetsFind();
   }, [search]);
 
-
   const OnRefresh = useCallback(async () => {
     setRefreshing(true);
     await tweetsRelease(), setRefreshing(false);
@@ -78,10 +78,28 @@ function BuscarPage({ navigation }: { navigation: any }) {
 
   return (
     <SafeAreaView>
-      <ScrollView refreshControl={
+      <ScrollView
+        refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={OnRefresh} />
-        }>
-        <View style={{ margin: 10, paddingTop: 25 }}>
+        }
+      >
+        <TextInput
+          color="#066cb4"
+          trailing={(props) => (
+            <IconButton
+              icon={(props) => <Icon name="magnify" {...props} />}
+              {...props}
+            />
+          )}
+          onChangeText={(text) => setSearch(text)}
+          value={search}
+          style={{ margin: 10, paddingTop: 45 }}
+          numberOfLines={2}
+          maxLength={40}
+          editable
+        />
+
+        <View style={{ margin: 10, paddingTop: 10 }}>
           <SelectList
             setSelected={(selected: React.SetStateAction<string>) =>
               setSelected(selected)
@@ -93,279 +111,278 @@ function BuscarPage({ navigation }: { navigation: any }) {
           />
         </View>
 
-        <TextInput
-          color="#066cb4"
-          trailing={(props) => (
-            <IconButton
-              icon={(props) => <Icon name="magnify" {...props} />}
-              {...props}
-            />
-          )}
-          onChangeText={(text) => setSearch(text)}
-          value={search}
-          style={{ margin: 10, paddingTop: 15 }}
-          numberOfLines={2}
-          maxLength={40}
-          editable
-        />
-
         <View style={{ margin: 20, paddingTop: 5 }}>
-          <Text
-            style={{
-              textAlign: "left",
-              fontSize: 24,
-              fontWeight: "500",
-              color: "#333",
-              paddingBottom: 25,
-            }}
-          >
-            Usuarios encontrados:
-          </Text>
-
           <View>
             <FlatList
               data={taskUser}
               renderItem={({ item }) => {
-                if(username === item['username']){  
-                return (
-                  <View
-                    style={{
-                      backgroundColor: "#afc7d8",
-                      paddingTop: 10,
-                      paddingLeft: 10,
-                      paddingRight: 160,
-                    }}
-                  >
-                    <Text
+                if (username === item["username"]) {
+                  return (
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("Profile", {})}
                       style={{
-                        textAlign: "left",
-                        fontSize: 16,
-                        fontWeight: "500",
-                        color: "#333",
-                        paddingTop: 25,
+                        backgroundColor: "#afc7d8",
+                        paddingTop: 10,
                         paddingLeft: 10,
-                        paddingRight: 10,
-                        paddingBottom: 5,
-                        paddingHorizontal: 10,
-                        borderColor: "black",
-                        borderWidth: 3,
-                        borderRadius: 15,
-                        backgroundColor: "#fff",
-                        overflow: "hidden",
+                        paddingRight: 160,
                       }}
-                      onPress={() =>
-                        navigation.navigate("Profile", {
-                        
-                        })
-                      }
                     >
                       <Text
                         style={{
-                          paddingTop: 10,
-                          paddingLeft: 30,
                           textAlign: "left",
-                          fontWeight: "700",
                           fontSize: 16,
-                          color: "#000000",
+                          fontWeight: "500",
+                          color: "#333",
+                          paddingTop: 25,
+                          paddingLeft: 10,
+                          paddingRight: 10,
+                          paddingBottom: 5,
+                          paddingHorizontal: 10,
+                          borderColor: "black",
+                          borderWidth: 3,
+                          borderRadius: 15,
+                          backgroundColor: "#fff",
+                          overflow: "hidden",
                         }}
                       >
-                        @{item['username']}
+                        <Text
+                          style={{
+                            paddingTop: 10,
+                            paddingLeft: 30,
+                            textAlign: "left",
+                            fontWeight: "700",
+                            fontSize: 16,
+                            color: "#000000",
+                          }}
+                        >
+                          @{item["username"]}
+                        </Text>
                       </Text>
-                    </Text>
-                  </View>
-                ); 
-              } else{
-                return (
-                  <View
-                    style={{
-                      backgroundColor: "#afc7d8",
-                      paddingTop: 10,
-                      paddingLeft: 10,
-                      paddingRight: 160,
-                    }}
-                  >
-                    <Text
+                    </TouchableOpacity>
+                  );
+                } else {
+                  return (
+                    <TouchableOpacity
                       style={{
-                        textAlign: "left",
-                        fontSize: 16,
-                        fontWeight: "500",
-                        color: "#333",
-                        paddingTop: 25,
+                        backgroundColor: "#afc7d8",
+                        paddingTop: 10,
                         paddingLeft: 10,
-                        paddingRight: 10,
-                        paddingBottom: 5,
-                        paddingHorizontal: 10,
-                        borderColor: "black",
-                        borderWidth: 3,
-                        borderRadius: 15,
-                        backgroundColor: "#fff",
-                        overflow: "hidden",
+                        paddingRight: 160,
                       }}
                       onPress={() =>
                         navigation.navigate("awayprofile", {
-                          username: item['username'],
-                          name: item['name'],
-                          last_Name: item['last_Name'],
-                          biography: item['biography'],
+                          username: item["username"],
+                          name: item["name"],
+                          last_Name: item["last_Name"],
+                          biography: item["biography"],
                         })
                       }
                     >
                       <Text
                         style={{
-                          paddingTop: 10,
-                          paddingLeft: 30,
                           textAlign: "left",
-                          fontWeight: "700",
                           fontSize: 16,
-                          color: "#000000",
+                          fontWeight: "500",
+                          color: "#333",
+                          paddingTop: 25,
+                          paddingLeft: 10,
+                          paddingRight: 10,
+                          paddingBottom: 5,
+                          paddingHorizontal: 10,
+                          borderColor: "black",
+                          borderWidth: 3,
+                          borderRadius: 15,
+                          backgroundColor: "#fff",
+                          overflow: "hidden",
                         }}
                       >
-                        @{item['username']}
+                        <Text
+                          style={{
+                            paddingTop: 10,
+                            paddingLeft: 30,
+                            textAlign: "left",
+                            fontWeight: "700",
+                            fontSize: 16,
+                            color: "#000000",
+                          }}
+                        >
+                          @{item["username"]}
+                        </Text>
                       </Text>
-                    </Text>
-                  </View>
-                ); 
-              }}}
+                    </TouchableOpacity>
+                  );
+                }
+              }}
             />
           </View>
         </View>
 
         <View style={{ margin: 20, paddingTop: 0 }}>
-          <Text
-            style={{
-              textAlign: "left",
-              fontSize: 24,
-              fontWeight: "500",
-              color: "#333",
-              paddingBottom: 15,
-            }}
-          >
-            {" "}
-            Tweets:{" "}
-          </Text>
           <FlatList
             data={task}
             renderItem={({ item }) => {
-             
-                if(username === item['owner']){
-              return (
-                
-                <View style={{backgroundColor: "#afc7d8",
-                paddingTop: 10, paddingLeft: 5, paddingRight: 5}}>
-                <Text
-                style={{
-                  textAlign: "left",
-                  fontSize: 16,
-                  fontWeight: "500",
-                  color: "#333",
-                  paddingTop: 25,
-                  paddingLeft: 10,
-                  paddingRight: 10,
-                  paddingBottom: 5,
-                  paddingHorizontal: 10,
-                  borderColor: "black",
-                  borderWidth: 3,
-                  borderRadius: 15,
-                  backgroundColor: "#fff",
-                  overflow: 'hidden'
-                }}
-                  onPress={() =>
-                    navigation.navigate("OwnTweets", {
-                      owner: item['owner'],
-                      tweets: item['tweets'],
-                      time: item['time'],
-                      _id: item['_id']
-                    })
-                  }
-                >
-                   <Text style={{
-                      paddingTop: 20,
-                      paddingLeft: 30,
-                      textAlign: "left",
-                      fontWeight: "700",
-                      fontSize: 16,
-                      color: "#000000",
-                      }}>@{item['owner']}: {'\n'}{'\n'}</Text>
-                      
-                      <Text style={{
-                              paddingTop: 20,
-                              paddingLeft: 60,
-                              paddingRight: 60,
-                              textAlign: "left",
-                              fontSize: 14,
-                            }}> {item['tweets']} {'\n'}{'\n'}{'\n'}
-                            </Text>                      
-                         
-                    <Text style={{
-                              paddingTop: 50,
-                              paddingLeft: 60,
-                              paddingRight: 60,
-                              textAlign: "right",
-                              fontSize: 14,
-                            }}> || Subido el:  {item['time']}</Text> 
-                </Text>
-                </View>
-              );
-            }else{
-              return (
-                
-                <View style={{backgroundColor: "#afc7d8",
-                paddingTop: 10, paddingLeft: 5, paddingRight: 5}}>
-                <Text
-                style={{
-                  textAlign: "left",
-                  fontSize: 16,
-                  fontWeight: "500",
-                  color: "#333",
-                  paddingTop: 25,
-                  paddingLeft: 10,
-                  paddingRight: 10,
-                  paddingBottom: 5,
-                  paddingHorizontal: 10,
-                  borderColor: "black",
-                  borderWidth: 3,
-                  borderRadius: 15,
-                  backgroundColor: "#fff",
-                  overflow: 'hidden'
-                }}
-                  onPress={() =>
-                    navigation.navigate("showTweets", {
-                      owner: item['owner'],
-                      tweets: item['tweets'],
-                      time: item['time'],
-                      _id: item['_id']
-                    })
-                  }
-                >
-                   <Text style={{
-                      paddingTop: 20,
-                      paddingLeft: 30,
-                      textAlign: "left",
-                      fontWeight: "700",
-                      fontSize: 16,
-                      color: "#000000",
-                      }}>@{item['owner']}: {'\n'}{'\n'}</Text>
-                      
-                      <Text style={{
-                              paddingTop: 20,
-                              paddingLeft: 60,
-                              paddingRight: 60,
-                              textAlign: "left",
-                              fontSize: 14,
-                            }}> {item['tweets']} {'\n'}{'\n'}{'\n'}
-                            </Text>                      
-                         
-                    <Text style={{
-                              paddingTop: 50,
-                              paddingLeft: 60,
-                              paddingRight: 60,
-                              textAlign: "right",
-                              fontSize: 14,
-                            }}> || Subido el:  {item['time']}</Text> 
-                </Text>
-                </View>
-              );
-            }}}
+              if (username === item["owner"]) {
+                return (
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: "#afc7d8",
+                      paddingTop: 10,
+                      paddingLeft: 5,
+                      paddingRight: 5,
+                    }}
+                    onPress={() =>
+                      navigation.navigate("OwnTweets", {
+                        owner: item["owner"],
+                        tweets: item["tweets"],
+                        time: item["time"],
+                        _id: item["_id"],
+                      })
+                    }
+                  >
+                    <Text
+                      style={{
+                        textAlign: "left",
+                        fontSize: 16,
+                        fontWeight: "500",
+                        color: "#333",
+                        paddingTop: 25,
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                        paddingBottom: 5,
+                        paddingHorizontal: 10,
+                        borderColor: "black",
+                        borderWidth: 3,
+                        borderRadius: 15,
+                        backgroundColor: "#fff",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          paddingTop: 20,
+                          paddingLeft: 30,
+                          textAlign: "left",
+                          fontWeight: "700",
+                          fontSize: 16,
+                          color: "#000000",
+                        }}
+                      >
+                        @{item["owner"]}: {"\n"}
+                        {"\n"}
+                      </Text>
+
+                      <Text
+                        style={{
+                          paddingTop: 20,
+                          paddingLeft: 60,
+                          paddingRight: 60,
+                          textAlign: "left",
+                          fontSize: 14,
+                        }}
+                      >
+                        {" "}
+                        {item["tweets"]} {"\n"}
+                        {"\n"}
+                        {"\n"}
+                      </Text>
+
+                      <Text
+                        style={{
+                          paddingTop: 50,
+                          paddingLeft: 60,
+                          paddingRight: 60,
+                          textAlign: "right",
+                          fontSize: 14,
+                        }}
+                      >
+                        {" "}
+                        || Subido el: {item["time"]}
+                      </Text>
+                    </Text>
+                  </TouchableOpacity>
+                );
+              } else {
+                return (
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: "#afc7d8",
+                      paddingTop: 10,
+                      paddingLeft: 5,
+                      paddingRight: 5,
+                    }}
+                    onPress={() =>
+                      navigation.navigate("showTweets", {
+                        owner: item["owner"],
+                        tweets: item["tweets"],
+                        time: item["time"],
+                        _id: item["_id"],
+                      })
+                    }
+                  >
+                    <Text
+                      style={{
+                        textAlign: "left",
+                        fontSize: 16,
+                        fontWeight: "500",
+                        color: "#333",
+                        paddingTop: 25,
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                        paddingBottom: 5,
+                        paddingHorizontal: 10,
+                        borderColor: "black",
+                        borderWidth: 3,
+                        borderRadius: 15,
+                        backgroundColor: "#fff",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          paddingTop: 20,
+                          paddingLeft: 30,
+                          textAlign: "left",
+                          fontWeight: "700",
+                          fontSize: 16,
+                          color: "#000000",
+                        }}
+                      >
+                        @{item["owner"]}: {"\n"}
+                        {"\n"}
+                      </Text>
+
+                      <Text
+                        style={{
+                          paddingTop: 20,
+                          paddingLeft: 60,
+                          paddingRight: 60,
+                          textAlign: "left",
+                          fontSize: 14,
+                        }}
+                      >
+                        {" "}
+                        {item["tweets"]} {"\n"}
+                        {"\n"}
+                        {"\n"}
+                      </Text>
+
+                      <Text
+                        style={{
+                          paddingTop: 50,
+                          paddingLeft: 60,
+                          paddingRight: 60,
+                          textAlign: "right",
+                          fontSize: 14,
+                        }}
+                      >
+                        {" "}
+                        || Subido el: {item["time"]}
+                      </Text>
+                    </Text>
+                  </TouchableOpacity>
+                );
+              }
+            }}
           />
         </View>
       </ScrollView>
