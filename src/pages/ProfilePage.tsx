@@ -84,9 +84,11 @@ function ProfilePage({ navigation }: { navigation: any }) {
                   {username}
                 </Text>
                 <Text style={styles.username}>{email}</Text>
+                <TouchableOpacity onPress ={()=> navigation.navigate('ProfileUpdateNamelast')}>
                 <Text style={styles.username}>
                   {name} {lastName}
                 </Text>
+                </TouchableOpacity>
               </View>
             </View>
             <View
@@ -109,7 +111,10 @@ function ProfilePage({ navigation }: { navigation: any }) {
                 <Text style={styles.statValue}>456</Text>
               </View>
             </View>
-            <Text style={styles.bio}>{biography}</Text>
+            <TouchableOpacity onPress ={()=> navigation.navigate('ProfileUpdateBio')}>
+            <Text style={styles.bio} >{biography} 
+              </Text>
+           </TouchableOpacity>
           </View>
 
           <View>

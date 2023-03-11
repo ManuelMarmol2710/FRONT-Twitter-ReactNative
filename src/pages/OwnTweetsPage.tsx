@@ -37,27 +37,29 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
     });
   };
 
-  const onClick = async () => {
-    if (like + (!isLike ? -1 : 1)) {
-      await axios.put(`/like/${_id}/${owner}`).then((response) => {
-        setLike(like + (isLike ? -1 : 1));
-      });
-    } else if (like + (isLike ? -1 : 1)) {
-      await axios.put(`/notlike/${_id}`).then((response) => {
-        setLike(like + (!isLike ? -1 : 1));
-      });
-    }
-  };
-  const obtenerLike = async () => {
-    await axios.get(`/like/${_id}`).then((response) => {
-      if (response.data.like === true) {
-        setLike(like + (isLike ? -1 : 1));
-      }
-      if (response.data.like === false) {
-        setisLike(!isLike);
-      }
-    });
-  };
+
+  const onClick =  async() => {
+    if((like +(!isLike ? -1: 1))){
+       await axios.post(`/like/${_id}/${owner}`).then((response) => {
+       
+      setLike(like +(isLike ? -1 : 1));
+         })
+     } else if((like +(isLike ? -1: 1))){
+       await axios.delete(`/notlike/${owner}/${_id}`).then((response) => {
+      
+         setLike(like +(!isLike ? -1 : 1));
+        });
+   }}
+
+   const obtenerLike = async() => {
+    await axios.get(`/like/${owner}/${_id}`).then((response) => {
+  if(response.data.like === true){
+    setLike(like +(isLike ? -1 : 1));
+  } if(response.data.like === false){
+    setisLike(!isLike);
+  }
+    });}    
+
 
   useEffect(() => {
     obtenerLike();

@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import axios from "../libs/axios";
+import { useAuthStore } from "../store/auth.store";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 function AwayComments({ route }: { route: any }) {
@@ -17,28 +18,28 @@ function AwayComments({ route }: { route: any }) {
   const [like, setLike] = useState(0);
   const [isLike, setisLike] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const username = useAuthStore((state) => state.profile.username.username);
+  const onClick =  async() => {
+    if((like +(!isLike ? -1: 1))){
+       await axios.post(`/likeComment/${_id}/${username}`).then((response) => {
+       
+      setLike(like +(isLike ? -1 : 1));
+         })
+     } else if((like +(isLike ? -1: 1))){
+       await axios.delete(`/notlikeComment/${username}/${_id}`).then((response) => {
+      
+         setLike(like +(!isLike ? -1 : 1));
+        });
+   }}
 
-  const onClick = async () => {
-    if (like + (!isLike ? -1 : 1)) {
-      await axios.put(`/likeComment/${_id}/${owner}`).then((response) => {
-        setLike(like + (isLike ? -1 : 1));
-      });
-    } else if (like + (isLike ? -1 : 1)) {
-      await axios.put(`/notlikeComment/${_id}`).then((response) => {
-        setLike(like + (!isLike ? -1 : 1));
-      });
-    }
-  };
-  const obtenerLikeComments = async () => {
-    await axios.get(`/likeComment/${_id}`).then((response) => {
-      if (response.data.like === true) {
-        setLike(like + (isLike ? -1 : 1));
-      }
-      if (response.data.like === false) {
-        setisLike(!isLike);
-      }
-    });
-  };
+   const obtenerLikeComments = async() => {
+    await axios.get(`/likeComment/${username}/${_id}`).then((response) => {
+  if(response.data.like === true){
+    setLike(like +(isLike ? -1 : 1));
+  } if(response.data.like === false){
+    setisLike(!isLike);
+  }
+    });}    
 
   const getComments = async () => {};
 

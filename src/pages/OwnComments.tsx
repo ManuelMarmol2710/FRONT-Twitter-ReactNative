@@ -21,27 +21,27 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
   const [isLike, setisLike] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [comments, setcomments] = useState("");
-  const onClick = async () => {
-    if (like + (!isLike ? -1 : 1)) {
-      await axios.put(`/likeComment/${_id}/${owner}`).then((response) => {
-        setLike(like + (isLike ? -1 : 1));
-      });
-    } else if (like + (isLike ? -1 : 1)) {
-      await axios.put(`/notlikeComment/${_id}`).then((response) => {
-        setLike(like + (!isLike ? -1 : 1));
-      });
-    }
-  };
-  const obtenerLikeComments = async () => {
-    await axios.get(`/likeComment/${_id}`).then((response) => {
-      if (response.data.like === true) {
-        setLike(like + (isLike ? -1 : 1));
-      }
-      if (response.data.like === false) {
-        setisLike(!isLike);
-      }
-    });
-  };
+  const onClick =  async() => {
+    if((like +(!isLike ? -1: 1))){
+       await axios.post(`/likeComment/${_id}/${owner}`).then((response) => {
+       
+      setLike(like +(isLike ? -1 : 1));
+         })
+     } else if((like +(isLike ? -1: 1))){
+       await axios.delete(`/notlikeComment/${owner}/${_id}`).then((response) => {
+      
+         setLike(like +(!isLike ? -1 : 1));
+        });
+   }}
+
+   const obtenerLikeComments = async() => {
+    await axios.get(`/likeComment/${owner}/${_id}`).then((response) => {
+  if(response.data.like === true){
+    setLike(like +(isLike ? -1 : 1));
+  } if(response.data.like === false){
+    setisLike(!isLike);
+  }
+    });}    
 
   const actuComment2 = async () => {
     await axios.put(`/updateComment/${_id}`).then((response) => {
