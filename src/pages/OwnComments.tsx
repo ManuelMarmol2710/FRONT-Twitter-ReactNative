@@ -21,15 +21,16 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
   const [isLike, setisLike] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [comments, setcomments] = useState("");
+  const[countLike, setCount] = useState([])
   const onClick =  async() => {
     if((like +(!isLike ? -1: 1))){
        await axios.post(`/likeComment/${_id}/${owner}`).then((response) => {
-       
+        getCountLike();
       setLike(like +(isLike ? -1 : 1));
          })
      } else if((like +(isLike ? -1: 1))){
        await axios.delete(`/notlikeComment/${owner}/${_id}`).then((response) => {
-      
+        getCountLike();
          setLike(like +(!isLike ? -1 : 1));
         });
    }}
@@ -43,13 +44,11 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
   }
     });}    
 
-  const actuComment2 = async () => {
-    await axios.put(`/updateComment/${_id}`).then((response) => {
-      setcomments(response.data.comment);
-      console.log(response.data.comment);
-      console.log(_id);
-    });
-  };
+    const getCountLike = async() =>{
+      await axios.get(`/countLikeCo/${_id}`).then((response) => {
+        setCount(response.data);
+      });
+    }
 
   const deleteComment = async () => {
     Alert.alert("Desea eliminar el comentario?", "Su comentario sera eliminado", [
@@ -89,10 +88,12 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
 
   useEffect(() => {
     obtenerLikeComments();
+    getCountLike();
   }, []);
   const OnRefresh = useCallback(async () => {
     setRefreshing(true);
     await actuComment(), setRefreshing(false);
+    await getCountLike(), setRefreshing(false);
   }, []);
   return (
     <SafeAreaView>
@@ -261,7 +262,7 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
             }}
           >
             <Pressable
-              style={{ paddingLeft: 60, paddingTop: 20, paddingBottom: 0 }}
+              style={{ paddingLeft: 45, paddingTop: 20, paddingBottom: 0 }}
               onPress={onClick}
             >
               <MaterialCommunityIcons
@@ -269,12 +270,9 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
                 size={32}
                 color={like ? "red" : "black"}
               />
-              <Text>{"" + (isLike ? like : "")} </Text>
-            </Pressable>
-            <TouchableOpacity>
-          <Text style={{
+               <Text style={{
               paddingVertical:10,
-                paddingLeft: 28,
+                paddingLeft: -8,
                 paddingRight: 0,
                 paddingTop:-30,
                 textAlign: "left",
@@ -282,10 +280,11 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
               }} onPress={()=> navigation.navigate('showLikesComments',{
 
                id_tweet:_id,
-               
+               owner:owner
 
-              })}> Ver Likes</Text>
-          </TouchableOpacity>
+              })}> Me Gustas:{ "" + (isLike ? like : countLike)} </Text>
+            </Pressable>
+      
 
           </View>
         </View>

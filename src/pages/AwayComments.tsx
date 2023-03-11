@@ -18,16 +18,17 @@ function AwayComments({ route,navigation }: { route: any, navigation:any }) {
   const [like, setLike] = useState(0);
   const [isLike, setisLike] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const[countLike, setCount] = useState([])
   const username = useAuthStore((state) => state.profile.username.username);
   const onClick =  async() => {
     if((like +(!isLike ? -1: 1))){
        await axios.post(`/likeComment/${_id}/${username}`).then((response) => {
-       
+        getCountLike();
       setLike(like +(isLike ? -1 : 1));
          })
      } else if((like +(isLike ? -1: 1))){
        await axios.delete(`/notlikeComment/${username}/${_id}`).then((response) => {
-      
+        getCountLike();
          setLike(like +(!isLike ? -1 : 1));
         });
    }}
@@ -41,6 +42,11 @@ function AwayComments({ route,navigation }: { route: any, navigation:any }) {
   }
     });}    
 
+    const getCountLike = async() =>{
+      await axios.get(`/countLikeCo/${_id}`).then((response) => {
+        setCount(response.data);
+      });
+    }
   const getComments = async () => {};
 
   useEffect(() => {
@@ -49,6 +55,7 @@ function AwayComments({ route,navigation }: { route: any, navigation:any }) {
   const OnRefresh = useCallback(async () => {
     setRefreshing(true);
     await getComments(), setRefreshing(false);
+    await getCountLike(), setRefreshing(false);
   }, []);
   return (
     <SafeAreaView>
@@ -166,23 +173,21 @@ function AwayComments({ route,navigation }: { route: any, navigation:any }) {
                 size={32}
                 color={like ? "red" : "black"}
               />
-              <Text>{"" + (isLike ? like : "")} </Text>
-            </Pressable>
-            <TouchableOpacity>
-          <Text style={{
+            <Text style={{
               paddingVertical:10,
-                paddingLeft: 36,
-                paddingRight: 30,
+                paddingLeft: -8,
+                paddingRight: 0,
                 paddingTop:-30,
                 textAlign: "left",
                 fontSize: 14,
               }} onPress={()=> navigation.navigate('showLikesComments',{
 
                id_tweet:_id,
-               
+               owner:owner
 
-              })}> Ver Likes</Text>
-          </TouchableOpacity>
+              })}>Me Gustas:{ "" + (isLike ? like : countLike)} </Text>
+            </Pressable>
+          
           </View>
         </ScrollView>
       </View>

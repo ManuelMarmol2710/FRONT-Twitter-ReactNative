@@ -21,6 +21,7 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
   const { owner, tweets, time, _id } = route.params;
   const username = useAuthStore((state) => state.profile.username.username);
   const [like, setLike] = useState(0);
+  const[countLike, setCount] = useState([])
   const [isLike, setisLike] = useState(false);
   const [comment, setText] = useState("");
   const [task, setTask] = useState([]);
@@ -43,11 +44,13 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
        await axios.post(`/like/${_id}/${owner}`).then((response) => {
        
       setLike(like +(isLike ? -1 : 1));
+      getCountLike();
          })
      } else if((like +(isLike ? -1: 1))){
        await axios.delete(`/notlike/${owner}/${_id}`).then((response) => {
       
          setLike(like +(!isLike ? -1 : 1));
+         getCountLike();
         });
    }}
 
@@ -60,20 +63,23 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
   }
     });}    
 
+    const getCountLike = async() =>{
+      await axios.get(`/countLike/${_id}`).then((response) => {
+        setCount(response.data);
+      });
+    }
+
 
   useEffect(() => {
     obtenerLike();
     getComments();
+    getCountLike();
   }, []);
 
-  const deleteTweets = async () => {
-    await axios.delete(`deleteTweets/${tweets}`).then((response) => {
-      navigation.navigate("Profile");
-    });
-  };
   const OnRefresh = useCallback(async () => {
     setRefreshing(true);
     await getComments(), setRefreshing(false);
+    await getCountLike(), setRefreshing(false);
   }, []);
 
   const alertaEliminar = async () => {
@@ -234,12 +240,11 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
                 size={32}
                 color={like ? "red" : "black"}
               />
-              <Text>{"" + (isLike ? like : "")} </Text>
-            </Pressable>
-            <TouchableOpacity>
-          <Text style={{
-              paddingVertical:10,
-                paddingLeft: 28,
+              <Text style={{
+              paddingVertical:10
+              
+              ,
+                paddingLeft: -8,
                 paddingRight: 0,
                 paddingTop:-30,
                 textAlign: "left",
@@ -249,8 +254,9 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
                id_tweet:_id,
                owner:owner
 
-              })}> Ver Likes</Text>
-          </TouchableOpacity>
+              })}> Me Gustas:{ "" + (isLike ? like : countLike)} </Text>
+            </Pressable>
+            
           </View>
          
           

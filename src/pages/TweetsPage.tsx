@@ -23,6 +23,7 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
   const [comment, setText] = useState("");
   const [task, setTask] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const[countLike, setCount] = useState([])
   const commentsPress = async () => {
     setText("");
     return axios.post(`comment/${_id}/${username}`, {
@@ -34,16 +35,22 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
       setTask(response.data);
     });
   };
-
+  const getCountLike = async() =>{
+    await axios.get(`/countLike/${_id}`).then((response) => {
+      setCount(response.data);
+    });
+  }
   const onClick =  async() => {
     if((like +(!isLike ? -1: 1))){
        await axios.post(`/like/${_id}/${username}`).then((response) => {
       setLike(like +(isLike ? -1 : 1));
+      getCountLike();
          })
      } else if((like +(isLike ? -1: 1))){
        await axios.delete(`/notlike/${username}/${_id}`).then((response) => {
       
          setLike(like +(!isLike ? -1 : 1));
+         getCountLike();
         });
    }}
 
@@ -59,13 +66,16 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
   useEffect(() => {
     obtenerLike();
     getComments();
+    getCountLike();
   }, []);
 
   const OnRefresh = useCallback(async () => {
     setRefreshing(true);
     await getComments(), setRefreshing(false);
+    await getCountLike(), setRefreshing(false);
   }, []);
 
+ 
   return (
     <SafeAreaView>
       <ScrollView
@@ -157,19 +167,18 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
           >
             <Pressable
               style={{ paddingLeft: 45, paddingTop: 20, paddingBottom: 0 }}
-              onPress={onClick}
+              onPress={()=> onClick()}
             >
               <MaterialCommunityIcons
                 name={like ? "heart" : "heart-outline"}
                 size={32}
                 color={like ? "red" : "black"}
               />
-              <Text>{"" + (isLike ? like : "")} </Text>
-            </Pressable>
-            <TouchableOpacity>
-          <Text style={{
-              paddingVertical:10,
-                paddingLeft: 28,
+              <Text style={{
+              paddingVertical:10
+              
+              ,
+                paddingLeft: -8,
                 paddingRight: 0,
                 paddingTop:-30,
                 textAlign: "left",
@@ -179,8 +188,10 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
                id_tweet:_id,
                owner:owner
 
-              })}> Ver Likes</Text>
-          </TouchableOpacity>
+              })}> Me Gustas:{ "" + (isLike ? like : countLike)} </Text>
+            </Pressable>
+          
+       
           </View>
 
           <View style={{ borderRadius: 10, borderWidth: 3, paddingTop: 5 }}>
