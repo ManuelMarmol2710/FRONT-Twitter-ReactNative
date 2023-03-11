@@ -14,6 +14,7 @@ import { TextInput, IconButton } from "@react-native-material/core";
 import { loginRequest, PerfilRequest } from "../api/auth";
 import { useAuthStore } from "../store/auth.store";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import { LinearGradient } from "expo-linear-gradient";
 
 function LoginPage({ navigation }: { navigation: any }) {
   const setToken = useAuthStore((state) => state.setToken);

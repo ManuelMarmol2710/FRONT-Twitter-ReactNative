@@ -161,13 +161,13 @@ function ProfilePage({ navigation }: { navigation: any }) {
                           color: "#000000",
                         }}
                       >
-                        <Icon
+                        
+                        @{item["owner"]}:                                                        <Icon
                           style={{ padding: 12, textAlign: "left" }}
                           name="brush"
                           color="#000000"
                           size={25}
-                        />
-                        @{item["owner"]}: {"\n"}
+                        />{"\n"}
                         {"\n"}
                       </Text>
 
