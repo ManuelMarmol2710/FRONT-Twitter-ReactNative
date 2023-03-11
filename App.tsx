@@ -14,6 +14,8 @@ import OwnTweetsPage from "./src/pages/OwnTweetsPage";
 import NewTweetPage from "./src/pages/NewTweet";
 import OwnComments from "./src/pages/OwnComments";
 import AwayComments from "./src/pages/AwayComments";
+import ShowLikePage from "./src/pages/ShowLikes";
+import ShowLikeCommentsPage from "./src/pages/ShowLikesComments";
 import ProfileUpdatePasswordPage from "./src/pages/ProfileUpdatePassword";
 import ProfileUpdateNamelastPage from "./src/pages/ProfileUpdateName&last";
 import ProfileUpdateBio from "./src/pages/ProfileUpdateBio";
@@ -129,6 +131,14 @@ export default function App() {
             backgroundColor: '#afc7d8',
           }}}/>
           <Stack.Screen name="showTweets" component={TweetsPage}  options={{ title: '' ,
+          headerStyle: {
+            backgroundColor: '#afc7d8',
+          }}}/>
+          <Stack.Screen name="showLikes" component={ShowLikePage}  options={{ title: '' ,
+          headerStyle: {
+            backgroundColor: '#afc7d8',
+          }}}/>
+             <Stack.Screen name="showLikesComments" component={ShowLikeCommentsPage}  options={{ title: '' ,
           headerStyle: {
             backgroundColor: '#afc7d8',
           }}}/>

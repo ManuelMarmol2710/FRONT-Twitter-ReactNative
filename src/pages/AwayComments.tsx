@@ -13,7 +13,7 @@ import axios from "../libs/axios";
 import { useAuthStore } from "../store/auth.store";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-function AwayComments({ route }: { route: any }) {
+function AwayComments({ route,navigation }: { route: any, navigation:any }) {
   const { owner, comment, time, _id } = route.params;
   const [like, setLike] = useState(0);
   const [isLike, setisLike] = useState(false);
@@ -158,7 +158,7 @@ function AwayComments({ route }: { route: any }) {
             }}
           >
             <Pressable
-              style={{ paddingLeft: 70, paddingTop: 20, paddingBottom: 0 }}
+              style={{ paddingLeft: 55, paddingTop: 20, paddingBottom: 0 }}
               onPress={onClick}
             >
               <MaterialCommunityIcons
@@ -168,6 +168,21 @@ function AwayComments({ route }: { route: any }) {
               />
               <Text>{"" + (isLike ? like : "")} </Text>
             </Pressable>
+            <TouchableOpacity>
+          <Text style={{
+              paddingVertical:10,
+                paddingLeft: 36,
+                paddingRight: 30,
+                paddingTop:-30,
+                textAlign: "left",
+                fontSize: 14,
+              }} onPress={()=> navigation.navigate('showLikesComments',{
+
+               id_tweet:_id,
+               
+
+              })}> Ver Likes</Text>
+          </TouchableOpacity>
           </View>
         </ScrollView>
       </View>

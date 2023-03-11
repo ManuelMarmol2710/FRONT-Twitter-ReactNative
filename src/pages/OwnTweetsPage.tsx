@@ -226,7 +226,7 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
             }}
           >
             <Pressable
-              style={{ paddingLeft: 60, paddingTop: 20, paddingBottom: 0 }}
+              style={{ paddingLeft: 45, paddingTop: 20, paddingBottom: 0 }}
               onPress={onClick}
             >
               <MaterialCommunityIcons
@@ -236,7 +236,24 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
               />
               <Text>{"" + (isLike ? like : "")} </Text>
             </Pressable>
+            <TouchableOpacity>
+          <Text style={{
+              paddingVertical:10,
+                paddingLeft: 28,
+                paddingRight: 0,
+                paddingTop:-30,
+                textAlign: "left",
+                fontSize: 14,
+              }} onPress={()=> navigation.navigate('showLikes',{
+
+               id_tweet:_id,
+               owner:owner
+
+              })}> Ver Likes</Text>
+          </TouchableOpacity>
           </View>
+         
+          
 
           <View style={{ borderRadius: 10, borderWidth: 3, paddingTop: 5 }}>
             <Text

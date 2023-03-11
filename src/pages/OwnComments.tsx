@@ -271,6 +271,21 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
               />
               <Text>{"" + (isLike ? like : "")} </Text>
             </Pressable>
+            <TouchableOpacity>
+          <Text style={{
+              paddingVertical:10,
+                paddingLeft: 28,
+                paddingRight: 0,
+                paddingTop:-30,
+                textAlign: "left",
+                fontSize: 14,
+              }} onPress={()=> navigation.navigate('showLikesComments',{
+
+               id_tweet:_id,
+               
+
+              })}> Ver Likes</Text>
+          </TouchableOpacity>
 
           </View>
         </View>
