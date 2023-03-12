@@ -15,9 +15,8 @@ import {
 } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useAuthStore } from "../store/auth.store";
-import { TextInput, IconButton } from "@react-native-material/core";
 import axios from "../libs/axios";
-import Tweets from "../components/Tweets";
+
 
 function ProfilePage({ navigation }: { navigation: any }) {
   const username = useAuthStore((state) => state.profile.username.username);
@@ -25,24 +24,32 @@ function ProfilePage({ navigation }: { navigation: any }) {
   const name = useAuthStore((state) => state.profile.username.name);
   const lastName = useAuthStore((state) => state.profile.username.last_Name);
   const biography = useAuthStore((state) => state.profile.username.biography);
-  const [tweets, setText] = React.useState("");
+  const[count,setCount] = useState([]);
   const [task, setTask] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
   const tweetsRelease = async () => {
     await axios.get(`tweet/${username}`).then((response) => {
       setTask(response.data);
-      console.log(response.data);
+
     });
   };
-
+  const tweetsCount = async () => {
+    await axios.get(`countTweets/${username}`).then((response) => {
+      setCount(response.data);
+  
+    });
+  };
   useEffect(() => {
+    tweetsCount();
     tweetsRelease();
+    
   }, []);
 
   const OnRefresh = useCallback(async () => {
     setRefreshing(true);
     await tweetsRelease(), setRefreshing(false);
+    await tweetsCount(), setRefreshing(false);
   }, []);
 
   return (
@@ -100,7 +107,7 @@ function ProfilePage({ navigation }: { navigation: any }) {
             >
               <View style={{ flex: 1, alignItems: "center" }}>
                 <Text style={styles.statLabel}>Tweets</Text>
-                <Text style={styles.statValue}>1,234</Text>
+                <Text style={styles.statValue}>{count}</Text>
               </View>
               <View style={{ flex: 1, alignItems: "center" }}>
                 <Text style={styles.statLabel}>Following</Text>

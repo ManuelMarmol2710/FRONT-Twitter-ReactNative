@@ -19,19 +19,27 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
   const { username, name, last_Name, biography } = route.params;
   const [task, setTask] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const[count,setCount] = useState([]);
   const tweetsRelease = async () => {
     await axios.get(`tweet/${username}`).then((response) => {
       setTask(response.data);
-      console.log(response.data);
+
     });
   };
-
+  const tweetsCount = async () => {
+    await axios.get(`countTweets/${username}`).then((response) => {
+      setCount(response.data);
+  
+    });
+  };
   useEffect(() => {
     tweetsRelease();
+    tweetsCount();
   }, []);
   const OnRefresh = useCallback(async () => {
     setRefreshing(true);
     await tweetsRelease(), setRefreshing(false);
+    await tweetsCount(), setRefreshing(false);
   }, []);
   return (
     <SafeAreaView>
@@ -74,7 +82,7 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
             >
               <View style={{ flex: 1, alignItems: "center" }}>
                 <Text style={styles.statLabel}>Tweets</Text>
-                <Text style={styles.statValue}>1,234</Text>
+                <Text style={styles.statValue}>{count}</Text>
               </View>
               <View style={{ flex: 1, alignItems: "center" }}>
                 <Text style={styles.statLabel}>Following</Text>

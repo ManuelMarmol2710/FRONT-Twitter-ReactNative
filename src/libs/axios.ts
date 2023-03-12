@@ -4,7 +4,7 @@ import { useAuthStore } from "../store/auth.store";
 const baseURL =
   process.env.NODE_ENV === "production"
     ? process.env.DOMAIN
-    : "http://192.168.0.202:3000";
+    : "https://back-twitter-reactnative-production.up.railway.app/";
 
 const authApi = axios.create({
   baseURL,
