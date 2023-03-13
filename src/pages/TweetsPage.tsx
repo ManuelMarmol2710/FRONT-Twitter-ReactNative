@@ -23,7 +23,7 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
   const [comment, setText] = useState("");
   const [task, setTask] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const[countLike, setCount] = useState([])
+  const [countLike, setCount] = useState([]);
   const commentsPress = async () => {
     setText("");
     return axios.post(`comment/${_id}/${username}`, {
@@ -35,34 +35,35 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
       setTask(response.data);
     });
   };
-  const getCountLike = async() =>{
+  const getCountLike = async () => {
     await axios.get(`/countLike/${_id}`).then((response) => {
       setCount(response.data);
     });
-  }
-  const onClick =  async() => {
-    if((like +(!isLike ? -1: 1))){
-       await axios.post(`/like/${_id}/${username}`).then((response) => {
-      setLike(like +(isLike ? -1 : 1));
-      getCountLike();
-         })
-     } else if((like +(isLike ? -1: 1))){
-       await axios.delete(`/notlike/${username}/${_id}`).then((response) => {
-      
-         setLike(like +(!isLike ? -1 : 1));
-         getCountLike();
-        });
-   }}
+  };
+  const onClick = async () => {
+    if (like + (!isLike ? -1 : 1)) {
+      await axios.post(`/like/${_id}/${username}`).then((response) => {
+        setLike(like + (isLike ? -1 : 1));
+        getCountLike();
+      });
+    } else if (like + (isLike ? -1 : 1)) {
+      await axios.delete(`/notlike/${username}/${_id}`).then((response) => {
+        setLike(like + (!isLike ? -1 : 1));
+        getCountLike();
+      });
+    }
+  };
 
-   const obtenerLike = async() => {
+  const obtenerLike = async () => {
     await axios.get(`/like/${username}/${_id}`).then((response) => {
-  if(response.data.like === true){
-    setLike(like +(isLike ? -1 : 1));
-  } if(response.data.like === false){
-    setisLike(!isLike);
-  }
-    })
-}
+      if (response.data.like === true) {
+        setLike(like + (isLike ? -1 : 1));
+      }
+      if (response.data.like === false) {
+        setisLike(!isLike);
+      }
+    });
+  };
   useEffect(() => {
     obtenerLike();
     getComments();
@@ -75,7 +76,6 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
     await getCountLike(), setRefreshing(false);
   }, []);
 
- 
   return (
     <SafeAreaView>
       <ScrollView
@@ -153,7 +153,7 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
             </Text>
           </Text>
 
-          <View
+          <TouchableOpacity
             style={{
               paddingHorizontal: 0,
               paddingTop: 0,
@@ -165,34 +165,40 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
               marginBottom: 35,
             }}
           >
-            <Pressable
-              style={{ paddingLeft: 45, paddingTop: 20, paddingBottom: 0 }}
-              onPress={()=> onClick()}
-            >
-              <MaterialCommunityIcons
-                name={like ? "heart" : "heart-outline"}
-                size={32}
-                color={like ? "red" : "black"}
-              />
-              <Text style={{
-              paddingVertical:10
-              
-              ,
-                paddingLeft: -8,
-                paddingRight: 0,
-                paddingTop:-30,
-                textAlign: "left",
-                fontSize: 14,
-              }} onPress={()=> navigation.navigate('showLikes',{
-
-               id_tweet:_id,
-               owner:owner
-
-              })}> Me Gustas:{ "" + (isLike ? like : countLike)} </Text>
-            </Pressable>
-          
-       
-          </View>
+            <View style={{paddingLeft: 2}} >
+              <Pressable
+                style={{ paddingLeft: 55, paddingTop: 20, paddingBottom: 0 }}
+                onPress={onClick}
+              >
+                <MaterialCommunityIcons
+                  name={like ? "heart" : "heart-outline"}
+                  size={32}
+                  color={like ? "red" : "black"}
+                />
+                <Text
+                  style={{
+                    paddingVertical: 0,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    paddingTop: 15,
+                    marginLeft:-14,
+                    textAlign: "left",
+                    fontSize: 14,
+                    fontWeight: "700"
+                  }}
+                  onPress={() =>
+                    navigation.navigate("showLikes", {
+                      id_tweet: _id,
+                      owner: owner,
+                    })
+                  }
+                >
+                  {" "}
+                  Likes: {"" + (isLike ? like : countLike)}{"\n"}
+                </Text>
+              </Pressable>
+            </View>
+          </TouchableOpacity>
 
           <View style={{ borderRadius: 10, borderWidth: 3, paddingTop: 5 }}>
             <Text
@@ -262,194 +268,193 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
               </View>
             </View>
 
-          <FlatList
-            data={task}
-            renderItem={({ item }) => {
-              if (username === item["owner"]) {
-                return (
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: "#afc7d8",
-                      paddingTop: 10,
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                      paddingBottom:10
-                    }}
-                    onPress={() =>
-                      navigation.navigate("owncomment", {
-                        comment: item["comment"],
-                        owner: item["owner"],
-                        time: item["time"],
-                        _id: item["_id"],
-                      })
-                    }
-                  >
-                    <Text
+            <FlatList
+              data={task}
+              renderItem={({ item }) => {
+                if (username === item["owner"]) {
+                  return (
+                    <TouchableOpacity
                       style={{
-                        textAlign: "left",
-                        fontSize: 16,
-                        fontWeight: "500",
-                        color: "#333",
-                        paddingTop: 25,
+                        backgroundColor: "#afc7d8",
+                        paddingTop: 10,
                         paddingLeft: 10,
                         paddingRight: 10,
-                        paddingBottom: 5,
-                        paddingHorizontal: 10,
-                        borderColor: "black",
-                        borderWidth: 3,
-                        borderRadius: 15,
-                        backgroundColor: "#fff",
-                        overflow: "hidden",
+                        paddingBottom: 10,
                       }}
+                      onPress={() =>
+                        navigation.navigate("owncomment", {
+                          comment: item["comment"],
+                          owner: item["owner"],
+                          time: item["time"],
+                          _id: item["_id"],
+                        })
+                      }
                     >
                       <Text
                         style={{
-                          paddingTop: 20,
-                          paddingLeft: 30,
                           textAlign: "left",
-                          fontWeight: "700",
                           fontSize: 16,
-                          color: "#000000",
+                          fontWeight: "500",
+                          color: "#333",
+                          paddingTop: 25,
+                          paddingLeft: 10,
+                          paddingRight: 10,
+                          paddingBottom: 5,
+                          paddingHorizontal: 10,
+                          borderColor: "black",
+                          borderWidth: 3,
+                          borderRadius: 15,
+                          backgroundColor: "#fff",
+                          overflow: "hidden",
                         }}
                       >
-                        <Icon
-                          style={{ padding: 10, textAlign: "left" }}
-                          name="reply"
-                          color="#000000"
-                          size={25}
-                        />
-                        @{item["owner"]}:                                            <Icon
-                          style={{ padding: 10, textAlign: "left" }}
-                          name="brush"
-                          color="#000000"
-                          size={25}
-                        />{" "}
-                        {" "}
-                        {"\n"}
-                        {"\n"}
-                      </Text>
+                        <Text
+                          style={{
+                            paddingTop: 20,
+                            paddingLeft: 30,
+                            textAlign: "left",
+                            fontWeight: "700",
+                            fontSize: 16,
+                            color: "#000000",
+                          }}
+                        >
+                          <Icon
+                            style={{ padding: 10, textAlign: "left" }}
+                            name="reply"
+                            color="#000000"
+                            size={25}
+                          />
+                          @{item["owner"]}:{"           "}{"           "}{"           "}{"           "}
+                          <Icon
+                            style={{ padding: 10, textAlign: "left" }}
+                            name="brush"
+                            color="#000000"
+                            size={25}
+                          />{" "}
+                          {"\n"}
+                          {"\n"}
+                        </Text>
 
-                      <Text
-                        style={{
-                          paddingTop: 20,
-                          paddingLeft: 60,
-                          paddingRight: 60,
-                          textAlign: "left",
-                          fontSize: 14,
-                        }}
-                      >
-                        {" "}
-                        {item["comment"]} {"\n"}
-                        {"\n"}
-                        {"\n"}
-                      </Text>
+                        <Text
+                          style={{
+                            paddingTop: 20,
+                            paddingLeft: 60,
+                            paddingRight: 60,
+                            textAlign: "left",
+                            fontSize: 14,
+                          }}
+                        >
+                          {" "}
+                          {item["comment"]} {"\n"}
+                          {"\n"}
+                          {"\n"}
+                        </Text>
 
-                      <Text
-                        style={{
-                          paddingTop: 50,
-                          paddingLeft: 60,
-                          paddingRight: 60,
-                          textAlign: "right",
-                          fontSize: 14,
-                        }}
-                      >
-                        {" "}
-                        || Subido el: {item["time"]}
+                        <Text
+                          style={{
+                            paddingTop: 50,
+                            paddingLeft: 60,
+                            paddingRight: 60,
+                            textAlign: "right",
+                            fontSize: 14,
+                          }}
+                        >
+                          {" "}
+                          || Subido el: {item["time"]}
+                        </Text>
                       </Text>
-                    </Text>
-                  </TouchableOpacity>
-                );
-              } else {
-                return (
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: "#afc7d8",
-                      paddingTop: 10,
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                      paddingBottom:10
-
-                    }}
-                    onPress={() =>
-                      navigation.navigate("awaycomment", {
-                        comment: item["comment"],
-                        owner: item["owner"],
-                        time: item["time"],
-                        _id: item["_id"],
-                      })
-                    }
-                  >
-                    <Text
+                    </TouchableOpacity>
+                  );
+                } else {
+                  return (
+                    <TouchableOpacity
                       style={{
-                        textAlign: "left",
-                        fontSize: 16,
-                        fontWeight: "500",
-                        color: "#333",
-                        paddingTop: 25,
+                        backgroundColor: "#afc7d8",
+                        paddingTop: 10,
                         paddingLeft: 10,
                         paddingRight: 10,
-                        paddingBottom: 5,
-                        paddingHorizontal: 10,
-                        borderColor: "black",
-                        borderWidth: 3,
-                        borderRadius: 15,
-                        backgroundColor: "#fff",
-                        overflow: "hidden",
+                        paddingBottom: 10,
                       }}
+                      onPress={() =>
+                        navigation.navigate("awaycomment", {
+                          comment: item["comment"],
+                          owner: item["owner"],
+                          time: item["time"],
+                          _id: item["_id"],
+                        })
+                      }
                     >
                       <Text
                         style={{
-                          paddingTop: 20,
-                          paddingLeft: 30,
                           textAlign: "left",
-                          fontWeight: "700",
                           fontSize: 16,
-                          color: "#000000",
+                          fontWeight: "500",
+                          color: "#333",
+                          paddingTop: 25,
+                          paddingLeft: 10,
+                          paddingRight: 10,
+                          paddingBottom: 5,
+                          paddingHorizontal: 10,
+                          borderColor: "black",
+                          borderWidth: 3,
+                          borderRadius: 15,
+                          backgroundColor: "#fff",
+                          overflow: "hidden",
                         }}
                       >
-                        <Icon
-                          style={{ padding: 10, textAlign: "left" }}
-                          name="reply"
-                          color="#000000"
-                          size={25}
-                        />
-                        @{item["owner"]}: {"\n"}
-                        {"\n"}
-                      </Text>
+                        <Text
+                          style={{
+                            paddingTop: 20,
+                            paddingLeft: 30,
+                            textAlign: "left",
+                            fontWeight: "700",
+                            fontSize: 16,
+                            color: "#000000",
+                          }}
+                        >
+                          <Icon
+                            style={{ padding: 10, textAlign: "left" }}
+                            name="reply"
+                            color="#000000"
+                            size={25}
+                          />
+                          @{item["owner"]}: {"\n"}
+                          {"\n"}
+                        </Text>
 
-                      <Text
-                        style={{
-                          paddingTop: 20,
-                          paddingLeft: 60,
-                          paddingRight: 60,
-                          textAlign: "left",
-                          fontSize: 14,
-                        }}
-                      >
-                        {" "}
-                        {item["comment"]} {"\n"}
-                        {"\n"}
-                        {"\n"}
-                      </Text>
+                        <Text
+                          style={{
+                            paddingTop: 20,
+                            paddingLeft: 60,
+                            paddingRight: 60,
+                            textAlign: "left",
+                            fontSize: 14,
+                          }}
+                        >
+                          {" "}
+                          {item["comment"]} {"\n"}
+                          {"\n"}
+                          {"\n"}
+                        </Text>
 
-                      <Text
-                        style={{
-                          paddingTop: 50,
-                          paddingLeft: 60,
-                          paddingRight: 60,
-                          textAlign: "right",
-                          fontSize: 14,
-                        }}
-                      >
-                        {" "}
-                        || Subido el: {item["time"]}
+                        <Text
+                          style={{
+                            paddingTop: 50,
+                            paddingLeft: 60,
+                            paddingRight: 60,
+                            textAlign: "right",
+                            fontSize: 14,
+                          }}
+                        >
+                          {" "}
+                          || Subido el: {item["time"]}
+                        </Text>
                       </Text>
-                    </Text>
-                  </TouchableOpacity>
-                );
-              }
-            }}
-          />
+                    </TouchableOpacity>
+                  );
+                }
+              }}
+            />
           </View>
         </View>
       </ScrollView>

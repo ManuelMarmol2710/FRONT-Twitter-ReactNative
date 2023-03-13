@@ -11,10 +11,13 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  TextInput,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 
 import { useAuthStore } from "../store/auth.store";
-import { TextInput, IconButton } from "@react-native-material/core";
+import { IconButton } from "@react-native-material/core";
 import axios from "../libs/axios";
 
 function NewTweetPage({ navigation }: { navigation: any }) {
@@ -30,68 +33,79 @@ function NewTweetPage({ navigation }: { navigation: any }) {
   };
 
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <View
-          style={{
-            paddingHorizontal: 25,
-            paddingTop: 80,
-            backgroundColor: "#fff",
-            borderRadius: 50,
-            borderWidth: 3,
-            margin:10,
-          }}
-        >
-          <Text
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <SafeAreaView>
+        <ScrollView>
+          <View
             style={{
-              textAlign: "center",
-              fontSize: 30,
-              fontWeight: "500",
-              color: "#333",
-              paddingBottom: 25,
+              paddingHorizontal: 25,
+              paddingTop: 80,
+              backgroundColor: "#fff",
+              borderRadius: 50,
+              borderWidth: 3,
+              margin: 10,
             }}
           >
-            Nuevo tweet
-          </Text>
-
-          <TextInput
-            color="#066cb4"
-            placeholder="Dile al mundo lo que piensas..."
-            onChangeText={(text) => setText(text)}
-            style={{ paddingHorizontal: 10, paddingVertical: 20 }}
-            value={tweets}
-            numberOfLines={4}
-            maxLength={120}
-            editable
-          />
-
-          <View style={{ paddingHorizontal: 200, paddingVertical: 1 }}>
-            <TouchableOpacity
-              onPress={tweetsPress}
+            <Text
               style={{
-                backgroundColor: "#000000",
-                padding: 10,
-                borderRadius: 10,
-                marginBottom: 30,
-                marginLeft: -20,
-                marginRight: -100,
+                textAlign: "center",
+                fontSize: 30,
+                fontWeight: "500",
+                color: "#333",
+                paddingBottom: 25,
               }}
             >
-              <Text
+              Nuevo tweet
+            </Text>
+
+            <TextInput
+              style={{
+                borderRadius: 10,
+                borderWidth: 2,
+                borderColor: "#000000",
+                overflow: "hidden",
+                height: 120,
+                width: 335,
+              }}
+              color="#000000"
+              label="Tweet"
+              placeholder="Dile al mundo lo que piensas..."
+              onChangeText={(text) => setText(text)}
+              value={tweets}
+              disableFullscreenUI
+              multiline
+              maxLength={120}
+              editable
+            />
+
+            <View style={{ paddingHorizontal: 200, paddingVertical: 1, paddingTop:10 }}>
+              <TouchableOpacity
+                onPress={tweetsPress}
                 style={{
-                  textAlign: "center",
-                  fontWeight: "700",
-                  fontSize: 16,
-                  color: "#fff",
+                  backgroundColor: "#000000",
+                  padding: 10,
+                  borderRadius: 10,
+                  marginBottom: 30,
+                  marginLeft: -20,
+                  marginRight: -100,
                 }}
               >
-                Tweetear
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontWeight: "700",
+                    fontSize: 16,
+                    color: "#fff",
+                  }}
+                >
+                  Tweetear
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 

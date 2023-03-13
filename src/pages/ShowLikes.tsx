@@ -59,7 +59,7 @@ function ShowLikePage({ route,navigation }: { navigation: any, route:any }) {
                         size={32}
                        color={ "red" }
               />
-              Me Gusta:
+              {" "} Likes:
             </Text>
 
           <FlatList
