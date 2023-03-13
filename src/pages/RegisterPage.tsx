@@ -12,6 +12,7 @@ import {
 import { RegisterRequest, PerfilRequest } from "../api/auth";
 import { useAuthStore } from "../store/auth.store";
 import { TextInput, IconButton } from "@react-native-material/core";
+import { LinearGradient } from "expo-linear-gradient";
 
 function RegisterPage({ navigation }: { navigation: any }) {
   const [email, setText] = useState("");
@@ -22,7 +23,7 @@ function RegisterPage({ navigation }: { navigation: any }) {
   const [username, setText5] = useState("");
   const [seePassword, setseePassword] = useState(true);
   const [checkValidEmail, setcheckValidEmail] = useState(true);
-
+  const [checkValidPassword, setcheckValidPassword] = useState(true);
   const setToken = useAuthStore((state) => state.setToken);
   const setProfile = useAuthStore((state) => state.setProfile);
   const SignupPress = async () => {
@@ -60,14 +61,20 @@ function RegisterPage({ navigation }: { navigation: any }) {
         { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
     } else {
+      
       navigation.navigate("login");
     }
   };
 
-  const checkPasswordValidity = (value: any) => {
+  const checkPasswordValidity = (text: any) => {
     const isValidLength = /^.{8,16}$/;
-    if (!isValidLength.test(value)) {
+    if (!isValidLength.test(text)) {
       return "La contraseña debe tener entre 8 y 16 caracteres.";
+    }
+
+    const isNonWhiteSpace = /^\S*$/;
+    if (!isNonWhiteSpace.test(text)) {
+      return "Password must not contain Whitespaces.";
     }
   };
 
@@ -83,112 +90,119 @@ function RegisterPage({ navigation }: { navigation: any }) {
     }
   };
 
-  const handleLogin = () => {
-    const checkpassword = checkPasswordValidity(password);
-
-    if (!checkpassword) {
-      alert("success");
+  const handleCheckPassword = (text: any) => {
+    let te = /^.{8,16}$/;
+    let teg = /^\S*$/;
+    setText1(text);
+    if (te.test(text) || teg.test(text)) {
+      setcheckValidPassword(false);
     } else {
-      alert("login failed");
+      setcheckValidPassword(true);
     }
   };
+
   return (
     <SafeAreaView>
-      <View
-        style={{
-          backgroundColor: "#fff",
-          borderRadius: 90,
-          borderWidth: 4,
-          margin: 10,
-        }}
-      >
-        <View style={{ paddingHorizontal: 25, paddingTop: 100 }}>
-          <Text
-            style={{
-              textAlign: "center",
-              fontSize: 30,
-              fontWeight: "500",
-              color: "#333",
-              paddingBottom: 25,
-            }}
-          >
-            Registro de usuario
-          </Text>
-
-          <TextInput
-            color="#066cb4"
-            label="Nombre"
-            placeholder="Nombre"
-            onChangeText={setText2}
-            value={name}
-          />
-
-          <TextInput
-            color="#066cb4"
-            label="Apellido"
-            placeholder="Apellido"
-            onChangeText={setText3}
-            value={last_Name}
-          />
-
-          <TextInput
-            color="#066cb4"
-            label="Biografia"
-            placeholder="Hola mi usuario es..."
-            onChangeText={(text) => setText4(text)}
-            value={biography}
-          />
-
-          <TextInput
-            color="#066cb4"
-            label="Email"
-            placeholder="ejemplo@test.com"
-            onChangeText={(text) => handleCheckEmail(text)}
-            value={email}
-          />
-          <TextInput
-            color="#066cb4"
-            label="Usuario"
-            placeholder="Nombre de Usuario"
-            onChangeText={setText5}
-            value={username}
-          />
-
-          <TextInput
-            color="#066cb4"
-            label="Contraseña"
-            placeholder="Contraseña"
-            onChangeText={(text) => setText1(text)}
-            value={password}
-          />
-        </View>
-
         <View
-          style={{ paddingHorizontal: 70, paddingVertical: 5, paddingTop: 25 }}
+          style={{
+            backgroundColor: "#fff",
+            borderRadius: 90,
+            borderWidth: 4,
+            margin: 10,
+          }}
         >
-          <TouchableOpacity
-            disabled={checkValidEmail}
-            onPress={SignupPress}
-            style={{
-              backgroundColor: "#000000",
-              padding: 20,
-              borderRadius: 10,
-              marginBottom: 30,
-            }}
-          >
+          <View style={{ paddingHorizontal: 25, paddingTop: 100 }}>
             <Text
               style={{
                 textAlign: "center",
-                fontWeight: "700",
-                fontSize: 16,
-                color: "#fff",
+                fontSize: 30,
+                fontWeight: "500",
+                color: "#333",
+                paddingBottom: 25,
               }}
             >
-              Registrar
+              Registro de usuario
             </Text>
-          </TouchableOpacity>
+
+            <TextInput
+              color="#066cb4"
+              label="Nombre"
+              placeholder="Nombre"
+              onChangeText={setText2}
+              value={name}
+            />
+
+            <TextInput
+              color="#066cb4"
+              label="Apellido"
+              placeholder="Apellido"
+              onChangeText={setText3}
+              value={last_Name}
+            />
+
+            <TextInput
+              color="#066cb4"
+              label="Biografia"
+              placeholder="Hola mi usuario es..."
+              onChangeText={(text) => setText4(text)}
+              value={biography}
+              maxLength={100}
+            />
+
+            <TextInput
+              color="#066cb4"
+              label="Email"
+              placeholder="ejemplo@test.com"
+              onChangeText={(text) => handleCheckEmail(text)}
+              value={email}
+            />
+            <TextInput
+              color="#066cb4"
+              label="Usuario"
+              placeholder="Nombre de Usuario"
+              onChangeText={setText5}
+              value={username}
+            />
+
+            <TextInput
+              color="#066cb4"
+              label="Contraseña"
+              placeholder="Contraseña"
+              onChangeText={(text) => setText1(text)}
+              value={password}
+            />
+          </View>
+
+          <View
+            style={{
+              paddingHorizontal: 70,
+              paddingVertical: 5,
+              paddingTop: 25,
+            }}
+          >
+            <TouchableOpacity
+              disabled={checkValidEmail}
+              onPress={SignupPress}
+              style={{
+                backgroundColor: "#000000",
+                padding: 20,
+                borderRadius: 10,
+                marginBottom: 30,
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontWeight: "700",
+                  fontSize: 16,
+                  color: "#fff",
+                }}
+              >
+                Registrar
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
     </SafeAreaView>
   );
 }

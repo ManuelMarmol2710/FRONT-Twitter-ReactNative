@@ -7,28 +7,26 @@ import {
   Button,
   Alert,
   View,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { useAuthStore } from "../store/auth.store";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-function SettingsPage({navigation}: {navigation: any}) {
+function SettingsPage({ navigation }: { navigation: any }) {
 
-  const Bye = async() => { 
 
-    Alert.alert('Cerrar sesion?', 'Su sesion sera cerrada', [
+  const Bye = async () => {
+    Alert.alert("Cerrar sesion?", "Su sesion sera cerrada", [
       {
-        text: 'Cancel',
-        onPress: () => navigation.navigate("Settings"),
-        style: 'cancel',
+        text: "Cancel",
+        onPress: () => console.log("Cancelado"),
+        style: "cancel",
       },
-      {text: 'OK', onPress: () => navigation.navigate("login")},
+      { text: "OK", onPress: () => navigation.navigate("login") },
     ]);
-    
-    useAuthStore((state) => state.logout);
-    
-  }
-  
+      useAuthStore((state) => state.logout);
+  };
+
   return (
     <SafeAreaView>
       <View
@@ -89,11 +87,11 @@ function SettingsPage({navigation}: {navigation: any}) {
             padding: 20,
             borderRadius: 10,
             marginBottom: 30,
-            borderColor: 'black',
-            borderLeftWidth:1,
+            borderColor: "black",
+            borderLeftWidth: 1,
             borderRightWidth: 1,
             borderTopWidth: 1,
-            borderBottomWidth: 1
+            borderBottomWidth: 1,
           }}
         >
           <Text
@@ -114,8 +112,6 @@ function SettingsPage({navigation}: {navigation: any}) {
           />
         </TouchableOpacity>
       </View>
-
-
     </SafeAreaView>
   );
 }

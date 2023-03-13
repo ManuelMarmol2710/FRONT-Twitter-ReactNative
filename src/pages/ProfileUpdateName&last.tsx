@@ -32,7 +32,17 @@ function ProfileUpdateNamelastPage({navigation}: {navigation: any}) {
 
   return (
     <SafeAreaView>
-      <View style={{paddingHorizontal:25, paddingTop:100}}>
+      <View
+          style={{
+            paddingHorizontal: 25,
+            paddingTop: 80,
+            backgroundColor: "#fff",
+            borderRadius: 50,
+            borderWidth: 3,
+            margin: 10,
+          }}
+        >
+      <View style={{paddingHorizontal:25, paddingTop:20}}>
       <Text style={{
             textAlign:'center',
             fontSize: 30,
@@ -40,7 +50,7 @@ function ProfileUpdateNamelastPage({navigation}: {navigation: any}) {
             color: '#333',
             paddingBottom: 25
           }}>
-        Editar perfil
+        Editar datos 
       </Text>
 
       <TextInput
@@ -69,7 +79,7 @@ function ProfileUpdateNamelastPage({navigation}: {navigation: any}) {
            changeNameandLast(),  navigation.navigate("Profile");
           }}
           style={{
-            backgroundColor: "#066cb4",
+            backgroundColor: "#000000",
             padding: 20,
             borderRadius: 10,
             marginBottom: 30,
@@ -87,7 +97,7 @@ function ProfileUpdateNamelastPage({navigation}: {navigation: any}) {
           </Text>
         </TouchableOpacity>
       </View>
-
+      </View>
     </SafeAreaView>
   );
 }
