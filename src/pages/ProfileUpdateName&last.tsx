@@ -30,9 +30,41 @@ function ProfileUpdateNamelastPage({navigation}: {navigation: any}) {
     });
   };
 
+  const alertaNameLast = async () => {
+    Alert.alert("Desea editar sus datos?", "Sus datos seran actualizados.", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancelado"),
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: async () =>
+        await axios.put(`/update/${emailShow}`, {
+          name: name,
+          last_Name: last_Name,
+       
+        }).then((response) => {
+          navigation.navigate("Profile");
+        }),
+      },
+    ]);
+  };
+
   return (
     <SafeAreaView>
-      <View style={{paddingHorizontal:25, paddingTop:100}}>
+      <View
+          style={{
+            paddingHorizontal: 25,
+            paddingTop: 80,
+            backgroundColor: "#fff",
+            borderRadius: 50,
+            borderWidth: 3,
+            margin: 10,
+            marginTop: 100
+          }}
+        >
+      <View style={{paddingHorizontal:25, paddingTop:20}}>
       <Text style={{
             textAlign:'center',
             fontSize: 30,
@@ -40,7 +72,7 @@ function ProfileUpdateNamelastPage({navigation}: {navigation: any}) {
             color: '#333',
             paddingBottom: 25
           }}>
-        Editar perfil
+        Editar datos 
       </Text>
 
       <TextInput
@@ -65,11 +97,9 @@ function ProfileUpdateNamelastPage({navigation}: {navigation: any}) {
         style={{ paddingHorizontal: 70, paddingVertical: 5, paddingTop: 25 }}
       >
         <TouchableOpacity
-          onPress={() => {
-           changeNameandLast(),  navigation.navigate("Profile");
-          }}
+          onPress={alertaNameLast}
           style={{
-            backgroundColor: "#066cb4",
+            backgroundColor: "#000000",
             padding: 20,
             borderRadius: 10,
             marginBottom: 30,
@@ -87,7 +117,7 @@ function ProfileUpdateNamelastPage({navigation}: {navigation: any}) {
           </Text>
         </TouchableOpacity>
       </View>
-
+      </View>
     </SafeAreaView>
   );
 }
