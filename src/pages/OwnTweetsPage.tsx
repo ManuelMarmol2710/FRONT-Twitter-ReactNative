@@ -254,6 +254,7 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
                     paddingRight: 0,
                     paddingTop: 10,
                     marginLeft:-10,
+                    marginBottom: 10,
                     textAlign: "left",
                     fontSize: 14,
                     fontWeight: "700"
@@ -266,7 +267,7 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
                   }
                 >
                   {" "}
-                  Likes: {"" + (isLike ? like : countLike)}{"\n"}
+                  Likes: {"" + (isLike ? like : countLike)}
                 </Text>
               </Pressable>
             </View>

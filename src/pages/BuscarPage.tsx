@@ -175,6 +175,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
                           name: item["name"],
                           last_Name: item["last_Name"],
                           biography: item["biography"],
+                          
                         })
                       }
                     >

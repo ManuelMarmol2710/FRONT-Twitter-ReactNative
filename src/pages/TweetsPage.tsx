@@ -16,7 +16,8 @@ import { TextInput, IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
-  const { owner, tweets, time, _id } = route.params;
+  const { owner, tweets, time, _id, name, last_Name, biography } = route.params;
+
   const username = useAuthStore((state) => state.profile.username.username);
   const [like, setLike] = useState(0);
   const [isLike, setisLike] = useState(false);
@@ -40,6 +41,7 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
       setCount(response.data);
     });
   };
+
   const onClick = async () => {
     if (like + (!isLike ? -1 : 1)) {
       await axios.post(`/like/${_id}/${username}`).then((response) => {
@@ -115,11 +117,25 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
                 paddingLeft: 30,
                 textAlign: "left",
                 fontWeight: "700",
+                margin:1,
                 fontSize: 16,
                 color: "#000000",
               }}
+              onPress={() =>
+                navigation.navigate("awayprofile", {
+                  username: owner,
+                  name: name,
+                  last_Name: last_Name,
+                  biography: biography,
+                })
+              }
             >
-              @{owner}: {"\n"}
+              @{owner}:
+            </Text>
+
+            <Text>
+              {"\n"}
+              {"\n"}
               {"\n"}
             </Text>
 
@@ -132,7 +148,7 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
                 fontSize: 14,
               }}
             >
-              {" "}
+              {"     "}
               {tweets} {"\n"}
               {"\n"}
               {"\n"}
@@ -149,7 +165,7 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
               {" "}
               {"\n"}
               {"\n"}
-              || Subido el: {time} {"\n"}
+              || Subido el: {time}
             </Text>
           </Text>
 
@@ -165,7 +181,7 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
               marginBottom: 35,
             }}
           >
-            <View style={{paddingLeft: 2}} >
+            <View style={{ paddingLeft: 2 }}>
               <Pressable
                 style={{ paddingLeft: 55, paddingTop: 20, paddingBottom: 0 }}
                 onPress={onClick}
@@ -181,10 +197,11 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
                     paddingLeft: 0,
                     paddingRight: 0,
                     paddingTop: 15,
-                    marginLeft:-14,
+                    marginLeft: -14,
+                    marginBottom: 10,
                     textAlign: "left",
                     fontSize: 14,
-                    fontWeight: "700"
+                    fontWeight: "700",
                   }}
                   onPress={() =>
                     navigation.navigate("showLikes", {
@@ -194,7 +211,7 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
                   }
                 >
                   {" "}
-                  Likes: {"" + (isLike ? like : countLike)}{"\n"}
+                  Likes: {"" + (isLike ? like : countLike)}
                 </Text>
               </Pressable>
             </View>
@@ -324,7 +341,10 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
                             color="#000000"
                             size={25}
                           />
-                          @{item["owner"]}:{"           "}{"           "}{"           "}{"           "}
+                          @{item["owner"]}:{"           "}
+                          {"           "}
+                          {"           "}
+                          {"           "}
                           <Icon
                             style={{ padding: 10, textAlign: "left" }}
                             name="brush"
