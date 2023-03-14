@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
-import Likes from "../components/likes";
+
 
 function HomePage({ navigation }: { navigation: any }) {
   const username = useAuthStore((state) => state.profile.username.username);
@@ -20,8 +20,9 @@ function HomePage({ navigation }: { navigation: any }) {
   const tweetsRelease = async () => {
     await axios.get(`tweet/${username}`).then((response) => {
       setTask(response.data);
-      console.log(response.data);
+   
     });
+    
   };
 
   useEffect(() => {
@@ -40,6 +41,8 @@ function HomePage({ navigation }: { navigation: any }) {
           <RefreshControl refreshing={refreshing} onRefresh={OnRefresh} />
         }
       >
+
+
         <View>
           <FlatList
             data={task}

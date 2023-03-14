@@ -50,6 +50,9 @@ function LoginPage({ navigation }: { navigation: any }) {
     navigation.navigate("register");
   };
 
+  const image = {
+    uri: "blob:https://bggenerator.com/a4473783-0fae-4b78-a3e1-b6515e209ed7",
+  };
 
   const recoverEmail = async () => {
     navigation.navigate("sendEmail");
@@ -62,7 +65,6 @@ function LoginPage({ navigation }: { navigation: any }) {
           borderRadius: 90,
           borderWidth: 4,
           margin: 10,
-          marginTop: 100
         }}
       >
         <View style={{ paddingHorizontal: 25, paddingTop: 100 }}>

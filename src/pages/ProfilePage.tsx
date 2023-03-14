@@ -17,29 +17,33 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
 
+
 function ProfilePage({ navigation }: { navigation: any }) {
   const username = useAuthStore((state) => state.profile.username.username);
   const email = useAuthStore((state) => state.profile.username.email);
   const name = useAuthStore((state) => state.profile.username.name);
   const lastName = useAuthStore((state) => state.profile.username.last_Name);
   const biography = useAuthStore((state) => state.profile.username.biography);
-  const [count, setCount] = useState([]);
+  const[count,setCount] = useState([]);
   const [task, setTask] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
   const tweetsRelease = async () => {
     await axios.get(`tweet/${username}`).then((response) => {
       setTask(response.data);
+
     });
   };
   const tweetsCount = async () => {
     await axios.get(`countTweets/${username}`).then((response) => {
       setCount(response.data);
+  
     });
   };
   useEffect(() => {
     tweetsCount();
     tweetsRelease();
+    
   }, []);
 
   const OnRefresh = useCallback(async () => {
@@ -87,13 +91,10 @@ function ProfilePage({ navigation }: { navigation: any }) {
                   {username}
                 </Text>
                 <Text style={styles.username}>{email}</Text>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("ProfileUpdateNamelast")}
-                >
-                  <Text style={styles.username}>
-                    {name} {lastName} {""}
-                    <Icon name="brush" color="#000000" size={16} />
-                  </Text>
+                <TouchableOpacity onPress ={()=> navigation.navigate('ProfileUpdateNamelast')}>
+                <Text style={styles.username}>
+                  {name} {lastName}
+                </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -117,24 +118,34 @@ function ProfilePage({ navigation }: { navigation: any }) {
                 <Text style={styles.statValue}>456</Text>
               </View>
             </View>
+            <TouchableOpacity onPress ={()=> navigation.navigate('ProfileUpdateBio')}>
+            <Text style={styles.bio} >{biography} 
+              </Text>
+           </TouchableOpacity>
+           <View style={{ paddingHorizontal: 200, paddingVertical: 1, marginTop:5 }}>
             <TouchableOpacity
-              onPress={() => navigation.navigate("ProfileUpdateBio")}
+              onPress={()=> navigation.navigate('imagen')}
+              style={{
+                backgroundColor: "#3364FF",
+                padding: 10,
+                borderRadius: 10,
+                marginBottom: 30,
+                marginLeft: -20,
+                marginRight: -100,
+              }}
             >
               <Text
                 style={{
-                  padding: 20,
+                  textAlign: "center",
+                  fontWeight: "700",
                   fontSize: 16,
-                  color: "#000000",
-                  backgroundColor: "#CECECE",
-                  overflow: "hidden",
-                  borderRadius: 15,
-                  borderColor: "#000000",
-                  borderTopWidth: 3,
+                  color: "#fff",
                 }}
               >
-                {biography}
+                VerImagenes
               </Text>
             </TouchableOpacity>
+            </View>
           </View>
 
           <View>
@@ -149,6 +160,7 @@ function ProfilePage({ navigation }: { navigation: any }) {
                         tweets: item["tweets"],
                         time: item["time"],
                         _id: item["_id"],
+                        url: item["url"]
                       })
                     }
                     style={{
@@ -186,14 +198,13 @@ function ProfilePage({ navigation }: { navigation: any }) {
                           color: "#000000",
                         }}
                       >
-                        @{item["owner"]}:{"             "}{"             "}{"             "}{"             "}{"    "}
-                        <Icon
+                        
+                        @{item["owner"]}:                                                        <Icon
                           style={{ padding: 12, textAlign: "left" }}
                           name="brush"
                           color="#000000"
                           size={25}
-                        />
-                        {"\n"}
+                        />{"\n"}
                         {"\n"}
                       </Text>
 
@@ -211,6 +222,10 @@ function ProfilePage({ navigation }: { navigation: any }) {
                         {"\n"}
                         {"\n"}
                       </Text>
+                      <Image
+          style={{ width: 100, height: 100 }}
+          source={{ uri: `${item['url']}` }}
+        /> 
 
                       <Text
                         style={{
@@ -294,12 +309,7 @@ const styles = {
   bio: {
     padding: 20,
     fontSize: 16,
-    color: "#000000",
-    backgroundColor: "#CECECE",
-    overflow: "hidden",
-    borderRadius: 15,
-    borderColor: "#000000",
-    borderTopWidth: 3,
+    color: "#333",
   },
 };
 

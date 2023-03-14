@@ -18,10 +18,10 @@ import { TextInput, IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
-  const { owner, tweets, time, _id } = route.params;
+  const { owner, tweets, time, _id, url } = route.params;
   const username = useAuthStore((state) => state.profile.username.username);
   const [like, setLike] = useState(0);
-  const [countLike, setCount] = useState([]);
+  const[countLike, setCount] = useState([])
   const [isLike, setisLike] = useState(false);
   const [comment, setText] = useState("");
   const [task, setTask] = useState([]);
@@ -38,36 +38,37 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
     });
   };
 
-  const onClick = async () => {
-    if (like + (!isLike ? -1 : 1)) {
-      await axios.post(`/like/${_id}/${owner}`).then((response) => {
-        setLike(like + (isLike ? -1 : 1));
-        getCountLike();
-      });
-    } else if (like + (isLike ? -1 : 1)) {
-      await axios.delete(`/notlike/${owner}/${_id}`).then((response) => {
-        setLike(like + (!isLike ? -1 : 1));
-        getCountLike();
+
+  const onClick =  async() => {
+    if((like +(!isLike ? -1: 1))){
+       await axios.post(`/like/${_id}/${owner}`).then((response) => {
+       
+      setLike(like +(isLike ? -1 : 1));
+      getCountLike();
+         })
+     } else if((like +(isLike ? -1: 1))){
+       await axios.delete(`/notlike/${owner}/${_id}`).then((response) => {
+      
+         setLike(like +(!isLike ? -1 : 1));
+         getCountLike();
+        });
+   }}
+
+   const obtenerLike = async() => {
+    await axios.get(`/like/${owner}/${_id}`).then((response) => {
+  if(response.data.like === true){
+    setLike(like +(isLike ? -1 : 1));
+  } if(response.data.like === false){
+    setisLike(!isLike);
+  }
+    });}    
+
+    const getCountLike = async() =>{
+      await axios.get(`/countLike/${_id}`).then((response) => {
+        setCount(response.data);
       });
     }
-  };
 
-  const obtenerLike = async () => {
-    await axios.get(`/like/${owner}/${_id}`).then((response) => {
-      if (response.data.like === true) {
-        setLike(like + (isLike ? -1 : 1));
-      }
-      if (response.data.like === false) {
-        setisLike(!isLike);
-      }
-    });
-  };
-
-  const getCountLike = async () => {
-    await axios.get(`/countLike/${_id}`).then((response) => {
-      setCount(response.data);
-    });
-  };
 
   useEffect(() => {
     obtenerLike();
@@ -177,19 +178,13 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
                 color: "#000000",
               }}
             >
-              @{owner}:{"          "}
-              {"          "}
-              {"          "}
-              {"          "}
-              {"          "}
-              {"          "}
-              <Icon
+             
+              @{owner}:                                                         <Icon
                 style={{ padding: 10, textAlign: "left" }}
                 name="brush"
                 color="#000000"
                 size={25}
-              />
-              {"\n"}
+              />{"\n"}
               {"\n"}
             </Text>
 
@@ -208,6 +203,10 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
               {"\n"}
             </Text>
 
+            <Image
+          style={{ width: 100, height: 100 }}
+          source={{ uri: `${url}` }}
+        /> 
             <Text
               style={{
                 paddingTop: 20,
@@ -218,10 +217,9 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
               }}
             >
               {" "}
+              {time} {"\n"}
               {"\n"}
               {"\n"}
-              {"\n"}
-              || Subido el: {time}
             </Text>
           </Text>
 
@@ -232,46 +230,40 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
               backgroundColor: "#fff",
               borderRadius: 70,
               borderWidth: 3,
-              margin: 100,
+              margin: 120,
               marginTop: 10,
               marginBottom: 35,
             }}
           >
-            <View style={{paddingLeft: 20}}>
-              <Pressable
-                style={{ paddingLeft: 55, paddingTop: 20, paddingBottom: 0 }}
-                onPress={onClick}
-              >
-                <MaterialCommunityIcons
-                  name={like ? "heart" : "heart-outline"}
-                  size={32}
-                  color={like ? "red" : "black"}
-                />
-                <Text
-                  style={{
-                    paddingVertical: 0,
-                    paddingLeft: 0,
-                    paddingRight: 0,
-                    paddingTop: 10,
-                    marginLeft:-10,
-                    marginBottom: 10,
-                    textAlign: "left",
-                    fontSize: 14,
-                    fontWeight: "700"
-                  }}
-                  onPress={() =>
-                    navigation.navigate("showLikes", {
-                      id_tweet: _id,
-                      owner: owner,
-                    })
-                  }
-                >
-                  {" "}
-                  Likes: {"" + (isLike ? like : countLike)}
-                </Text>
-              </Pressable>
-            </View>
+            <Pressable
+              style={{ paddingLeft: 45, paddingTop: 20, paddingBottom: 0 }}
+              onPress={onClick}
+            >
+              <MaterialCommunityIcons
+                name={like ? "heart" : "heart-outline"}
+                size={32}
+                color={like ? "red" : "black"}
+              />
+              <Text style={{
+              paddingVertical:10
+              
+              ,
+                paddingLeft: -8,
+                paddingRight: 0,
+                paddingTop:-30,
+                textAlign: "left",
+                fontSize: 14,
+              }} onPress={()=> navigation.navigate('showLikes',{
+
+               id_tweet:_id,
+               owner:owner
+
+              })}> Me Gustas:{ "" + (isLike ? like : countLike)} </Text>
+            </Pressable>
+            
           </View>
+         
+          
 
           <View style={{ borderRadius: 10, borderWidth: 3, paddingTop: 5 }}>
             <Text
@@ -398,19 +390,16 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
                               color="#000000"
                               size={25}
                             />
-                            @{item["owner"]}:{"          "}
-                            {"          "}
-                            {"          "}
-                            {"          "}
-                            {"     "}
-                            <Icon
+                          
+                            
+                            @{item["owner"]}:                                             <Icon
                               style={{ padding: 10, textAlign: "left" }}
                               name="brush"
                               color="#000000"
                               size={25}
-                            />{" "}
+                            />   {"\n"}
                             {"\n"}
-                            {"\n"}
+                            
                           </Text>
 
                           <Text

@@ -11,153 +11,208 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  TextInput,
-  TouchableWithoutFeedback,
-  Keyboard,
+  Platform,
+  Keyboard
+
 } from "react-native";
-
+import { firebaseConfig } from "../ImagenFirebase/firebase"
+import { StatusBar } from "expo-status-bar";
 import { useAuthStore } from "../store/auth.store";
-import { IconButton } from "@react-native-material/core";
+import { TextInput, IconButton } from "@react-native-material/core";
 import axios from "../libs/axios";
-
+import * as ImagePicker from 'expo-image-picker'
+import { firebase } from "../ImagenFirebase/firebase";
+import {getDownloadURL, uploadBytes, getStorage, ref} from 'firebase/storage'
 function NewTweetPage({ navigation }: { navigation: any }) {
   const username = useAuthStore((state) => state.profile.username.username);
-
+  const [uploading, setUploading] = React.useState(false)
   const [tweets, setText] = React.useState("");
+  const [image, setImage] = React.useState(null)
+  const [showIm, setShowImg] = React.useState([])
 
   const tweetsPress = async () => {
     setText("");
-    return axios.post(`tweet/${username}`, {
-      tweets,
-    });
+    setImage("")
+    setUploading(true);
+   const response = await fetch(image!)
+    const blob = await response.blob();
+    const filename = image!.substring(image!.lastIndexOf('/') + 1)
+    const app = firebase.initializeApp(firebaseConfig)
+    const storage = getStorage(app)
+    const storageref = ref(storage,filename)
+    await uploadBytes(storageref,blob)
+    const url =  await getDownloadURL(storageref)
+    console.log(url)
+  axios.post(`tweet/${username}`, {
+    tweets,
+    url
+  });
+ 
+
   };
 
+  const Upload = async (e: Event) => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.canceled) {
+    
+ setImage(result.assets[0].uri);
+   
+   } 
+ }
+
+  const uploadImage = async () => {
+    firebase.firestore().collection('Tweets').add({
+    username,
+    tweets,
+    
+   }).then(()=> {
+      setText('')
+      Keyboard.dismiss();
+    })
+    .catch((error)=>{
+      console.log(error)
+      })
+   setUploading(false);
+  setImage(null);
+  
+  }
+ 
+
+
+  useEffect(() => {
+    const foo = async () => {
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    }
+    foo();
+  }, [])
+
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <SafeAreaView>
-        <ScrollView>
-          <View
+    <SafeAreaView>
+      <ScrollView>
+ 
+        <View
+          style={{
+            paddingHorizontal: 25,
+            paddingTop: 80,
+            backgroundColor: "#fff",
+            borderRadius: 50,
+            borderWidth: 3,
+            margin: 10,
+
+          }}
+        >
+             
+          <Text
             style={{
-              paddingHorizontal: 25,
-              paddingTop: 80,
-              backgroundColor: "#fff",
+              textAlign: "center",
+              fontSize: 30,
+              fontWeight: "500",
+              color: "#FDFEFE",
+              paddingTop: 20,
+              paddingBottom: 15,
+              backgroundColor: "#85C1E9",
               borderRadius: 50,
-              borderWidth: 3,
-              margin: 10,
-              marginTop: 120
+              borderWidth: 5,
+              borderColor: "#2471A3"
             }}
           >
-            <Text
+            Nuevo Tweet
+          </Text>
+
+          <TextInput
+            style={{
+              paddingHorizontal: 10,
+              paddingVertical: 20,
+              backgroundColor: "#AED6F1",
+              borderWidth: 3,
+              paddingTop: 20,
+              marginBottom: 30,
+              marginTop: 30,
+              borderColor: "#2980B9",
+              borderStyle: 'dashed',
+
+            }
+            }
+            color="#3498DB"
+            placeholder="Dile al mundo lo que piensas..."
+            onChangeText={(text) => setText(text)}
+            value={tweets}
+            numberOfLines={4}
+            maxLength={120}
+            editable
+          />
+          <View style={{ paddingHorizontal: 10, paddingVertical: 1, marginBottom: 15, }}>
+            {image && <Image source={{ uri: image }} style={{ width: 300, height: 200 }} />}
+            <StatusBar style="auto" />
+
+          </View>
+
+          <View style={{ paddingHorizontal: 200, paddingVertical: 1 }}>
+            <TouchableOpacity
+              onPress={Upload}
               style={{
-                textAlign: "center",
-                fontSize: 30,
-                fontWeight: "500",
-                color: "#333",
-                paddingBottom: 25,
+                backgroundColor: "#3364FF",
+                padding: 10,
+                borderRadius: 10,
+                marginBottom: 30,
+                marginLeft: -20,
+                marginRight: -100,
               }}
             >
-              Nuevo tweet
-            </Text>
-
-            <TextInput
-              style={{
-                borderRadius: 10,
-                borderWidth: 2,
-                borderColor: "#000000",
-                overflow: "hidden",
-                height: 120,
-                width: 335,
-              }}
-              color="#000000"
-              label="Tweet"
-              placeholder="Dile al mundo lo que piensas..."
-              onChangeText={(text) => setText(text)}
-              value={tweets}
-              disableFullscreenUI
-              multiline
-              maxLength={120}
-              editable
-            />
-
-            <View style={{ paddingHorizontal: 200, paddingVertical: 1, paddingTop:20 }}>
-              <TouchableOpacity
-                onPress={tweetsPress}
+              <Text
                 style={{
-                  backgroundColor: "#000000",
-                  padding: 10,
-                  borderRadius: 10,
-                  marginBottom: 30,
-                  marginLeft: -5,
-                  marginRight: -130,
+                  textAlign: "center",
+                  fontWeight: "700",
+                  fontSize: 16,
+                  color: "#fff",
                 }}
               >
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontWeight: "700",
-                    fontSize: 16,
-                    color: "#fff",
-                  }}
-                >
-                  Tweetear
-                </Text>
-              </TouchableOpacity>
-            </View>
+                Subir Imagen
+              </Text>
+            </TouchableOpacity>
           </View>
-        </ScrollView>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+          <View style={{ paddingHorizontal: 200, paddingVertical: 1 }}>
+            <TouchableOpacity
+              onPress={tweetsPress}
+              style={{
+                backgroundColor: "#000000",
+                padding: 10,
+                borderRadius: 10,
+                marginBottom: 30,
+                marginLeft: -20,
+                marginRight: -100,
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontWeight: "700",
+                  fontSize: 16,
+                  color: "#fff",
+                }}
+              >
+                Tweetear
+              </Text>
+            </TouchableOpacity>
+          </View>
+           </View>
+
+
+</ScrollView>
+</SafeAreaView>
   );
 }
 
-const styles = {
-  container: {
-    backgroundColor: "#fff",
-    paddingTop: 10,
-  },
-  header: {
-    marginTop: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 20,
-  },
-  avatar: {
-    width: 95,
-    height: 95,
-    borderRadius: 55,
-  },
-  info: {
-    marginLeft: 25,
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  username: {
-    color: "#999",
-    fontSize: 18,
-  },
-  stats: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 20,
-  },
-  stat: {
-    flex: 1,
-    alignItems: "center",
-  },
-  statLabel: {
-    color: "#999",
-    fontSize: 14,
-  },
-  statValue: {
-    fontSize: 18,
-  },
-  bio: {
-    padding: 20,
-    fontSize: 16,
-    color: "#333",
-  },
-};
+
 
 export default NewTweetPage;

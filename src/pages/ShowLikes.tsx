@@ -41,7 +41,7 @@ function ShowLikePage({ route,navigation }: { navigation: any, route:any }) {
           <RefreshControl refreshing={refreshing} onRefresh={OnRefresh} />
         }
       >
-        <View style={{ borderRadius: 10, borderWidth: 3, paddingTop: 5, paddingBottom: 10 }}>
+        <View style={{ borderRadius: 10, borderWidth: 3, paddingTop: 5 }}>
   
             <Text
               style={{
@@ -59,7 +59,7 @@ function ShowLikePage({ route,navigation }: { navigation: any, route:any }) {
                         size={32}
                        color={ "red" }
               />
-              {" "} Likes:
+              Me Gusta:
             </Text>
 
           <FlatList
@@ -102,9 +102,9 @@ function ShowLikePage({ route,navigation }: { navigation: any, route:any }) {
                     >
                       @{item["owner"]}  
                        <MaterialCommunityIcons
-                       name={"heart"}
+                       name={ "heart"}
                         size={32}
-                       color={"red"}
+                       color={ "red" }
               />{"\n"}
                       {"\n"}
                     </Text></Text>

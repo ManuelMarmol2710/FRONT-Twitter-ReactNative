@@ -62,8 +62,8 @@ function BuscarPage({ navigation }: { navigation: any }) {
   };
 
   const data = [
-    { key: "1", value: "Mas reciente" },
-    { key: "2", value: "Mas antiguo"},
+    { key: "1", value: "Mas reciente", filtrartweetsNew },
+    { key: "2", value: "Mas antiguo", filtrartweetsOld },
   ];
 
   useEffect(() => {
@@ -175,7 +175,6 @@ function BuscarPage({ navigation }: { navigation: any }) {
                           name: item["name"],
                           last_Name: item["last_Name"],
                           biography: item["biography"],
-                          
                         })
                       }
                     >

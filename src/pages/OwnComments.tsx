@@ -262,7 +262,7 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
             }}
           >
             <Pressable
-              style={{ paddingLeft: 55, paddingTop: 20, paddingBottom: 0 }}
+              style={{ paddingLeft: 45, paddingTop: 20, paddingBottom: 0 }}
               onPress={onClick}
             >
               <MaterialCommunityIcons
@@ -273,18 +273,16 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
                <Text style={{
               paddingVertical:10,
                 paddingLeft: -8,
-                marginLeft:-10,
                 paddingRight: 0,
-                paddingTop:10,
+                paddingTop:-30,
                 textAlign: "left",
                 fontSize: 14,
-                fontWeight: "700"
               }} onPress={()=> navigation.navigate('showLikesComments',{
 
                id_tweet:_id,
                owner:owner
 
-              })}> Likes: { "" + (isLike ? like : countLike)} </Text>
+              })}> Me Gustas:{ "" + (isLike ? like : countLike)} </Text>
             </Pressable>
       
 
