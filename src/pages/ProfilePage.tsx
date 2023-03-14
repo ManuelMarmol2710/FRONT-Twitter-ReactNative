@@ -17,33 +17,29 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
 
-
 function ProfilePage({ navigation }: { navigation: any }) {
   const username = useAuthStore((state) => state.profile.username.username);
   const email = useAuthStore((state) => state.profile.username.email);
   const name = useAuthStore((state) => state.profile.username.name);
   const lastName = useAuthStore((state) => state.profile.username.last_Name);
   const biography = useAuthStore((state) => state.profile.username.biography);
-  const[count,setCount] = useState([]);
+  const [count, setCount] = useState([]);
   const [task, setTask] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
   const tweetsRelease = async () => {
     await axios.get(`tweet/${username}`).then((response) => {
       setTask(response.data);
-
     });
   };
   const tweetsCount = async () => {
     await axios.get(`countTweets/${username}`).then((response) => {
       setCount(response.data);
-  
     });
   };
   useEffect(() => {
     tweetsCount();
     tweetsRelease();
-    
   }, []);
 
   const OnRefresh = useCallback(async () => {
@@ -91,10 +87,13 @@ function ProfilePage({ navigation }: { navigation: any }) {
                   {username}
                 </Text>
                 <Text style={styles.username}>{email}</Text>
-                <TouchableOpacity onPress ={()=> navigation.navigate('ProfileUpdateNamelast')}>
-                <Text style={styles.username}>
-                  {name} {lastName}
-                </Text>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("ProfileUpdateNamelast")}
+                >
+                  <Text style={styles.username}>
+                    {name} {lastName} {""}
+                    <Icon name="brush" color="#000000" size={16} />
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -118,10 +117,24 @@ function ProfilePage({ navigation }: { navigation: any }) {
                 <Text style={styles.statValue}>456</Text>
               </View>
             </View>
-            <TouchableOpacity onPress ={()=> navigation.navigate('ProfileUpdateBio')}>
-            <Text style={styles.bio} >{biography} 
+            <TouchableOpacity
+              onPress={() => navigation.navigate("ProfileUpdateBio")}
+            >
+              <Text
+                style={{
+                  padding: 20,
+                  fontSize: 16,
+                  color: "#000000",
+                  backgroundColor: "#CECECE",
+                  overflow: "hidden",
+                  borderRadius: 15,
+                  borderColor: "#000000",
+                  borderTopWidth: 3,
+                }}
+              >
+                {biography}
               </Text>
-           </TouchableOpacity>
+            </TouchableOpacity>
           </View>
 
           <View>
@@ -173,13 +186,14 @@ function ProfilePage({ navigation }: { navigation: any }) {
                           color: "#000000",
                         }}
                       >
-                        
-                        @{item["owner"]}:                                                        <Icon
+                        @{item["owner"]}:{"             "}{"             "}{"             "}{"             "}{"    "}
+                        <Icon
                           style={{ padding: 12, textAlign: "left" }}
                           name="brush"
                           color="#000000"
                           size={25}
-                        />{"\n"}
+                        />
+                        {"\n"}
                         {"\n"}
                       </Text>
 
@@ -280,7 +294,12 @@ const styles = {
   bio: {
     padding: 20,
     fontSize: 16,
-    color: "#333",
+    color: "#000000",
+    backgroundColor: "#CECECE",
+    overflow: "hidden",
+    borderRadius: 15,
+    borderColor: "#000000",
+    borderTopWidth: 3,
   },
 };
 

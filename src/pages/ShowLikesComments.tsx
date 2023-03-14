@@ -41,7 +41,7 @@ function ShowLikeCommentsPage({ route,navigation }: { navigation: any, route:any
           <RefreshControl refreshing={refreshing} onRefresh={OnRefresh} />
         }
       >
-        <View style={{ borderRadius: 10, borderWidth: 3, paddingTop: 5 }}>
+        <View style={{ borderRadius: 10, borderWidth: 3, paddingTop: 5, paddingBottom: 10 }}>
   
             <Text
               style={{
@@ -59,7 +59,7 @@ function ShowLikeCommentsPage({ route,navigation }: { navigation: any, route:any
                         size={32}
                        color={ "red" }
               />
-              Me Gusta:
+              {''} Likes:
             </Text>
 
           <FlatList

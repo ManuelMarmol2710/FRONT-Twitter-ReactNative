@@ -65,7 +65,7 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
                 }}
               />
               <View style={styles.info}>
-                <Text style={{ fontSize: 24, fontWeight: "bold" }}>
+                <Text style={{ fontSize: 22, fontWeight: "bold" }}>
                   @{username}
                 </Text>
                 <Text style={styles.username}>
@@ -93,7 +93,16 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
                 <Text style={styles.statValue}>456</Text>
               </View>
             </View>
-            <Text style={styles.bio}>{biography}</Text>
+            <Text style={{
+                  padding: 20,
+                  fontSize: 16,
+                  color: "#000000",
+                  backgroundColor: "#CECECE",
+                  overflow: "hidden",
+                  borderRadius: 15,
+                  borderColor: "#000000",
+                  borderTopWidth: 3,
+                }}>{biography}</Text>
           </View>
           <View style={{ paddingHorizontal: 25, paddingTop: 30 }}></View>
 
@@ -192,7 +201,7 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
 const styles = {
   container: {
     backgroundColor: "#FFFFFF",
-    paddingTop: 10,
+    paddingTop: 0,
     borderColor: "#00000",
     borderBottomWidth: 4,
     borderTopWidth: 4,
@@ -207,9 +216,9 @@ const styles = {
     padding: 20,
   },
   avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 95,
+    height: 95,
+    borderRadius: 55,
   },
   info: {
     marginLeft: 20,
