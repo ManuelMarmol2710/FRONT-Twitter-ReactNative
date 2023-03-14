@@ -56,6 +56,7 @@ function AwayComments({ route, navigation }: { route: any; navigation: any }) {
 
   useEffect(() => {
     obtenerLikeComments();
+    getCountLike();
   }, []);
   const OnRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -194,7 +195,7 @@ function AwayComments({ route, navigation }: { route: any; navigation: any }) {
                   })
                 }
               >
-                Likes: {"" + (isLike ? like : countLike)}{" "}
+                Likes: {"" + (isLike ? like : countLike)}
               </Text>
             </Pressable>
           </View>
