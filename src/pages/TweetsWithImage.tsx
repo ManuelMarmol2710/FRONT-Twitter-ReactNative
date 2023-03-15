@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   RefreshControl,
   Pressable,
+  Image
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import axios from "../libs/axios";
@@ -15,8 +16,8 @@ import { useAuthStore } from "../store/auth.store";
 import { TextInput, IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
-  const { owner, tweets, time, _id, name, last_Name, biography } = route.params;
+function TweetsWithImage({ route, navigation }: { route: any; navigation: any }) {
+  const { owner, tweets, time, _id, name, last_Name, biography, url } = route.params;
 
   const username = useAuthStore((state) => state.profile.username.username);
   const [like, setLike] = useState(0);
@@ -153,6 +154,20 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
               {"\n"}
               {"\n"}
             </Text>
+
+            <View style={{ paddingLeft: 140, paddingTop: 5 }}>
+                        <Image
+                          style={{
+                            width: 100,
+                            height: 100,
+                            borderColor: "#000000",
+                            borderWidth: 3,
+                            borderRadius: 10,
+                          }}
+                          source={{ uri: `${url}` }}
+                        />
+                      </View>
+
             <Text
               style={{
                 paddingTop: 40,
@@ -482,4 +497,4 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
   );
 }
 
-export default TweetsPage;
+export default TweetsWithImage;

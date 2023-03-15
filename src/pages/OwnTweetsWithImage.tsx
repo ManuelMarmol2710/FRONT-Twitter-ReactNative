@@ -17,7 +17,7 @@ import { useAuthStore } from "../store/auth.store";
 import { TextInput, IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
+function OwnTweetsWithImage({ route, navigation }: { route: any; navigation: any }) {
   const { owner, tweets, time, _id, url } = route.params;
   const username = useAuthStore((state) => state.profile.username.username);
   const [like, setLike] = useState(0);
@@ -207,6 +207,19 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
               {"\n"}
               {"\n"}
             </Text>
+
+            <View style={{ paddingLeft: 140, paddingTop: 5 }}>
+                        <Image
+                          style={{
+                            width: 100,
+                            height: 100,
+                            borderColor: "#000000",
+                            borderWidth: 3,
+                            borderRadius: 10,
+                          }}
+                          source={{ uri: `${url}` }}
+                        />
+                      </View>
 
             <Text
               style={{
@@ -542,4 +555,4 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
   );
 }
 
-export default OwnTweetsPage;
+export default OwnTweetsWithImage;
