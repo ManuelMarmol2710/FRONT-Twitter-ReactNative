@@ -171,8 +171,8 @@ function NewTweetPage({ navigation }: { navigation: any }) {
                   borderRadius: 10,
                   marginBottom: 30,
                   marginLeft: -180,
-                  marginRight: -115,
-                  marginTop: 10,
+                  marginRight: -120,
+                  marginTop: 0,
                 }}
               >
                 <Text
@@ -207,8 +207,8 @@ function NewTweetPage({ navigation }: { navigation: any }) {
                   padding: 10,
                   borderRadius: 10,
                   marginBottom: 30,
-                  marginLeft: -5,
-                  marginRight: -130,
+                  marginLeft: -15,
+                  marginRight: -120,
                 }}
               >
                 <Text

@@ -7,7 +7,7 @@ const baseURL =
     : "https://back-twitter-reactnative-production.up.railway.app/";
 
 const authApi = axios.create({
-  baseURL,
+  baseURL, 
   withCredentials: true,
 });
 
