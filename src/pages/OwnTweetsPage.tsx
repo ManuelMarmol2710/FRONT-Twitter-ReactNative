@@ -91,7 +91,7 @@ function OwnTweetsPage({ route, navigation }: { route: any; navigation: any }) {
       {
         text: "OK",
         onPress: async () =>
-          await axios.delete(`deleteTweets/${tweets}`).then((response) => {
+          await axios.delete(`deleteTweets/${_id}`).then((response) => {
             navigation.navigate("Profile");
           }),
       },

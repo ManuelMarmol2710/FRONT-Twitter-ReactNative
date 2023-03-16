@@ -31,11 +31,16 @@ function NewTweetPage({ navigation }: { navigation: any }) {
   const [uploading, setUploading] = React.useState(false);
   const [tweets, setText] = React.useState("");
   const [image, setImage] = React.useState(null);
-  const [showIm, setShowImg] = React.useState([]);
 
-  const tweetsPress = async () => {
-    setText("");
-    setImage("");
+const tweetsPress = async () => {
+  setText("");
+  setImage(null);
+  if (!image ){
+    axios.post(`tweet/${username}`, {
+      tweets
+    });
+    
+  } else {
     setUploading(true);
     const response = await fetch(image!);
     const blob = await response.blob();
@@ -43,13 +48,16 @@ function NewTweetPage({ navigation }: { navigation: any }) {
     const app = firebase.initializeApp(firebaseConfig);
     const storage = getStorage(app);
     const storageref = ref(storage, filename);
-    await uploadBytes(storageref, blob);
+    const upload =   await uploadBytes(storageref, blob);
     const url = await getDownloadURL(storageref);
-    console.log(url);
+  
     axios.post(`tweet/${username}`, {
       tweets,
-      url,
-    });
+      url
+  });
+
+
+  }
   };
 
   const Upload = async (e: Event) => {
@@ -62,26 +70,10 @@ function NewTweetPage({ navigation }: { navigation: any }) {
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
+  
+ 
   };
 
-  const uploadImage = async () => {
-    firebase
-      .firestore()
-      .collection("Tweets")
-      .add({
-        username,
-        tweets,
-      })
-      .then(() => {
-        setText("");
-        Keyboard.dismiss();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setUploading(false);
-    setImage(null);
-  };
 
   useEffect(() => {
     const foo = async () => {
@@ -171,8 +163,8 @@ function NewTweetPage({ navigation }: { navigation: any }) {
                   borderRadius: 10,
                   marginBottom: 30,
                   marginLeft: -180,
-                  marginRight: -120,
-                  marginTop: 0,
+                  marginRight: -115,
+                  marginTop: 10,
                 }}
               >
                 <Text
@@ -207,8 +199,8 @@ function NewTweetPage({ navigation }: { navigation: any }) {
                   padding: 10,
                   borderRadius: 10,
                   marginBottom: 30,
-                  marginLeft: -15,
-                  marginRight: -120,
+                  marginLeft: -5,
+                  marginRight: -130,
                 }}
               >
                 <Text
