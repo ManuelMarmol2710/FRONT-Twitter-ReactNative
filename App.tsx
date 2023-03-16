@@ -22,6 +22,7 @@ import ProfileUpdatePasswordPage from "./src/pages/ProfileUpdatePassword";
 import ProfileUpdateNamelastPage from "./src/pages/ProfileUpdateName&last";
 import ProfileUpdateBio from "./src/pages/ProfileUpdateBio";
 import followingPage from "./src/pages/Following";
+import AwayfollowingPage from "./src/pages/AwayFollowing";
 import { BottomTab } from "./src/navigation/BottomTab";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -332,6 +333,16 @@ export default function App() {
               <Stack.Screen
             name="following"
             component={followingPage}
+            options={{
+              title: "",
+              headerStyle: {
+                backgroundColor: "#afc7d8",
+              },
+            }}
+          />
+                <Stack.Screen
+            name="Awayfollowing"
+            component={AwayfollowingPage}
             options={{
               title: "",
               headerStyle: {

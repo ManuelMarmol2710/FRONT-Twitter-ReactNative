@@ -26,6 +26,7 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
   const [count, setCount] = useState([]);
   const [like, setLike] = useState(0);
   const [isLike, setisLike] = useState(false);
+  const[countFollowing, setCountFollowing] = useState([]);
   const tweetsRelease = async () => {
     await axios.get(`tweet/${username}`).then((response) => {
       setTask(response.data);
@@ -36,15 +37,22 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
       setCount(response.data);
     });
   };
+  const followingCount = async () => {
+    await axios.get(`countFollowing/${username}`).then((response) => {
+      setCountFollowing(response.data);
+    });
+  };
   useEffect(() => {
     tweetsRelease();
     tweetsCount();
     siloSIgo();
+    followingCount();
   }, []);
   const OnRefresh = useCallback(async () => {
     setRefreshing(true);
     await tweetsRelease(), setRefreshing(false);
     await tweetsCount(), setRefreshing(false);
+    await followingCount(), setRefreshing(false);
   }, []);
 
   const onClick = async () => {
@@ -122,7 +130,11 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
               </View>
               <View style={{ flex: 1, alignItems: "center" }}>
                 <Text style={styles.statLabel}>Following</Text>
-                <Text style={styles.statValue}>123</Text>
+                <Text  onPress={() => navigation.navigate("Awayfollowing",{
+                owner:username
+
+                })}
+                style={styles.statValue}>{countFollowing}</Text>
               </View>
               <View style={{ flex: 1, alignItems: "center" }}>
                 <Text style={styles.statLabel}>Followers</Text>
