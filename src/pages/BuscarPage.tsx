@@ -277,7 +277,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
                           color: "#000000",
                         }}
                       >
-                        @{item["owner"]}:{" "}
+                        @{item["owner"]}:{"      "}{"      "}{"      "}{"      "}{"      "}{"      "}{"      "}{"      "}{"   "}  
                         <Icon
                           style={{ padding: 12, textAlign: "left" }}
                           name="brush"
@@ -445,7 +445,13 @@ function BuscarPage({ navigation }: { navigation: any }) {
                           color: "#000000",
                         }}
                       >
-                        @{item["owner"]}: {"\n"}
+                        @{item["owner"]}:{"       "}{"       "} {"       "} {"       "} {"       "} {"       "} {"   "}  
+                        <Icon
+                          style={{ padding: 12, textAlign: "left" }}
+                          name="brush"
+                          color="#000000"
+                          size={25}
+                        />{"\n"}
                         {"\n"}
                       </Text>
 

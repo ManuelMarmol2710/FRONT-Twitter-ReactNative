@@ -460,13 +460,22 @@ function OwnTweetsWithImage({ route, navigation }: { route: any; navigation: any
                     );
                   } else {
                     return (
-                      <View
+                      <TouchableOpacity
                         style={{
                           backgroundColor: "#afc7d8",
                           paddingTop: 10,
                           paddingLeft: 10,
                           paddingRight: 10,
+                          paddingBottom: 10
                         }}
+                        onPress={() =>
+                          navigation.navigate("awaycomment", {
+                            comment: item["comment"],
+                            owner: item["owner"],
+                            time: item["time"],
+                            _id: item["_id"],
+                          })
+                        }
                       >
                         <Text
                           style={{
@@ -485,14 +494,7 @@ function OwnTweetsWithImage({ route, navigation }: { route: any; navigation: any
                             backgroundColor: "#fff",
                             overflow: "hidden",
                           }}
-                          onPress={() =>
-                            navigation.navigate("awaycomment", {
-                              comment: item["comment"],
-                              owner: item["owner"],
-                              time: item["time"],
-                              _id: item["_id"],
-                            })
-                          }
+                          
                         >
                           <Text
                             style={{
@@ -542,7 +544,7 @@ function OwnTweetsWithImage({ route, navigation }: { route: any; navigation: any
                             || Subido el: {item["time"]}
                           </Text>
                         </Text>
-                      </View>
+                      </TouchableOpacity>
                     );
                   }
                 }}

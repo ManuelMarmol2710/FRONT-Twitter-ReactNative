@@ -25,6 +25,7 @@ function RegisterPage({ navigation }: { navigation: any }) {
   const [checkValidEmail, setcheckValidEmail] = useState(true);
   const setToken = useAuthStore((state) => state.setToken);
   const setProfile = useAuthStore((state) => state.setProfile);
+
   const SignupPress = async () => {
     const respuesta = await RegisterRequest(
       email,
@@ -32,29 +33,10 @@ function RegisterPage({ navigation }: { navigation: any }) {
       name,
       last_Name,
       username,
-      biography
+      biography,
+      navigation,
     );
     setToken(respuesta.data.token);
-
-    if (setText1.length < 7) {
-      Alert.alert("Registro Invalido", "Contraseña invalida", [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") },
-      ]);
-    } else if (setText5.length < 3){
-      Alert.alert("Registro Invalido", "Usuario invalido", [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") },
-      ]);
-    }
   };
 
   const handleCheckEmail = (text: any) => {
@@ -79,7 +61,7 @@ function RegisterPage({ navigation }: { navigation: any }) {
             margin: 10,
           }}
         >
-          <View style={{ paddingHorizontal: 25, paddingTop: 100 }}>
+          <View style={{ paddingHorizontal: 25, paddingTop: 40 }}>
             <Text
               style={{
                 textAlign: "center",
