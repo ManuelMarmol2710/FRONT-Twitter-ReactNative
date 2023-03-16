@@ -222,7 +222,7 @@ function ProfilePage({ navigation }: { navigation: any }) {
                           
                       </Text>
 
-                      <View style={{paddingLeft:140, paddingTop: 5}}>
+                      <View style={{paddingLeft:140, paddingTop: 20}}>
 
                       <Image
                             style={{ width: 100, height: 100, borderColor:'#000000', borderWidth: 3, borderRadius: 10 }}

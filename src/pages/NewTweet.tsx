@@ -32,32 +32,29 @@ function NewTweetPage({ navigation }: { navigation: any }) {
   const [tweets, setText] = React.useState("");
   const [image, setImage] = React.useState(null);
 
-const tweetsPress = async () => {
-  setText("");
-  setImage(null);
-  if (!image ){
-    axios.post(`tweet/${username}`, {
-      tweets
-    });
-    
-  } else {
-    setUploading(true);
-    const response = await fetch(image!);
-    const blob = await response.blob();
-    const filename = image!.substring(image!.lastIndexOf("/") + 1);
-    const app = firebase.initializeApp(firebaseConfig);
-    const storage = getStorage(app);
-    const storageref = ref(storage, filename);
-    const upload =   await uploadBytes(storageref, blob);
-    const url = await getDownloadURL(storageref);
-  
-    axios.post(`tweet/${username}`, {
-      tweets,
-      url
-  });
+  const tweetsPress = async () => {
+    setText("");
+    setImage(null);
+    if (!image) {
+      axios.post(`tweet/${username}`, {
+        tweets,
+      });
+    } else {
+      setUploading(true);
+      const response = await fetch(image!);
+      const blob = await response.blob();
+      const filename = image!.substring(image!.lastIndexOf("/") + 1);
+      const app = firebase.initializeApp(firebaseConfig);
+      const storage = getStorage(app);
+      const storageref = ref(storage, filename);
+      const upload = await uploadBytes(storageref, blob);
+      const url = await getDownloadURL(storageref);
 
-
-  }
+      axios.post(`tweet/${username}`, {
+        tweets,
+        url,
+      });
+    }
   };
 
   const Upload = async (e: Event) => {
@@ -70,10 +67,7 @@ const tweetsPress = async () => {
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
-  
- 
   };
-
 
   useEffect(() => {
     const foo = async () => {
@@ -142,13 +136,13 @@ const tweetsPress = async () => {
                 marginBottom: 15,
                 marginTop: 10,
                 marginLeft: 0,
-                marginRight:0,
+                marginRight: 0,
               }}
             >
               {image && (
                 <Image
                   source={{ uri: image }}
-                  style={{ width: 300, height: 200, marginLeft:12 }}
+                  style={{ width: 300, height: 200, marginLeft: 12 }}
                 />
               )}
               <StatusBar style="auto" />
@@ -164,7 +158,7 @@ const tweetsPress = async () => {
                   marginBottom: 30,
                   marginLeft: -180,
                   marginRight: -115,
-                  marginTop: 10,
+                  marginTop: -15,
                 }}
               >
                 <Text

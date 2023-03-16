@@ -155,11 +155,11 @@ function TweetsWithImage({ route, navigation }: { route: any; navigation: any })
               {"\n"}
             </Text>
 
-            <View style={{ paddingLeft: 140, paddingTop: 5 }}>
+            <View style={{ paddingLeft: 45, paddingTop: 5 }}>
                         <Image
                           style={{
-                            width: 100,
-                            height: 100,
+                            width: 300,
+                            height: 300,
                             borderColor: "#000000",
                             borderWidth: 3,
                             borderRadius: 10,

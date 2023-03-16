@@ -14,7 +14,6 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 function SettingsPage({ navigation }: { navigation: any }) {
 
-
   const Bye = async () => {
     Alert.alert("Cerrar sesion?", "Su sesion sera cerrada", [
       {

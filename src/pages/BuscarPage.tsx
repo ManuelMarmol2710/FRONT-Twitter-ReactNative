@@ -63,8 +63,9 @@ function BuscarPage({ navigation }: { navigation: any }) {
   };
 
   const data = [
-    { key: "1", value: "Mas reciente" },
-    { key: "2", value: "Mas antiguo" },
+    { key: "1", value: "Mas antiguo" },
+    { key: "2", value: "Mas recientes" },
+    { key: "3", value: "Buscar por fotos" }
   ];
 
   useEffect(() => {
@@ -107,7 +108,15 @@ function BuscarPage({ navigation }: { navigation: any }) {
             }
             data={data}
             save="value"
-            onSelect={filtrartweetsOld}
+
+            onSelect={() => {
+              if (selected === 'Mas antiguo'){
+                filtrartweetsOld();
+              } else if (selected === 'Mas recientes'){
+                tweetsFind();
+              }
+
+            }}
             searchPlaceholder="Filtrar por"
           />
         </View>

@@ -23,7 +23,6 @@ function RegisterPage({ navigation }: { navigation: any }) {
   const [username, setText5] = useState("");
   const [seePassword, setseePassword] = useState(true);
   const [checkValidEmail, setcheckValidEmail] = useState(true);
-  const [checkValidPassword, setcheckValidPassword] = useState(true);
   const setToken = useAuthStore((state) => state.setToken);
   const setProfile = useAuthStore((state) => state.setProfile);
   const SignupPress = async () => {
@@ -37,7 +36,7 @@ function RegisterPage({ navigation }: { navigation: any }) {
     );
     setToken(respuesta.data.token);
 
-    if (password.length < 7) {
+    if (setText1.length < 7) {
       Alert.alert("Registro Invalido", "Contraseña invalida", [
         {
           text: "Cancel",
@@ -46,13 +45,8 @@ function RegisterPage({ navigation }: { navigation: any }) {
         },
         { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
-    } else if (
-      email == null ||
-      username == null ||
-      name == null ||
-      last_Name == null
-    ) {
-      Alert.alert("Registro Invalido", "Campo vacio", [
+    } else if (setText5.length < 3){
+      Alert.alert("Registro Invalido", "Usuario invalido", [
         {
           text: "Cancel",
           onPress: () => console.log("Cancel Pressed"),
@@ -60,21 +54,6 @@ function RegisterPage({ navigation }: { navigation: any }) {
         },
         { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
-    } else {
-      
-      navigation.navigate("login");
-    }
-  };
-
-  const checkPasswordValidity = (text: any) => {
-    const isValidLength = /^.{8,16}$/;
-    if (!isValidLength.test(text)) {
-      return "La contraseña debe tener entre 8 y 16 caracteres.";
-    }
-
-    const isNonWhiteSpace = /^\S*$/;
-    if (!isNonWhiteSpace.test(text)) {
-      return "Password must not contain Whitespaces.";
     }
   };
 
@@ -87,17 +66,6 @@ function RegisterPage({ navigation }: { navigation: any }) {
       setcheckValidEmail(false);
     } else {
       setcheckValidEmail(true);
-    }
-  };
-
-  const handleCheckPassword = (text: any) => {
-    let te = /^.{8,16}$/;
-    let teg = /^\S*$/;
-    setText1(text);
-    if (te.test(text) || teg.test(text)) {
-      setcheckValidPassword(false);
-    } else {
-      setcheckValidPassword(true);
     }
   };
 
@@ -206,6 +174,5 @@ function RegisterPage({ navigation }: { navigation: any }) {
     </SafeAreaView>
   );
 }
-const styles = StyleSheet.create({});
 
 export default RegisterPage;

@@ -62,7 +62,7 @@ function LoginPage({ navigation }: { navigation: any }) {
           borderRadius: 90,
           borderWidth: 4,
           margin: 10,
-          marginTop: 100
+          marginTop: 50
         }}
       >
         <View style={{ paddingHorizontal: 25, paddingTop: 100 }}>
