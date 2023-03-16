@@ -12,14 +12,20 @@ import {
   Image,
   RefreshControl,
   ScrollView,
+  Pressable,
 } from "react-native";
-
+import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { SimpleLineIcons } from '@expo/vector-icons'; 
 function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
   const { username, name, last_Name, biography } = route.params;
-  const [task, setTask] = useState([]);
+  const owner= useAuthStore((state) => state.profile.username.username);
+   const [task, setTask] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [count, setCount] = useState([]);
+  const [like, setLike] = useState(0);
+  const [isLike, setisLike] = useState(false);
   const tweetsRelease = async () => {
     await axios.get(`tweet/${username}`).then((response) => {
       setTask(response.data);
@@ -33,12 +39,44 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
   useEffect(() => {
     tweetsRelease();
     tweetsCount();
+    siloSIgo();
   }, []);
   const OnRefresh = useCallback(async () => {
     setRefreshing(true);
     await tweetsRelease(), setRefreshing(false);
     await tweetsCount(), setRefreshing(false);
   }, []);
+
+  const onClick = async () => {
+    if (like + (!isLike ? -1 : 1)) {
+      await axios.post(`/follow/${owner}/${username}`).then((response) => {
+       setLike(like + (isLike ? -1 : 1));
+      });
+    } else if (like + (isLike ? -1 : 1)) {
+      await axios
+        .delete(`/unfollow/${owner}/${username}`)
+        .then((response) => {
+          setLike(like + (!isLike ? -1 : 1));
+        });
+    }
+  };
+
+  const siloSIgo = async () => {
+    await axios.get(`/following/${owner}/${username}`).then((response) => {
+   console.log(response.data.following); 
+      if (response.data.following === username) {
+        setLike(like + (isLike ? -1 : 1));
+      }
+      if (response.data.following === !username) {
+        setisLike(!isLike);
+      }
+    });
+  };
+
+
+
+
+
   return (
     <SafeAreaView>
       <ScrollView
@@ -89,7 +127,20 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
               <View style={{ flex: 1, alignItems: "center" }}>
                 <Text style={styles.statLabel}>Followers</Text>
                 <Text style={styles.statValue}>456</Text>
+               
+           
               </View>
+              <Pressable
+              style={{ paddingLeft: 55, paddingTop: 20, paddingBottom: 10 }}
+              onPress={onClick}
+            >
+              <SimpleLineIcons
+                name={like ? "user-following" : "user-follow"}
+                size={32}
+                color={like ? "blue" : "black"}
+              />
+              </Pressable>
+           
             </View>
             <Text
               style={{

@@ -27,6 +27,7 @@ function ProfilePage({ navigation }: { navigation: any }) {
   const url = useAuthStore((state) => state.profile.username.url);
   const [count, setCount] = useState([]);
   const [task, setTask] = useState([]);
+  const[countFollowing, setCountFollowing] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const myTime = moment(["time"]).format('hh:mm:ss')
 
@@ -40,8 +41,14 @@ function ProfilePage({ navigation }: { navigation: any }) {
       setCount(response.data);
     });
   };
+  const followingCount = async () => {
+    await axios.get(`countFollowing/${username}`).then((response) => {
+      setCountFollowing(response.data);
+    });
+  };
   useEffect(() => {
     tweetsCount();
+    followingCount();
     tweetsRelease();
   }, []);
 
@@ -49,6 +56,7 @@ function ProfilePage({ navigation }: { navigation: any }) {
     setRefreshing(true);
     await tweetsRelease(), setRefreshing(false);
     await tweetsCount(), setRefreshing(false);
+    await followingCount(), setRefreshing(false);
   }, []);
 
   return (
@@ -113,7 +121,8 @@ function ProfilePage({ navigation }: { navigation: any }) {
               </View>
               <View style={{ flex: 1, alignItems: "center" }}>
                 <Text style={styles.statLabel}>Following</Text>
-                <Text style={styles.statValue}>123</Text>
+                <Text  onPress={() => navigation.navigate("following")}
+                style={styles.statValue}>{countFollowing}</Text>
               </View>
               <View style={{ flex: 1, alignItems: "center" }}>
                 <Text style={styles.statLabel}>Followers</Text>
