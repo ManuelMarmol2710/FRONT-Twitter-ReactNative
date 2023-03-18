@@ -28,6 +28,7 @@ function ProfilePage({ navigation }: { navigation: any }) {
   const [count, setCount] = useState([]);
   const [task, setTask] = useState([]);
   const[countFollowing, setCountFollowing] = useState([]);
+  const[countFollowers, setCountFollowers] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const myTime = moment(["time"]).format('hh:mm:ss')
 
@@ -46,10 +47,16 @@ function ProfilePage({ navigation }: { navigation: any }) {
       setCountFollowing(response.data);
     });
   };
+  const followersCount = async () => {
+    await axios.get(`countFollowers/${username}`).then((response) => {
+      setCountFollowers(response.data);
+    });
+  };
   useEffect(() => {
     tweetsCount();
     followingCount();
     tweetsRelease();
+    followersCount();
   }, []);
 
   const OnRefresh = useCallback(async () => {
@@ -57,6 +64,7 @@ function ProfilePage({ navigation }: { navigation: any }) {
     await tweetsRelease(), setRefreshing(false);
     await tweetsCount(), setRefreshing(false);
     await followingCount(), setRefreshing(false);
+    await followersCount(), setRefreshing(false);
   }, []);
 
   return (
@@ -125,8 +133,9 @@ function ProfilePage({ navigation }: { navigation: any }) {
                 style={styles.statValue}>{countFollowing}</Text>
               </View>
               <View style={{ flex: 1, alignItems: "center" }}>
-                <Text style={styles.statLabel}>Followers</Text>
-                <Text style={styles.statValue}>456</Text>
+              <Text style={styles.statLabel}
+                onPress={() => navigation.navigate("followers")}>Followers</Text>
+                <Text style={styles.statValue}>{countFollowers}</Text>
               </View>
             </View>
             <TouchableOpacity

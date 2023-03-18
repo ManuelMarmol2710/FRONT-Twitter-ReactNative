@@ -12,25 +12,24 @@ import {
 import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
 import { SimpleLineIcons } from '@expo/vector-icons'; 
-function followingPage
+function followersPage
 ({ navigation }: { navigation: any }) {
   const username = useAuthStore((state) => state.profile.username.username);
   const [task, setTask] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const followingRealease = async () => {
-    await axios.get(`follow/${username}`).then((response) => {
+  const followersRealease = async () => {
+    await axios.get(`Followerss/${username}`).then((response) => {
       setTask(response.data);
-    
-    });
+   });
   };
 
   useEffect(() => {
-    followingRealease();
+    followersRealease();
   }, []);
 
   const OnRefresh = useCallback(async () => {
     setRefreshing(true);
-    await followingRealease(), setRefreshing(false);
+    await followersRealease(), setRefreshing(false);
   }, []);
 
   return (
@@ -56,9 +55,9 @@ function followingPage
               <SimpleLineIcons
                        name={ "user-following"}
                         size={32}
-                       color={ "blue" }
+                       color={ "green" }
               />
-              {" "} Siguiendo:
+              {" "} Seguidores:
             </Text>
 
           <FlatList
@@ -90,8 +89,8 @@ function followingPage
                     }}
                     onPress={() =>
                       navigation.navigate("awayprofile", {
-                        username: item["following"],
-                        
+                        username: item["owner"],
+                    
                       })
                     }
                 >
@@ -105,11 +104,11 @@ function followingPage
                         color: "#000000",
                       }}
                     >
-                      @{item["following"]}  
+                      @{item["owner"]}  
                        <SimpleLineIcons
                        name={"user-following"}
                         size={32}
-                       color={"blue"}
+                       color={"green"}
               />{"\n"}
                       {"\n"}
                     </Text></Text>
@@ -126,5 +125,5 @@ function followingPage
 
 
 }
-export default followingPage
+export default followersPage
 ;

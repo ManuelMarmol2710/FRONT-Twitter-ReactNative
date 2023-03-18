@@ -16,7 +16,6 @@ import {
 } from "react-native";
 import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { SimpleLineIcons } from '@expo/vector-icons'; 
 function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
   const { username, name, last_Name, biography } = route.params;
@@ -27,6 +26,7 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
   const [like, setLike] = useState(0);
   const [isLike, setisLike] = useState(false);
   const[countFollowing, setCountFollowing] = useState([]);
+  const[countFollowers, setCountFollowers] = useState([]);
   const tweetsRelease = async () => {
     await axios.get(`tweet/${username}`).then((response) => {
       setTask(response.data);
@@ -42,17 +42,24 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
       setCountFollowing(response.data);
     });
   };
+  const followersCount = async () => {
+    await axios.get(`countFollowers/${username}`).then((response) => {
+      setCountFollowers(response.data);
+    });
+  };
   useEffect(() => {
     tweetsRelease();
     tweetsCount();
     siloSIgo();
     followingCount();
+    followersCount();
   }, []);
   const OnRefresh = useCallback(async () => {
     setRefreshing(true);
     await tweetsRelease(), setRefreshing(false);
     await tweetsCount(), setRefreshing(false);
     await followingCount(), setRefreshing(false);
+    await followersCount(), setRefreshing(false);
   }, []);
 
   const onClick = async () => {
@@ -137,8 +144,12 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
                 style={styles.statValue}>{countFollowing}</Text>
               </View>
               <View style={{ flex: 1, alignItems: "center" }}>
-                <Text style={styles.statLabel}>Followers</Text>
-                <Text style={styles.statValue}>456</Text>
+                <Text style={styles.statLabel}
+                onPress={() => navigation.navigate("Awayfollowers",{
+                owner:username
+
+                })}>Followers</Text>
+                <Text style={styles.statValue}>{countFollowers}</Text>
                
            
               </View>

@@ -12,25 +12,26 @@ import {
 import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
 import { SimpleLineIcons } from '@expo/vector-icons'; 
-function followingPage
-({ navigation }: { navigation: any }) {
-  const username = useAuthStore((state) => state.profile.username.username);
+function AwayfollowersPage
+({ navigation, route}: { navigation: any, route: any}) {
+    const{owner} = route.params 
+   
   const [task, setTask] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const followingRealease = async () => {
-    await axios.get(`follow/${username}`).then((response) => {
+  const followersRealease = async () => {
+    await axios.get(`Followerss/${owner}`).then((response) => {
       setTask(response.data);
-    
+ 
     });
   };
 
   useEffect(() => {
-    followingRealease();
+    followersRealease();
   }, []);
 
   const OnRefresh = useCallback(async () => {
     setRefreshing(true);
-    await followingRealease(), setRefreshing(false);
+    await followersRealease(), setRefreshing(false);
   }, []);
 
   return (
@@ -47,7 +48,7 @@ function followingPage
                 textAlign: "left",
                 fontSize: 30,
                 fontWeight: "500",
-                color: "#333",
+                color: "white",
                 paddingBottom: 25,
                 paddingLeft: 10,
                 paddingTop: 5,
@@ -56,9 +57,9 @@ function followingPage
               <SimpleLineIcons
                        name={ "user-following"}
                         size={32}
-                       color={ "blue" }
+                       color={ "green" }
               />
-              {" "} Siguiendo:
+              {" "} Seguidores:
             </Text>
 
           <FlatList
@@ -88,13 +89,7 @@ function followingPage
                       backgroundColor: "#fff",
                       overflow: "hidden",
                     }}
-                    onPress={() =>
-                      navigation.navigate("awayprofile", {
-                        username: item["following"],
-                        
-                      })
-                    }
-                >
+                  >
                     <Text
                       style={{
                         paddingTop: 20,
@@ -104,12 +99,13 @@ function followingPage
                         fontSize: 16,
                         color: "#000000",
                       }}
+                   
                     >
-                      @{item["following"]}  
+                      @{item["owner"]}  
                        <SimpleLineIcons
                        name={"user-following"}
                         size={32}
-                       color={"blue"}
+                       color={"green"}
               />{"\n"}
                       {"\n"}
                     </Text></Text>
@@ -126,5 +122,5 @@ function followingPage
 
 
 }
-export default followingPage
+export default AwayfollowersPage
 ;

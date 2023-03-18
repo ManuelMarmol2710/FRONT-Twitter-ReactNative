@@ -99,6 +99,7 @@ function AwayfollowingPage
                         fontSize: 16,
                         color: "#000000",
                       }}
+                   
                     >
                       @{item["following"]}  
                        <SimpleLineIcons
