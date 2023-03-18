@@ -49,8 +49,8 @@ function BuscarPage({ navigation }: { navigation: any }) {
       setTask(response.data);
     });
   };
-  const filtrartweetsNew = async () => {
-    await axios.get(`/tweetsFilterForNew/${search}`).then((response) => {
+  const filtrartweetsImage = async () => {
+    await axios.get(`/tweetsFilterImage/https`).then((response) => {
       setTask(response.data);
     });
   };
@@ -65,7 +65,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
   const data = [
     { key: "1", value: "Mas antiguo" },
     { key: "2", value: "Mas recientes" },
-    { key: "3", value: "Buscar por fotos" }
+    { key: "3", value: "Imagenes" }
   ];
 
   useEffect(() => {
@@ -85,6 +85,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
           <RefreshControl refreshing={refreshing} onRefresh={OnRefresh} />
         }
       >
+        <View>
         <TextInput
           color="#066cb4"
           trailing={(props) => (
@@ -99,26 +100,29 @@ function BuscarPage({ navigation }: { navigation: any }) {
           numberOfLines={2}
           maxLength={40}
           editable
+          
         />
-
-        <View style={{ margin: 10, paddingTop: 10 }}>
           <SelectList
-            setSelected={(selected: React.SetStateAction<string>) =>
+          setSelected={(selected: React.SetStateAction<string>) =>
               setSelected(selected)
             }
             data={data}
             save="value"
-
-            onSelect={() => {
+             onSelect={() => {
               if (selected === 'Mas antiguo'){
                 filtrartweetsOld();
               } else if (selected === 'Mas recientes'){
                 tweetsFind();
+              } else if (selected === 'Imagenes'){
+                filtrartweetsImage();
               }
 
             }}
-            searchPlaceholder="Filtrar por"
+          
           />
+</View>
+        <View style={{ margin: 10, paddingTop: 10 }}>
+      
         </View>
 
         <View style={{ margin: 20, paddingTop: 5 }}>

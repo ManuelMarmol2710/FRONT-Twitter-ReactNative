@@ -35,6 +35,7 @@ function ProfilePage({ navigation }: { navigation: any }) {
   const tweetsRelease = async () => {
     await axios.get(`tweet/${username}`).then((response) => {
       setTask(response.data);
+      
     });
   };
   const tweetsCount = async () => {
