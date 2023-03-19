@@ -13,7 +13,7 @@ import {
   LogBox,
   YellowBox,
   TouchableOpacity,
-  Image
+  Image,
 } from "react-native";
 import { useAuthStore } from "../store/auth.store";
 import { SelectList } from "react-native-dropdown-select-list";
@@ -49,8 +49,8 @@ function BuscarPage({ navigation }: { navigation: any }) {
       setTask(response.data);
     });
   };
-  const filtrartweetsImage = async () => {
-    await axios.get(`/tweetsFilterImage/https`).then((response) => {
+  const filtrartweetsNew = async () => {
+    await axios.get(`/tweetsFilterForNew/${search}`).then((response) => {
       setTask(response.data);
     });
   };
@@ -65,7 +65,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
   const data = [
     { key: "1", value: "Mas antiguo" },
     { key: "2", value: "Mas recientes" },
-    { key: "3", value: "Imagenes" }
+    { key: "3", value: "Buscar por fotos" },
   ];
 
   useEffect(() => {
@@ -85,7 +85,6 @@ function BuscarPage({ navigation }: { navigation: any }) {
           <RefreshControl refreshing={refreshing} onRefresh={OnRefresh} />
         }
       >
-        <View>
         <TextInput
           color="#066cb4"
           trailing={(props) => (
@@ -100,29 +99,24 @@ function BuscarPage({ navigation }: { navigation: any }) {
           numberOfLines={2}
           maxLength={40}
           editable
-          
         />
+
+        <View style={{ margin: 5, paddingTop: 5, paddingHorizontal:100, marginLeft: 150, marginRight:-85 }}>
           <SelectList
-          setSelected={(selected: React.SetStateAction<string>) =>
+            setSelected={(selected: React.SetStateAction<string>) =>
               setSelected(selected)
             }
             data={data}
             save="value"
-             onSelect={() => {
-              if (selected === 'Mas antiguo'){
+            onSelect={() => {
+              if (selected === "Mas antiguo") {
                 filtrartweetsOld();
-              } else if (selected === 'Mas recientes'){
+              } else if (selected === "Mas recientes") {
                 tweetsFind();
-              } else if (selected === 'Imagenes'){
-                filtrartweetsImage();
               }
-
             }}
-          
+            searchPlaceholder="Filtrar por"
           />
-</View>
-        <View style={{ margin: 10, paddingTop: 10 }}>
-      
         </View>
 
         <View style={{ margin: 20, paddingTop: 5 }}>
@@ -281,7 +275,7 @@ function BuscarPage({ navigation }: { navigation: any }) {
                           color: "#000000",
                         }}
                       >
-                        @{item["owner"]}:{"      "}{"      "}{"      "}{"      "}{"      "}{"      "}{"      "}{"      "}{"   "}  
+                        @{item["owner"]}:{" "}
                         <Icon
                           style={{ padding: 12, textAlign: "left" }}
                           name="brush"
@@ -449,13 +443,14 @@ function BuscarPage({ navigation }: { navigation: any }) {
                           color: "#000000",
                         }}
                       >
-                        @{item["owner"]}:{"       "}{"       "} {"       "} {"       "} {"       "} {"       "} {"   "}  
+                        @{item["owner"]}:{" "}
                         <Icon
                           style={{ padding: 12, textAlign: "left" }}
                           name="brush"
                           color="#000000"
                           size={25}
-                        />{"\n"}
+                        />
+                        {"\n"}
                         {"\n"}
                       </Text>
 

@@ -11,11 +11,16 @@ import {
 } from "react-native";
 import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
-import { SimpleLineIcons } from '@expo/vector-icons'; 
-function AwayfollowingPage
-({ navigation, route}: { navigation: any, route: any}) {
-    const{owner} = route.params 
-    const username = useAuthStore((state) => state.profile.username.username);
+import { SimpleLineIcons } from "@expo/vector-icons";
+function AwayfollowingPage({
+  navigation,
+  route,
+}: {
+  navigation: any;
+  route: any;
+}) {
+  const { owner } = route.params;
+  const username = useAuthStore((state) => state.profile.username.username);
   const [task, setTask] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const followingRealease = async () => {
@@ -41,33 +46,38 @@ function AwayfollowingPage
           <RefreshControl refreshing={refreshing} onRefresh={OnRefresh} />
         }
       >
-        <View style={{ borderRadius: 10, borderWidth: 3, paddingTop: 5, paddingBottom: 10 }}>
-  
-            <Text
-              style={{
-                textAlign: "left",
-                fontSize: 30,
-                fontWeight: "500",
-                color: "#333",
-                paddingBottom: 25,
-                paddingLeft: 10,
-                paddingTop: 5,
-              }}
-            >
-              <SimpleLineIcons
-                       name={ "user-following"}
-                        size={32}
-                       color={ "blue" }
-              />
-              {" "} Siguiendo:
-            </Text>
+        <View
+          style={{
+            borderRadius: 10,
+            borderWidth: 3,
+            paddingTop: 5,
+            paddingBottom: 10,
+            paddingHorizontal: 20,
+            marginLeft: 10,
+            marginRight: 10,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "left",
+              fontSize: 30,
+              fontWeight: "500",
+              color: "#000000",
+              paddingBottom: 25,
+              paddingLeft: 10,
+              paddingTop: 5,
+            }}
+          >
+            <SimpleLineIcons name={"user-following"} size={32} color={"blue"} />{" "}
+            Siguiendo:
+          </Text>
 
           <FlatList
             data={task}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
-              style={{
+                  style={{
                     backgroundColor: "#afc7d8",
                     paddingTop: 10,
                     paddingLeft: 10,
@@ -99,17 +109,17 @@ function AwayfollowingPage
                         fontSize: 16,
                         color: "#000000",
                       }}
-                   
                     >
-                      @{item["following"]}  
-                       <SimpleLineIcons
-                       name={"user-following"}
+                      @{item["following"]}
+                      <SimpleLineIcons
+                        name={"user-following"}
                         size={32}
-                       color={"blue"}
-              />{"\n"}
+                        color={"blue"}
+                      />
                       {"\n"}
-                    </Text></Text>
-
+                      {"\n"}
+                    </Text>
+                  </Text>
                 </TouchableOpacity>
               );
             }}
@@ -118,9 +128,5 @@ function AwayfollowingPage
       </ScrollView>
     </SafeAreaView>
   );
-
-
-
 }
-export default AwayfollowingPage
-;
+export default AwayfollowingPage;

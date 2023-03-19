@@ -16,7 +16,7 @@ import {
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
-import moment from 'moment';
+import moment from "moment";
 
 function ProfilePage({ navigation }: { navigation: any }) {
   const username = useAuthStore((state) => state.profile.username.username);
@@ -27,15 +27,14 @@ function ProfilePage({ navigation }: { navigation: any }) {
   const url = useAuthStore((state) => state.profile.username.url);
   const [count, setCount] = useState([]);
   const [task, setTask] = useState([]);
-  const[countFollowing, setCountFollowing] = useState([]);
-  const[countFollowers, setCountFollowers] = useState([]);
+  const [countFollowing, setCountFollowing] = useState([]);
+  const [countFollowers, setCountFollowers] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const myTime = moment(["time"]).format('hh:mm:ss')
+  const myTime = moment(["time"]).format("hh:mm:ss");
 
   const tweetsRelease = async () => {
     await axios.get(`tweet/${username}`).then((response) => {
       setTask(response.data);
-      
     });
   };
   const tweetsCount = async () => {
@@ -129,14 +128,22 @@ function ProfilePage({ navigation }: { navigation: any }) {
                 <Text style={styles.statValue}>{count}</Text>
               </View>
               <View style={{ flex: 1, alignItems: "center" }}>
-                <Text style={styles.statLabel}>Following</Text>
-                <Text  onPress={() => navigation.navigate("following")}
-                style={styles.statValue}>{countFollowing}</Text>
+                <Text
+                  onPress={() => navigation.navigate("followers")}
+                  style={styles.statLabel}
+                >
+                  Followers
+                </Text>
+                <Text style={styles.statValue}>{countFollowers}</Text>
               </View>
               <View style={{ flex: 1, alignItems: "center" }}>
-              <Text style={styles.statLabel}
-                onPress={() => navigation.navigate("followers")}>Followers</Text>
-                <Text style={styles.statValue}>{countFollowers}</Text>
+                <Text
+                  style={styles.statLabel}
+                  onPress={() => navigation.navigate("following")}
+                >
+                  Following
+                </Text>
+                <Text style={styles.statValue}>{countFollowing}</Text>
               </View>
             </View>
             <TouchableOpacity
@@ -163,203 +170,193 @@ function ProfilePage({ navigation }: { navigation: any }) {
             <FlatList
               data={task}
               renderItem={({ item }) => {
-                if (item['url']) {
-                return (
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate("OwnTweetsWithImage", {
-                        owner: item["owner"],
-                        tweets: item["tweets"],
-                        time: item["time"],
-                        _id: item["_id"],
-                        url: item["url"],
-                      })
-                    }
-                    style={{
-                      backgroundColor: "#afc7d8",
-                      paddingTop: 10,
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  >
-                    <Text
+                if (item["url"]) {
+                  return (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("OwnTweetsWithImage", {
+                          owner: item["owner"],
+                          tweets: item["tweets"],
+                          time: item["time"],
+                          _id: item["_id"],
+                          url: item["url"],
+                        })
+                      }
                       style={{
-                        textAlign: "left",
-                        fontSize: 16,
-                        fontWeight: "500",
-                        color: "#333",
-                        paddingTop: 25,
+                        backgroundColor: "#afc7d8",
+                        paddingTop: 10,
                         paddingLeft: 10,
                         paddingRight: 10,
-                        paddingBottom: 5,
-                        paddingHorizontal: 10,
-                        borderColor: "black",
-                        borderWidth: 3,
-                        borderRadius: 15,
-                        backgroundColor: "#fff",
-                        overflow: "hidden",
                       }}
                     >
                       <Text
                         style={{
-                          paddingTop: 20,
-                          paddingLeft: 30,
                           textAlign: "left",
-                          fontWeight: "700",
                           fontSize: 16,
-                          color: "#000000",
+                          fontWeight: "500",
+                          color: "#333",
+                          paddingTop: 25,
+                          paddingLeft: 10,
+                          paddingRight: 10,
+                          paddingBottom: 5,
+                          paddingHorizontal: 10,
+                          borderColor: "black",
+                          borderWidth: 3,
+                          borderRadius: 15,
+                          backgroundColor: "#fff",
+                          overflow: "hidden",
                         }}
                       >
-                        @{item["owner"]}:{"             "}
-                        {"             "}
-                        {"             "}
-                        {"             "}
-                        {"    "}
-                        <Icon
-                          style={{ padding: 12, textAlign: "left" }}
-                          name="brush"
-                          color="#000000"
-                          size={25}
-                        />
-                        {"\n"}
-                        {"\n"}
-                      </Text>
+                        <Text
+                          style={{
+                            paddingTop: 20,
+                            paddingLeft: 30,
+                            textAlign: "left",
+                            fontWeight: "700",
+                            fontSize: 16,
+                            color: "#000000",
+                          }}
+                        >
+                          @{item["owner"]}:{" "}
+                          <Icon
+                            style={{ padding: 12, textAlign: "left" }}
+                            name="brush"
+                            color="#000000"
+                            size={25}
+                          />
+                          {"\n"}
+                          {"\n"}
+                        </Text>
 
-                      <Text
-                        style={{
-                          paddingTop: 20,
-                          paddingLeft: 60,
-                          paddingRight: 60,
-                          textAlign: "left",
-                          fontSize: 14,
-                        }}
-                      >
-                        {" "}
-                        {item["tweets"]}
-                        {"\n"}
-                        {"\n"}
-                          
-                      </Text>
+                        <Text
+                          style={{
+                            paddingTop: 20,
+                            paddingLeft: 60,
+                            paddingRight: 60,
+                            textAlign: "left",
+                            fontSize: 14,
+                          }}
+                        >
+                          {" "}
+                          {item["tweets"]}
+                          {"\n"}
+                        </Text>
 
-                      <View style={{paddingLeft:140, paddingTop: 20}}>
-
-                      <Image
-                            style={{ width: 100, height: 100, borderColor:'#000000', borderWidth: 3, borderRadius: 10 }}
+                        <View style={{ paddingLeft: 140, paddingTop: 15 }}>
+                          <Image
+                            style={{
+                              width: 100,
+                              height: 100,
+                              borderColor: "#000000",
+                              borderWidth: 3,
+                              borderRadius: 10,
+                              marginBottom: 20,
+                            }}
                             source={{ uri: `${item["url"]}` }}
                           />
-                      </View>
+                        </View>
 
-                      <Text
-                        style={{
-                          paddingTop: 0,
-                          paddingLeft: 60,
-                          paddingRight: 60,
-                          textAlign: "right",
-                          fontSize: 14,
-                        }}
-                      >
-                        {"\n"} || Subido el: {item["time"]}
+                        <Text
+                          style={{
+                            paddingTop: 0,
+                            paddingLeft: 60,
+                            paddingRight: 60,
+                            textAlign: "right",
+                            fontSize: 14,
+                          }}
+                        >
+                          {"\n"} || Subido el: {item["time"]}
+                        </Text>
                       </Text>
-                    </Text>
-                  </TouchableOpacity>
-                
-                );
-              } else if (!item['url']){
-                return (
-
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate("OwnTweets", {
-                        owner: item["owner"],
-                        tweets: item["tweets"],
-                        time: item["time"],
-                        _id: item["_id"],
-                      })
-                    }
-                    style={{
-                      backgroundColor: "#afc7d8",
-                      paddingTop: 10,
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  >
-                    <Text
+                    </TouchableOpacity>
+                  );
+                } else if (!item["url"]) {
+                  return (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("OwnTweets", {
+                          owner: item["owner"],
+                          tweets: item["tweets"],
+                          time: item["time"],
+                          _id: item["_id"],
+                        })
+                      }
                       style={{
-                        textAlign: "left",
-                        fontSize: 16,
-                        fontWeight: "500",
-                        color: "#333",
-                        paddingTop: 25,
+                        backgroundColor: "#afc7d8",
+                        paddingTop: 10,
                         paddingLeft: 10,
                         paddingRight: 10,
-                        paddingBottom: 5,
-                        paddingHorizontal: 10,
-                        borderColor: "black",
-                        borderWidth: 3,
-                        borderRadius: 15,
-                        backgroundColor: "#fff",
-                        overflow: "hidden",
                       }}
                     >
                       <Text
                         style={{
-                          paddingTop: 20,
-                          paddingLeft: 30,
                           textAlign: "left",
-                          fontWeight: "700",
                           fontSize: 16,
-                          color: "#000000",
+                          fontWeight: "500",
+                          color: "#333",
+                          paddingTop: 25,
+                          paddingLeft: 10,
+                          paddingRight: 10,
+                          paddingBottom: 5,
+                          paddingHorizontal: 10,
+                          borderColor: "black",
+                          borderWidth: 3,
+                          borderRadius: 15,
+                          backgroundColor: "#fff",
+                          overflow: "hidden",
                         }}
                       >
-                        @{item["owner"]}:{"             "}
-                        {"             "}
-                        {"             "}
-                        {"             "}
-                        {"    "}
-                        <Icon
-                          style={{ padding: 12, textAlign: "left" }}
-                          name="brush"
-                          color="#000000"
-                          size={25}
-                        />
-                        {"\n"}
-                        {"\n"}
+                        <Text
+                          style={{
+                            paddingTop: 20,
+                            paddingLeft: 30,
+                            textAlign: "left",
+                            fontWeight: "700",
+                            fontSize: 16,
+                            color: "#000000",
+                          }}
+                        >
+                          @{item["owner"]}:{" "}
+                          <Icon
+                            style={{ padding: 12, textAlign: "left" }}
+                            name="brush"
+                            color="#000000"
+                            size={25}
+                          />
+                          {"\n"}
+                          {"\n"}
+                        </Text>
+
+                        <Text
+                          style={{
+                            paddingTop: 20,
+                            paddingLeft: 60,
+                            paddingRight: 60,
+                            textAlign: "left",
+                            fontSize: 14,
+                          }}
+                        >
+                          {" "}
+                          {item["tweets"]}
+                          {"\n"}
+                          {"\n"}
+                        </Text>
+
+                        <Text
+                          style={{
+                            paddingTop: 0,
+                            paddingLeft: 60,
+                            paddingRight: 60,
+                            textAlign: "right",
+                            fontSize: 14,
+                          }}
+                        >
+                          {"\n"} || Subido el: {item["time"]}
+                        </Text>
                       </Text>
-
-                      <Text
-                        style={{
-                          paddingTop: 20,
-                          paddingLeft: 60,
-                          paddingRight: 60,
-                          textAlign: "left",
-                          fontSize: 14,
-                        }}
-                      >
-                        {" "}
-                        {item["tweets"]}
-                        {"\n"}
-                        {"\n"}
-                          
-                      </Text>
-
-                      <Text
-                        style={{
-                          paddingTop: 0,
-                          paddingLeft: 60,
-                          paddingRight: 60,
-                          textAlign: "right",
-                          fontSize: 14,
-                        }}
-                      >
-                        {"\n"} || Subido el: {item["time"]}
-                      </Text>
-                    </Text>
-                  </TouchableOpacity>
-
-
-
-                )
-              }
+                    </TouchableOpacity>
+                  );
+                }
               }}
             />
           </View>

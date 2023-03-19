@@ -56,7 +56,7 @@ function ProfileUpdateBiografia({ navigation }: { navigation: any }) {
             borderRadius: 50,
             borderWidth: 3,
             margin: 10,
-            marginTop: 100
+            marginTop:50
           }}
         >
           <View style={{ paddingHorizontal: 25, paddingTop: 25 }}>

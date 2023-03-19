@@ -11,16 +11,15 @@ import {
 } from "react-native";
 import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
-import { SimpleLineIcons } from '@expo/vector-icons'; 
-function followersPage
-({ navigation }: { navigation: any }) {
+import { SimpleLineIcons } from "@expo/vector-icons";
+function followersPage({ navigation }: { navigation: any }) {
   const username = useAuthStore((state) => state.profile.username.username);
   const [task, setTask] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const followersRealease = async () => {
     await axios.get(`Followerss/${username}`).then((response) => {
       setTask(response.data);
-   });
+    });
   };
 
   useEffect(() => {
@@ -39,33 +38,42 @@ function followersPage
           <RefreshControl refreshing={refreshing} onRefresh={OnRefresh} />
         }
       >
-        <View style={{ borderRadius: 10, borderWidth: 3, paddingTop: 5, paddingBottom: 10 }}>
-  
-            <Text
-              style={{
-                textAlign: "left",
-                fontSize: 30,
-                fontWeight: "500",
-                color: "#333",
-                paddingBottom: 25,
-                paddingLeft: 10,
-                paddingTop: 5,
-              }}
-            >
-              <SimpleLineIcons
-                       name={ "user-following"}
-                        size={32}
-                       color={ "green" }
-              />
-              {" "} Seguidores:
-            </Text>
+        <View
+          style={{
+            borderRadius: 10,
+            borderWidth: 3,
+            paddingTop: 5,
+            paddingBottom: 10,
+            paddingHorizontal: 20,
+            marginLeft: 10,
+            marginRight: 10,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "left",
+              fontSize: 30,
+              fontWeight: "500",
+              color: "#000000",
+              paddingBottom: 25,
+              paddingLeft: 0,
+              paddingTop: 5,
+            }}
+          >
+            <SimpleLineIcons
+              name={"user-following"}
+              size={32}
+              color={"green"}
+            />{"  "}
+            Seguidores:
+          </Text>
 
           <FlatList
             data={task}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
-              style={{
+                  style={{
                     backgroundColor: "#afc7d8",
                     paddingTop: 10,
                     paddingLeft: 10,
@@ -90,10 +98,9 @@ function followersPage
                     onPress={() =>
                       navigation.navigate("awayprofile", {
                         username: item["owner"],
-                    
                       })
                     }
-                >
+                  >
                     <Text
                       style={{
                         paddingTop: 20,
@@ -104,15 +111,16 @@ function followersPage
                         color: "#000000",
                       }}
                     >
-                      @{item["owner"]}  
-                       <SimpleLineIcons
-                       name={"user-following"}
+                      @{item["owner"]}
+                      <SimpleLineIcons
+                        name={"user-following"}
                         size={32}
-                       color={"green"}
-              />{"\n"}
+                        color={"green"}
+                      />
                       {"\n"}
-                    </Text></Text>
-
+                      {"\n"}
+                    </Text>
+                  </Text>
                 </TouchableOpacity>
               );
             }}
@@ -121,9 +129,5 @@ function followersPage
       </ScrollView>
     </SafeAreaView>
   );
-
-
-
 }
-export default followersPage
-;
+export default followersPage;

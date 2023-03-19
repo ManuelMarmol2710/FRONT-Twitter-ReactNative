@@ -136,30 +136,14 @@ function LoginPage({ navigation }: { navigation: any }) {
           flexDirection: "row",
           justifyContent: "center",
           marginBottom: 30,
-          paddingTop: 20,
-        }}
-      >
-        <Text>Olvido su contraseña?</Text>
-        <TouchableOpacity onPress={recoverEmail}>
-          <Text style={{ color: "#000000", fontWeight: "700" }}>
-            {" "}
-            Haga click aqui
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          marginBottom: 30,
+          marginTop: 20
         }}
       >
         <Text>No tienes una cuenta?</Text>
         <TouchableOpacity onPress={register}>
           <Text style={{ color: "#000000", fontWeight: "700" }}>
             {" "}
-            Registrate
+            Regístrate
           </Text>
         </TouchableOpacity>
       </View>

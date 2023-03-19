@@ -20,6 +20,7 @@
     "aws-amplify": "^5.0.17",
     "aws-amplify-react-native": "^7.0.2",
     "axios": "^1.3.3",
+    "dotenv": "^16.0.3",
     "expo": "~47.0.12",
     "expo-image-picker": "~14.0.2",
     "expo-linear-gradient": "~12.0.1",
@@ -43,7 +44,8 @@
     "react-native-web": "~0.18.9",
     "react-navigation": "^4.4.4",
     "react-router-dom": "^6.9.0",
-    "zustand": "^4.3.6"
+    "zustand": "^4.3.6",
+    "expo-updates": "~0.15.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

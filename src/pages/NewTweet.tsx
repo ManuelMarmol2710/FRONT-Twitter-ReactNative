@@ -116,7 +116,7 @@ function NewTweetPage({ navigation }: { navigation: any }) {
                 borderColor: "#000000",
                 overflow: "hidden",
                 height: 120,
-                width: 335,
+                width: 340,
               }}
               color="#000000"
               label="Tweet"
@@ -156,7 +156,7 @@ function NewTweetPage({ navigation }: { navigation: any }) {
                   padding: 10,
                   borderRadius: 10,
                   marginBottom: 30,
-                  marginLeft: -180,
+                  marginLeft: -183,
                   marginRight: -115,
                   marginTop: -15,
                 }}
@@ -194,7 +194,7 @@ function NewTweetPage({ navigation }: { navigation: any }) {
                   borderRadius: 10,
                   marginBottom: 30,
                   marginLeft: -5,
-                  marginRight: -130,
+                  marginRight: -115,
                 }}
               >
                 <Text

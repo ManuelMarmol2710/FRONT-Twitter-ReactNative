@@ -130,7 +130,7 @@ export default function App() {
           <Stack.Screen
             name="login"
             component={LoginPage}
-            options={{ headerShown: false }}
+            options={{ title: "", headerShown: false }}
           />
           <Stack.Screen
             name="buscar"
@@ -376,7 +376,7 @@ export default function App() {
           <Stack.Screen
             name="homepage"
             component={Home}
-            options={{ gestureEnabled: false, headerShown: false }}
+            options={{ title: "", gestureEnabled: false, headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>

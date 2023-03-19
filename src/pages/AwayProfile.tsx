@@ -16,17 +16,17 @@ import {
 } from "react-native";
 import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
-import { SimpleLineIcons } from '@expo/vector-icons'; 
+import { SimpleLineIcons } from "@expo/vector-icons";
 function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
   const { username, name, last_Name, biography } = route.params;
-  const owner= useAuthStore((state) => state.profile.username.username);
-   const [task, setTask] = useState([]);
+  const owner = useAuthStore((state) => state.profile.username.username);
+  const [task, setTask] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [count, setCount] = useState([]);
   const [like, setLike] = useState(0);
   const [isLike, setisLike] = useState(false);
-  const[countFollowing, setCountFollowing] = useState([]);
-  const[countFollowers, setCountFollowers] = useState([]);
+  const [countFollowing, setCountFollowing] = useState([]);
+  const [countFollowers, setCountFollowers] = useState([]);
   const tweetsRelease = async () => {
     await axios.get(`tweet/${username}`).then((response) => {
       setTask(response.data);
@@ -65,20 +65,18 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
   const onClick = async () => {
     if (like + (!isLike ? -1 : 1)) {
       await axios.post(`/follow/${owner}/${username}`).then((response) => {
-       setLike(like + (isLike ? -1 : 1));
+        setLike(like + (isLike ? -1 : 1));
       });
     } else if (like + (isLike ? -1 : 1)) {
-      await axios
-        .delete(`/unfollow/${owner}/${username}`)
-        .then((response) => {
-          setLike(like + (!isLike ? -1 : 1));
-        });
+      await axios.delete(`/unfollow/${owner}/${username}`).then((response) => {
+        setLike(like + (!isLike ? -1 : 1));
+      });
     }
   };
 
   const siloSIgo = async () => {
     await axios.get(`/following/${owner}/${username}`).then((response) => {
-   console.log(response.data.following); 
+      console.log(response.data.following);
       if (response.data.following === username) {
         setLike(like + (isLike ? -1 : 1));
       }
@@ -87,10 +85,6 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
       }
     });
   };
-
-
-
-
 
   return (
     <SafeAreaView>
@@ -136,34 +130,51 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
                 <Text style={styles.statValue}>{count}</Text>
               </View>
               <View style={{ flex: 1, alignItems: "center" }}>
-                <Text style={styles.statLabel}>Following</Text>
-                <Text  onPress={() => navigation.navigate("Awayfollowing",{
-                owner:username
-
-                })}
-                style={styles.statValue}>{countFollowing}</Text>
+                <Text
+                  onPress={() =>
+                    navigation.navigate("Awayfollowers", {
+                      owner: username,
+                    })
+                  }
+                  style={styles.statLabel}
+                >
+                  Followers
+                </Text>
+                <Text style={styles.statValue}>{countFollowers}</Text>
               </View>
               <View style={{ flex: 1, alignItems: "center" }}>
-                <Text style={styles.statLabel}
-                onPress={() => navigation.navigate("Awayfollowers",{
-                owner:username
-
-                })}>Followers</Text>
-                <Text style={styles.statValue}>{countFollowers}</Text>
-               
-           
+                <Text
+                  style={styles.statLabel}
+                  onPress={() =>
+                    navigation.navigate("Awayfollowing", {
+                      owner: username,
+                    })
+                  }
+                >
+                  Following
+                </Text>
+                <Text style={styles.statValue}>{countFollowing}</Text>
               </View>
-              <Pressable
-              style={{ paddingLeft: 55, paddingTop: 20, paddingBottom: 10 }}
-              onPress={onClick}
-            >
-              <SimpleLineIcons
-                name={like ? "user-following" : "user-follow"}
-                size={32}
-                color={like ? "blue" : "black"}
-              />
-              </Pressable>
-           
+
+              <View
+                style={{
+                  marginLeft: 10,
+                  paddingLeft: 10,
+                  marginRight: 40,
+                  paddingBottom: 10,
+                }}
+              >
+                <Pressable
+                  style={{ paddingLeft: 55, paddingTop: 20, paddingBottom: 10 }}
+                  onPress={onClick}
+                >
+                  <SimpleLineIcons
+                    name={like ? "user-following" : "user-follow"}
+                    size={32}
+                    color={like ? "blue" : "black"}
+                  />
+                </Pressable>
+              </View>
             </View>
             <Text
               style={{
@@ -266,7 +277,7 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
                       </Text>
                     </TouchableOpacity>
                   );
-                } else if (item["url"]){
+                } else if (item["url"]) {
                   return (
                     <TouchableOpacity
                       style={{
@@ -333,17 +344,17 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
                         </Text>
 
                         <View style={{ paddingLeft: 140, paddingTop: 5 }}>
-                        <Image
-                          style={{
-                            width: 100,
-                            height: 100,
-                            borderColor: "#000000",
-                            borderWidth: 3,
-                            borderRadius: 10,
-                          }}
-                          source={{ uri: `${item["url"]}` }}
-                        />
-                      </View>
+                          <Image
+                            style={{
+                              width: 100,
+                              height: 100,
+                              borderColor: "#000000",
+                              borderWidth: 3,
+                              borderRadius: 10,
+                            }}
+                            source={{ uri: `${item["url"]}` }}
+                          />
+                        </View>
 
                         <Text
                           style={{
@@ -359,7 +370,7 @@ function AwayProfile({ navigation, route }: { navigation: any; route: any }) {
                         </Text>
                       </Text>
                     </TouchableOpacity>
-                  )
+                  );
                 }
               }}
             />

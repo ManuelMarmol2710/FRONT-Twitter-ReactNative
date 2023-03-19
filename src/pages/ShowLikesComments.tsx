@@ -13,8 +13,14 @@ import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-function ShowLikeCommentsPage({ route,navigation }: { navigation: any, route:any }) {
-   const {id_tweet}= route.params
+function ShowLikeCommentsPage({
+  route,
+  navigation,
+}: {
+  navigation: any;
+  route: any;
+}) {
+  const { id_tweet } = route.params;
   const [task, setTask] = useState([]);
 
   const [refreshing, setRefreshing] = useState(false);
@@ -41,33 +47,38 @@ function ShowLikeCommentsPage({ route,navigation }: { navigation: any, route:any
           <RefreshControl refreshing={refreshing} onRefresh={OnRefresh} />
         }
       >
-        <View style={{ borderRadius: 10, borderWidth: 3, paddingTop: 5, paddingBottom: 10 }}>
-  
-            <Text
-              style={{
-                textAlign: "left",
-                fontSize: 30,
-                fontWeight: "500",
-                color: "#333",
-                paddingBottom: 25,
-                paddingLeft: 10,
-                paddingTop: 5,
-              }}
-            >
-              <MaterialCommunityIcons
-                       name={ "heart"}
-                        size={32}
-                       color={ "red" }
-              />
-              {''} Likes:
-            </Text>
+        <View
+          style={{
+            borderRadius: 10,
+            borderWidth: 3,
+            paddingTop: 5,
+            paddingBottom: 10,
+            paddingHorizontal: 20,
+            marginLeft: 10,
+            marginRight: 10,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "left",
+              fontSize: 30,
+              fontWeight: "500",
+              color: "#000000",
+              paddingBottom: 25,
+              paddingLeft: 10,
+              paddingTop: 5,
+            }}
+          >
+            <MaterialCommunityIcons name={"heart"} size={32} color={"red"} />
+            {""} Likes:
+          </Text>
 
           <FlatList
             data={task}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
-              style={{
+                  style={{
                     backgroundColor: "#afc7d8",
                     paddingTop: 10,
                     paddingLeft: 10,
@@ -100,15 +111,16 @@ function ShowLikeCommentsPage({ route,navigation }: { navigation: any, route:any
                         color: "#000000",
                       }}
                     >
-                      @{item["owner"]}  
-                       <MaterialCommunityIcons
-                       name={ "heart"}
+                      @{item["owner"]}
+                      <MaterialCommunityIcons
+                        name={"heart"}
                         size={32}
-                       color={ "red" }
-              />{"\n"}
+                        color={"red"}
+                      />
                       {"\n"}
-                    </Text></Text>
-
+                      {"\n"}
+                    </Text>
+                  </Text>
                 </TouchableOpacity>
               );
             }}

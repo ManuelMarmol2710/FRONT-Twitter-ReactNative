@@ -177,12 +177,7 @@ function OwnTweetsWithImage({ route, navigation }: { route: any; navigation: any
                 color: "#000000",
               }}
             >
-              @{owner}:{"          "}
-              {"          "}
-              {"          "}
-              {"          "}
-              {"          "}
-              {"          "}
+              @{owner}:{" "}
               <Icon
                 style={{ padding: 10, textAlign: "left" }}
                 name="brush"
@@ -413,11 +408,7 @@ function OwnTweetsWithImage({ route, navigation }: { route: any; navigation: any
                               color="#000000"
                               size={25}
                             />
-                            @{item["owner"]}:{"          "}
-                            {"          "}
-                            {"          "}
-                            {"          "}
-                            {"     "}
+                            @{item["owner"]}:{" "}
                             <Icon
                               style={{ padding: 10, textAlign: "left" }}
                               name="brush"

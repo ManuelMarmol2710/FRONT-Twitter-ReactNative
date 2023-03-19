@@ -20,16 +20,16 @@ export const RegisterRequest = async (
   biography: string,
   navigation:any,
 ) => {
-  if (password.length < 7) {
-    Alert.alert("Registro Invalido", "Contraseña invalida, debe tener por lo menos 7 caracteres.", [
+
+  var whiteSpaceExp = /^\s+$/; 
+  var whiteSpaceBetween = /\s/;
+
+  if ( username.length < 3||  whiteSpaceExp.test(username)||  whiteSpaceBetween.test(username)) {
+    Alert.alert("Registro Invalido", "Usuario invalido.", [
       { text: "OK", onPress: () => console.log("OK Pressed") },
     ]);
-  } else if (username.length < 3) {
-    Alert.alert("Registro Invalido", "Usuario invalido, debe tener por lo menos 3 caracteres", [
-      { text: "OK", onPress: () => console.log("OK Pressed") },
-    ]);
-  } else if (password === null && username === null) {
-    Alert.alert("Registro Invalido", "Varios campos se encuentran vacios.", [
+  } else if(password.length < 7 || whiteSpaceExp.test(password)|| whiteSpaceBetween.test(password)) {
+    Alert.alert("Registro Invalido", "Contraseña invalida.", [
       { text: "OK", onPress: () => console.log("OK Pressed") },
     ]);
   } else {
