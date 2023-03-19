@@ -77,10 +77,11 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
       {
         text: "OK",
         onPress: async () =>
-        await axios.put(`/updateComment/${_id}`).then((response) => {
-            setcomments(response.data.comment);
-            console.log(response.data.comment);
-            console.log(_id);
+        await axios.put(`/updateComment/${_id}`,{
+          comment:comments
+        }).then((response) => {
+
+            
           })
       },
     ]);
@@ -210,8 +211,7 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
                 size={25}
               />
                 
-              @{owner}:{" "}
-              <Icon
+              @{owner}:                                                   <Icon
                 style={{ padding: 12, textAlign: "left" }}
                 name="brush"
                 color="#000000"
@@ -227,12 +227,12 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
                 paddingLeft: 10,
                 paddingHorizontal: 1
               }}
-              onChangeText={(text) => setcomments(text)}
-            >
-              {""}
-              {comment} {"\n"}
-              
-            </TextInput>
+            onChangeText={setcomments}
+            value ={comments}
+            placeholder={comment}
+            maxLength={100}
+>
+  </TextInput>
             <Text
               style={{
                 paddingTop: 20,
