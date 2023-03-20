@@ -8,11 +8,12 @@ import {
   RefreshControl,
   Pressable,
   TouchableOpacity,
-  Alert
+  Alert,
+  TextInput,
 } from "react-native";
 import axios from "../libs/axios";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { TextInput } from "@react-native-material/core";
+import {} from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 function OwnComments({ route, navigation }: { route: any; navigation: any }) {
@@ -21,50 +22,60 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
   const [isLike, setisLike] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [comments, setcomments] = useState("");
-  const[countLike, setCount] = useState([])
-  const onClick =  async() => {
-    if((like +(!isLike ? -1: 1))){
-       await axios.post(`/likeComment/${_id}/${owner}`).then((response) => {
-        getCountLike();
-      setLike(like +(isLike ? -1 : 1));
-         })
-     } else if((like +(isLike ? -1: 1))){
-       await axios.delete(`/notlikeComment/${owner}/${_id}`).then((response) => {
-        getCountLike();
-         setLike(like +(!isLike ? -1 : 1));
-        });
-   }}
+  const [countLike, setCount] = useState([]);
 
-   const obtenerLikeComments = async() => {
-    await axios.get(`/likeComment/${owner}/${_id}`).then((response) => {
-  if(response.data.like === true){
-    setLike(like +(isLike ? -1 : 1));
-  } if(response.data.like === false){
-    setisLike(!isLike);
-  }
-    });}    
-
-    const getCountLike = async() =>{
-      await axios.get(`/countLikeCo/${_id}`).then((response) => {
-        setCount(response.data);
+  const onClick = async () => {
+    if (like + (!isLike ? -1 : 1)) {
+      await axios.post(`/likeComment/${_id}/${owner}`).then((response) => {
+        getCountLike();
+        setLike(like + (isLike ? -1 : 1));
+      });
+    } else if (like + (isLike ? -1 : 1)) {
+      await axios.delete(`/notlikeComment/${owner}/${_id}`).then((response) => {
+        getCountLike();
+        setLike(like + (!isLike ? -1 : 1));
       });
     }
+  };
+
+  const obtenerLikeComments = async () => {
+    await axios.get(`/likeComment/${owner}/${_id}`).then((response) => {
+      if (response.data.like === true) {
+        setLike(like + (isLike ? -1 : 1));
+      }
+      if (response.data.like === false) {
+        setisLike(!isLike);
+      }
+    });
+  };
+
+  const getCountLike = async () => {
+    await axios.get(`/countLikeCo/${_id}`).then((response) => {
+      setCount(response.data);
+    });
+  };
 
   const deleteComment = async () => {
-    Alert.alert("Desea eliminar el comentario?", "Su comentario sera eliminado", [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancelado"),
-        style: "cancel",
-      },
-      {
-        text: "OK",
-        onPress: async () =>
-        await axios.delete(`deleteComment/${_id}`).then(async (response) => {
-            navigation.navigate("Buscar");
-          })
-      },
-    ]);
+    Alert.alert(
+      "Desea eliminar el comentario?",
+      "Su comentario sera eliminado",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancelado"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: async () =>
+            await axios
+              .delete(`deleteComment/${_id}`)
+              .then(async (response) => {
+                navigation.navigate("Buscar");
+              }),
+        },
+      ]
+    );
   };
 
   const actuComment = async () => {
@@ -77,12 +88,13 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
       {
         text: "OK",
         onPress: async () =>
-        await axios.put(`/updateComment/${_id}`,{
-          comment:comments
-        }).then((response) => {
-
-            
-          })
+          await axios
+            .put(`/updateComment/${_id}`, {
+              comment: comments,
+            })
+            .then((response) => {
+              navigation.navigate("Profile");
+            }),
       },
     ]);
   };
@@ -96,6 +108,7 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
     await actuComment(), setRefreshing(false);
     await getCountLike(), setRefreshing(false);
   }, []);
+  
   return (
     <SafeAreaView>
       <ScrollView
@@ -137,37 +150,8 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
               />
             </Text>
           </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={actuComment}
-            style={{
-              backgroundColor: "#066cb4",
-              padding: 10,
-              borderRadius: 10,
-              marginBottom: 15,
-              marginLeft: 145,
-              marginRight: -190,
-            }}
-          >
-            <Text
-              style={{
-                textAlign: "center",
-                fontWeight: "700",
-                fontSize: 16,
-                color: "#fff",
-              }}
-            >
-              <Icon
-                style={{ padding: 12, textAlign: "right" }}
-                name="update"
-                color="#fff"
-                size={25}
-              />
-            </Text>
-          </TouchableOpacity>
         </View>
 
-      
         <View
           style={{
             backgroundColor: "#afc7d8",
@@ -204,14 +188,14 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
                 color: "#000000",
               }}
             >
-                <Icon
+              <Icon
                 style={{ padding: 12, textAlign: "left" }}
                 name="reply"
                 color="#000000"
                 size={25}
               />
-                
-              @{owner}:                                                   <Icon
+              @{owner}:{" "}
+              <Icon
                 style={{ padding: 12, textAlign: "left" }}
                 name="brush"
                 color="#000000"
@@ -220,19 +204,57 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
               {"\n"}
               {"\n"}
             </Text>
+            <View style={{ paddingHorizontal: 50, paddingTop: 25 }}>
+              <TextInput
+                style={{
+                  borderRadius: 10,
+                  borderWidth: 2,
+                  borderColor: "#000000",
+                  overflow: "hidden",
+                  height: 120,
+                  width: 290,
+                }}
+                onChangeText={setcomments}
+                value={comments}
+                disableFullscreenUI
+                multiline
+                placeholder={comment}
+                maxLength={100}
+              ></TextInput>
 
-            <TextInput
-              style={{
-                paddingTop: 30,
-                paddingLeft: 10,
-                paddingHorizontal: 1
-              }}
-            onChangeText={setcomments}
-            value ={comments}
-            placeholder={comment}
-            maxLength={100}
->
-  </TextInput>
+              <View style={{ paddingHorizontal: 10 }}>
+                <TouchableOpacity
+                  onPress={actuComment}
+                  style={{
+                    backgroundColor: "#000000",
+                    padding: 10,
+                    borderRadius: 20,
+                    marginBottom: 15,
+                    marginLeft: -150,
+                    marginRight: -190,
+                    marginTop: 20,
+                  }}
+                >
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontWeight: "700",
+                      fontSize: 16,
+                      color: "#fff",
+                    }}
+                  >
+                    Editar{"   "}
+                    <Icon
+                      style={{ padding: 12, textAlign: "right" }}
+                      name="update"
+                      color="#fff"
+                      size={25}
+                    />
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
             <Text
               style={{
                 paddingTop: 20,
@@ -242,11 +264,8 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
                 fontSize: 14,
               }}
             >
-              {" "}
               {"\n"}
-              {"\n"}
-              {"\n"}
-              || Subido el: {time} 
+              || Subido el: {time}
             </Text>
           </Text>
 
@@ -271,24 +290,28 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
                 size={32}
                 color={like ? "red" : "black"}
               />
-               <Text style={{
-              paddingVertical:10,
-                paddingLeft: -8,
-                marginLeft:-10,
-                paddingRight: 0,
-                paddingTop:10,
-                textAlign: "left",
-                fontSize: 14,
-                fontWeight: "700"
-              }} onPress={()=> navigation.navigate('showLikesComments',{
-
-               id_tweet:_id,
-               owner:owner
-
-              })}> Likes: { "" + (isLike ? like : countLike)} </Text>
+              <Text
+                style={{
+                  paddingVertical: 10,
+                  paddingLeft: -8,
+                  marginLeft: -10,
+                  paddingRight: 0,
+                  paddingTop: 10,
+                  textAlign: "left",
+                  fontSize: 14,
+                  fontWeight: "700",
+                }}
+                onPress={() =>
+                  navigation.navigate("showLikesComments", {
+                    id_tweet: _id,
+                    owner: owner,
+                  })
+                }
+              >
+                {" "}
+                Likes: {"" + (isLike ? like : countLike)}{" "}
+              </Text>
             </Pressable>
-      
-
           </View>
         </View>
       </ScrollView>

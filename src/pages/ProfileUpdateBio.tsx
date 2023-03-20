@@ -16,7 +16,7 @@ import {
 } from "react-native";
 import { useAuthStore } from "../store/auth.store";
 import axios from "../libs/axios";
-import {  IconButton } from "@react-native-material/core";
+import { IconButton } from "@react-native-material/core";
 import { Icon } from "@react-native-material/core";
 
 function ProfileUpdateBiografia({ navigation }: { navigation: any }) {
@@ -27,27 +27,33 @@ function ProfileUpdateBiografia({ navigation }: { navigation: any }) {
   const [biography, setText4] = useState("");
 
   const alertaBio = async () => {
-    Alert.alert("Desea editar su biografia?", "Su biografia sera actualizada.", [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancelado"),
-        style: "cancel",
-      },
-      {
-        text: "OK",
-        onPress: async () =>
-        await axios.put(`/updatebiography/${emailShow}`, {
-          biography: biography
-        }).then((response) => {
-          navigation.navigate("Profile");
-        }),
-      },
-    ]);
+    Alert.alert(
+      "Desea editar su biografia?",
+      "Su biografia sera actualizada.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancelado"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: async () =>
+            await axios
+              .put(`/updatebiography/${emailShow}`, {
+                biography: biography,
+              })
+              .then((response) => {
+                navigation.navigate("Profile");
+              }),
+        },
+      ]
+    );
   };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-    <SafeAreaView>
+      <SafeAreaView>
         <View
           style={{
             paddingHorizontal: 25,
@@ -56,7 +62,7 @@ function ProfileUpdateBiografia({ navigation }: { navigation: any }) {
             borderRadius: 50,
             borderWidth: 3,
             margin: 10,
-            marginTop:50
+            marginTop: 50,
           }}
         >
           <View style={{ paddingHorizontal: 25, paddingTop: 25 }}>
@@ -73,7 +79,14 @@ function ProfileUpdateBiografia({ navigation }: { navigation: any }) {
             </Text>
 
             <TextInput
-              style={{borderRadius: 10, borderWidth: 2, borderColor: '#000000', overflow:'hidden', height: 120, width:290}}
+              style={{
+                borderRadius: 10,
+                borderWidth: 2,
+                borderColor: "#000000",
+                overflow: "hidden",
+                height: 120,
+                width: 290,
+              }}
               color="#000000"
               label="Biografia"
               placeholder={bioShow}
@@ -109,7 +122,7 @@ function ProfileUpdateBiografia({ navigation }: { navigation: any }) {
                   color: "#fff",
                 }}
               >
-                Editar 
+                Editar
               </Text>
             </TouchableOpacity>
           </View>
@@ -117,7 +130,7 @@ function ProfileUpdateBiografia({ navigation }: { navigation: any }) {
             style={{ paddingHorizontal: 70, paddingVertical: 5, paddingTop: 5 }}
           ></View>
         </View>
-    </SafeAreaView>
+      </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 }

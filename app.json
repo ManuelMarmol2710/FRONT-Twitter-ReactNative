@@ -18,24 +18,22 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.manuelmarmol27.twiter"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      },
-      "package": "com.manuelmarmol27.twiter"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "3a159f67-1e65-4d00-b1a8-4c5bab22f150"
+        "projectId": "3aa97372-f975-4bb6-a03b-6eeac20edf7c"
       }
     },
-    "owner": "manuelmarmol27"
+    "owner": "oferrer27"
   }
 }
