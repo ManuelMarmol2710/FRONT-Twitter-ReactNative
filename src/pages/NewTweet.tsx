@@ -157,7 +157,7 @@ function NewTweetPage({ navigation }: { navigation: any }) {
                   borderRadius: 10,
                   marginBottom: 30,
                   marginLeft: -183,
-                  marginRight: -115,
+                  marginRight: -120,
                   marginTop: -15,
                 }}
               >

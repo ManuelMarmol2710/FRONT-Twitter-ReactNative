@@ -26,11 +26,23 @@ export const RegisterRequest = async (
   var whiteSpaceBetween = /\s/;
 
   if ( username.length < 3||  whiteSpaceExp.test(username)||  whiteSpaceBetween.test(username)) {
-    Alert.alert("Registro Invalido", "Usuario invalido.", [
+    Alert.alert("Usuario Invalido", "El usuario debe tener por lo menos 3 caracteres y no presentar espacios en blanco.", [
       { text: "OK", onPress: () => console.log("OK Pressed") },
     ]);
-  } else if(password.length < 7 || whiteSpaceExp.test(password)|| whiteSpaceBetween.test(password)) {
-    Alert.alert("Registro Invalido", "Contraseña invalida.", [
+  } else if (password.length < 7 || whiteSpaceExp.test(password)|| whiteSpaceBetween.test(password)) {
+    Alert.alert("Contraseña Invalida", "La contraseña debe tener por lo menos 7 caracteres y no presentar espacios en blanco.", [
+      { text: "OK", onPress: () => console.log("OK Pressed") },
+    ]);
+  } else if (name.length < 2 || whiteSpaceExp.test(name)|| whiteSpaceBetween.test(name)) {
+    Alert.alert("Nombre Invalido", "El nombre debe presentar al menos 2 caracteres y no tener espacios en blanco.", [
+      { text: "OK", onPress: () => console.log("OK Pressed") },
+    ]);
+  } else if (last_Name.length < 2 || whiteSpaceExp.test(last_Name)|| whiteSpaceBetween.test(last_Name)) {
+    Alert.alert("Apellido Invalido", "El apellido debe presentar al menos 2 caracteres y no tener espacios en blanco.", [
+      { text: "OK", onPress: () => console.log("OK Pressed") },
+    ]);
+  } else if (whiteSpaceExp.test(email)|| whiteSpaceBetween.test(email)) {
+    Alert.alert("Correo Invalido", "El correo no puede tener espacios en blanco.", [
       { text: "OK", onPress: () => console.log("OK Pressed") },
     ]);
   } else {

@@ -112,31 +112,35 @@ function TweetsWithImage({ route, navigation }: { route: any; navigation: any })
               overflow: "hidden",
             }}
           >
-            <Text
-              style={{
-                paddingTop: 20,
-                paddingLeft: 30,
-                textAlign: "left",
-                fontWeight: "700",
-                margin:1,
-                fontSize: 16,
-                color: "#000000",
+            <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("awayprofile", {
+                username: owner,
+                name: name,
+                last_Name: last_Name,
+                biography: biography,
+              })
+            }
+              style={{paddingTop:10,
               }}
-              onPress={() =>
-                navigation.navigate("awayprofile", {
-                  username: owner,
-                  name: name,
-                  last_Name: last_Name,
-                  biography: biography,
-                })
-              }
             >
-              @{owner}:
-            </Text>
+              <Text
+                style={{
+                  paddingTop: 20,
+                  paddingLeft: 20,
+                  textAlign: "left",
+                  fontWeight: "700",
+                  margin: 1,
+                  fontSize: 16,
+                  color: "#000000",
+                }}
+                
+              >
+                @{owner}:
+              </Text>
+            </TouchableOpacity>
 
             <Text>
-              {"\n"}
-              {"\n"}
               {"\n"}
             </Text>
 
@@ -148,9 +152,7 @@ function TweetsWithImage({ route, navigation }: { route: any; navigation: any })
                 textAlign: "left",
                 fontSize: 14,
               }}
-            >
-              {"     "}
-              {tweets} {"\n"}
+            >{tweets} {"\n"}
               {"\n"}
               {"\n"}
             </Text>
@@ -356,10 +358,7 @@ function TweetsWithImage({ route, navigation }: { route: any; navigation: any })
                             color="#000000"
                             size={25}
                           />
-                          @{item["owner"]}:{"           "}
-                          {"           "}
-                          {"           "}
-                          {"           "}
+                          @{item["owner"]}:{" "}
                           <Icon
                             style={{ padding: 10, textAlign: "left" }}
                             name="brush"

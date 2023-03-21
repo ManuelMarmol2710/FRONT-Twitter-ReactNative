@@ -108,7 +108,7 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
     await actuComment(), setRefreshing(false);
     await getCountLike(), setRefreshing(false);
   }, []);
-  
+
   return (
     <SafeAreaView>
       <ScrollView
@@ -211,8 +211,8 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
                   borderWidth: 2,
                   borderColor: "#000000",
                   overflow: "hidden",
-                  height: 120,
-                  width: 290,
+                  height: 200,
+                  width: 295,
                 }}
                 onChangeText={setcomments}
                 value={comments}
@@ -228,10 +228,10 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
                   style={{
                     backgroundColor: "#000000",
                     padding: 10,
-                    borderRadius: 20,
-                    marginBottom: 15,
-                    marginLeft: -150,
-                    marginRight: -190,
+                    borderRadius: 15,
+                    marginBottom: 5,
+                    marginLeft: 120,
+                    marginRight: -30,
                     marginTop: 20,
                   }}
                 >
@@ -257,7 +257,7 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
 
             <Text
               style={{
-                paddingTop: 20,
+                paddingTop: 10,
                 paddingLeft: 80,
                 paddingRight: 60,
                 textAlign: "right",
