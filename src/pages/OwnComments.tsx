@@ -230,7 +230,7 @@ function OwnComments({ route, navigation }: { route: any; navigation: any }) {
                     padding: 10,
                     borderRadius: 15,
                     marginBottom: 5,
-                    marginLeft: 120,
+                    marginLeft: 100,
                     marginRight: -30,
                     marginTop: 20,
                   }}

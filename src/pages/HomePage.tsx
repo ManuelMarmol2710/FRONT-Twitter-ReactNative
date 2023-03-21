@@ -43,8 +43,46 @@ setTask(response.data )
           <RefreshControl refreshing={refreshing} onRefresh={OnRefresh} />
         }
  >
-          <View style={{ paddingHorizontal: 25, paddingTop: 30 }}></View>
-
+          <View style={{ paddingHorizontal: 25, paddingTop: 45 }}></View>
+          
+           <Text
+           
+                        style={{
+                          textAlign: "left",
+                          fontSize: 16,
+                          fontWeight: "500",
+                          color: "#333",
+                          paddingTop: 14,
+                          paddingLeft: 13,
+                          paddingRight: 10,
+                          paddingBottom: 6,
+                          paddingHorizontal: 10,
+                          borderColor: "black",
+                          borderWidth: 3,
+                          borderRadius: 15,
+                          backgroundColor: "#fff",
+                          overflow: "hidden",
+                        }}
+                        
+                        onPress={() =>
+                          navigation.navigate("Home", {
+                          
+                          })
+                        }
+                      >
+                        <Text
+                          style={{
+                            paddingTop: 20,
+                            paddingLeft: 30,
+                            textAlign: "left",
+                            fontWeight: "700",
+                            fontSize: 16,
+                            color: "#000000",
+                          }}
+                        >
+                           Home
+                        </Text>
+                        </Text>
           <View style={{ paddingTop: 0 }}>
             <FlatList
               data={task}

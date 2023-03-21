@@ -99,8 +99,8 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
               fontSize: 16,
               fontWeight: "500",
               color: "#333",
-              paddingTop: 25,
-              paddingLeft: 10,
+              paddingTop: 5,
+              paddingLeft: 20,
               paddingRight: 10,
               paddingBottom: 5,
               paddingHorizontal: 10,
@@ -125,8 +125,8 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
             >
               <Text
                 style={{
-                  paddingTop: 20,
-                  paddingLeft: 20,
+                  paddingTop: 10,
+                  paddingLeft: 10,
                   textAlign: "left",
                   fontWeight: "700",
                   margin: 1,
@@ -141,6 +141,8 @@ function TweetsPage({ route, navigation }: { route: any; navigation: any }) {
 
             <Text>
               {"\n"}
+              {"\n"}
+              
             </Text>
 
             <Text

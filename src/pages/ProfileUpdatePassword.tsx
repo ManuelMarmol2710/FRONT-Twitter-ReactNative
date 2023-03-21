@@ -16,8 +16,11 @@ import { TextInput, IconButton } from "@react-native-material/core";
 function ProfileUpdatePasswordPage({ navigation }: { navigation: any }) {
   const emailShow = useAuthStore((state) => state.profile.username.email);
   const [password, setText1] = useState("");
+  var whiteSpaceExp = /^\s+$/; 
+  var whiteSpaceBetween = /\s/;
 
   const changePassword = async () => {
+   
     return axios.put(`/updatepassword/${emailShow}`, {
       password: password,
     });
@@ -32,13 +35,19 @@ function ProfileUpdatePasswordPage({ navigation }: { navigation: any }) {
       },
       {
         text: "OK",
-        onPress: async () =>
-        await axios.put(`/updatepassword/${emailShow}`, {
-          password: password,
-        }).then((response) => {
-          navigation.navigate("login");
-        })
-      },
+        onPress: async () =>{
+        if (password.length < 7 || whiteSpaceExp.test(password)|| whiteSpaceBetween.test(password)) {
+          Alert.alert("Contraseña Invalida", "La contraseña debe tener por lo menos 7 caracteres y no presentar espacios en blanco.", [
+            { text: "OK", onPress: () => console.log("OK Pressed") },
+          ]); 
+          } else{
+            await axios.put(`/updatepassword/${emailShow}`, {
+                      password: password,
+                    }).then((response) => {
+                      navigation.navigate("login");
+                    }) }
+                  }
+                  },
     ]);
   };
 

@@ -100,7 +100,7 @@ function TweetsWithImage({ route, navigation }: { route: any; navigation: any })
               fontSize: 16,
               fontWeight: "500",
               color: "#333",
-              paddingTop: 25,
+              paddingTop: 10,
               paddingLeft: 10,
               paddingRight: 10,
               paddingBottom: 5,
@@ -142,12 +142,13 @@ function TweetsWithImage({ route, navigation }: { route: any; navigation: any })
 
             <Text>
               {"\n"}
+              {"\n"}
             </Text>
 
             <Text
               style={{
-                paddingTop: 20,
-                paddingLeft: 80,
+                paddingTop: 28,
+                paddingLeft: 100,
                 paddingRight: 60,
                 textAlign: "left",
                 fontSize: 14,
