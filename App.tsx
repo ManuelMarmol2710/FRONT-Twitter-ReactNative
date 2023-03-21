@@ -25,7 +25,7 @@ import followingPage from "./src/pages/Following";
 import AwayfollowingPage from "./src/pages/AwayFollowing";
 import followersPage from "./src/pages/Followers";
 import AwayfollowersPage from "./src/pages/AwayFollowers";
-
+import 'react-native-gesture-handler'
 import { BottomTab } from "./src/navigation/BottomTab";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";

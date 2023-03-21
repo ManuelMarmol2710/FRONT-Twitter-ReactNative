@@ -24,16 +24,34 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.OMAPP.twiter"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "3aa97372-f975-4bb6-a03b-6eeac20edf7c"
+        "projectId": "3a159f67-1e65-4d00-b1a8-4c5bab22f150"
       }
     },
-    "owner": "oferrer27"
+    "owner": "manuelmarmol27",
+    "plugins": [
+      [
+      "expo-build-properties",
+      {
+        "android": {
+          "compileSdkVersion": 33,
+          "targetSdkVersion": 33,
+          "buildToolsVersion": "31.0.0"
+        },
+        "ios": {
+          "deploymentTarget": "13.0"
+        }
+      }
+    ]
+  ]
+
+  
   }
 }
